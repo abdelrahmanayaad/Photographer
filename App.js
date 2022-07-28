@@ -8,7 +8,7 @@ export class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.textStyle}>Photographer</Text>
+        <Text style={styles.textStyle}>Hello World !</Text>
       </View>
     );
   }
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: FONTS.h1,
     color: COLORS.black,
+    fontWeight: 'bold',
   },
 });
 export default App;
