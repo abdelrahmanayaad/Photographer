@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {RADIUS, COLORS, FONTS} from '../constants';
+import {RFValue} from 'react-native-responsive-fontsize';
 const {width, height} = Dimensions.get('window');
 export class GeneralButton extends Component {
   constructor(props) {
@@ -26,15 +27,17 @@ export class GeneralButton extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    width: width * 0.8,
-    height: height * 0.075,
-    borderRadius: RADIUS.xsRadius,
+    // width: width * 0.7,
+    width: RFValue(230),
+    // height: height * 0.065 >= 45 ? height * 0.065 : 40,
+    height: RFValue(45),
+    borderRadius: RFValue(RADIUS.xsRadius),
     justifyContent: 'center',
     alignItems: 'center',
   },
   titleStyle: {
     color: COLORS.white,
-    fontSize: FONTS.h3,
+    fontSize: RFValue(FONTS.h4),
     fontWeight: 'bold',
   },
 });
