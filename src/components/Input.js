@@ -19,7 +19,7 @@ export class Input extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    width: RFValue(600),
+    width: RFValue(300),
     // width: width * 0.9,
     height: RFValue(40),
     // height: height * 0.065,
