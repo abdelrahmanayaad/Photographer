@@ -6,7 +6,9 @@ import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ChangePassword from './src/screens/Auth/ChangePassword'
+import Verification from './src/screens/Auth/Verification'
 import Login from './src/screens/Auth/Login';
+import ForgetPassword from './src/screens/Auth/ForgetPassword';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {

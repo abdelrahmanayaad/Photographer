@@ -1,4 +1,4 @@
-import * as React from 'react'
+{/*import * as React from 'react'
 import {Text,StyleSheet,View, TextInput, TouchableOpacity,Image, StatusBar, ScrollView} from 'react-native'
 import { Dimensions } from "react-native"
 const { width, height } = Dimensions.get("screen")
@@ -166,4 +166,16 @@ each_textinput_viewstyle:{
 }
 }
 
-)
+)*/}
+
+import * as React from 'react'
+import { View, Text } from 'react-native'
+export default class Login extends React.Component{
+    render(){
+        return(
+            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                <Text>Hello</Text>
+            </View>
+        )
+    }
+}
