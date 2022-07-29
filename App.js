@@ -5,6 +5,7 @@ import { pass_icon } from './src/assets';
 import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
+import ChangePassword from './src/screens/Auth/ChangePassword'
 import Login from './src/screens/Auth/Login';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
@@ -23,20 +24,11 @@ export class App extends Component {
       //   {/* <Input placeholder="First Name" style={{width: 150}} />
       //   <Input placeholder="Last Name" style={{width: 150}} /> */}
       // </View>
+      <View>
       <Login/>
+      </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textStyle: {
-    fontSize: FONTS.h1,
-    color: COLORS.black,
-    fontWeight: 'bold',
-  },
-});
+const styles = StyleSheet.create({});
 export default App;

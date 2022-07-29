@@ -11,7 +11,9 @@ import {
 import { COLORS, PADDING, RADIUS } from '../../constants';
 import Input from '../../components/Input';
 import GeneralButton from '../../components/GeneralButton';
-import Entypo from 'react-native-vector-icons/Entypo';
+import { RFValue } from 'react-native-responsive-fontsize';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo'
 const { width, height } = Dimensions.get('window');
 export default class Login extends React.Component {
     constructor() {
@@ -69,7 +71,7 @@ export default class Login extends React.Component {
                 <StatusBar backgroundColor={COLORS.background} />
                 <View>
                     <TouchableOpacity style={{ alignSelf: 'flex-start' }}>
-                        <Entypo name='arrow-long-right' size={15} />
+                        <AntDesign name='arrowright' size={15} />
                     </TouchableOpacity>
                     <Text style={{ marginTop: 30, fontSize: 30, fontWeight: 'bold' }}>تسجيل الدخول</Text>
                     <View style={{ marginTop: 50 }}>
@@ -89,6 +91,7 @@ export default class Login extends React.Component {
                             <Text style={{ textDecorationLine: 'underline' }}>نسيت كلمة المرور!</Text>
                         </TouchableOpacity>
                         <GeneralButton
+                            style={{ alignSelf: 'center' }}
                             title="تسجيل الدخول"
                             bgcolor={COLORS.primary}
                             activeOpacity={0.7}
@@ -103,7 +106,7 @@ export default class Login extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center',marginTop:height*0.28 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: height * 0.28 }}>
                         <Text>ليس لديك حساب ؟ </Text>
                         <TouchableOpacity onPress={() => { }}>
                             <Text style={{ textDecorationLine: 'underline' }}>انشاء حساب</Text>

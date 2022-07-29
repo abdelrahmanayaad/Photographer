@@ -1,4 +1,5 @@
 import {Dimensions} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 const {width, height} = Dimensions.get('window');
 export const COLORS = {
   primary: '#FF7A7A',
@@ -17,6 +18,13 @@ export const PADDING = {
   mdPadding: 15,
   lgPadding: 20,
   xlPadding: 25,
+};
+export const MARGIN = {
+  xsMargin: 15,
+  smMargin: 20,
+  mdMargin: 25,
+  lgMargin: 30,
+  xlMargin: 60,
 };
 
 export const RADIUS = {
@@ -46,4 +54,9 @@ export const ICONS = {
 export const ProfilePhoto = {
   PhotoWidth: width * 0.17,
   PhotoHeight: height * 0.078,
+};
+
+export const IconsView = {
+  IconWidth: width * 0.1,
+  IconHeight: height * 0.05,
 };

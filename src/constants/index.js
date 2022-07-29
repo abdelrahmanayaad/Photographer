@@ -1,2 +1,10 @@
-import {COLORS, PADDING, FONTS, RADIUS, ICONS} from './Constants';
-export {COLORS, PADDING, FONTS, RADIUS, ICONS};
+import {
+  COLORS,
+  PADDING,
+  MARGIN,
+  FONTS,
+  RADIUS,
+  ICONS,
+  IconsView,
+} from './Constants';
+export {COLORS, PADDING, MARGIN, FONTS, RADIUS, ICONS, IconsView};
