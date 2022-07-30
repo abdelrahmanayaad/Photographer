@@ -13,14 +13,9 @@
     "@react-native-clipboard/clipboard": "^1.10.0",
     "react": "18.0.0",
     "react-native": "0.69.3",
-<<<<<<< HEAD
-    "react-native-element-dropdown": "^2.1.0",
-=======
     "react-native-otp-inputs": "^7.4.0",
->>>>>>> 97c6d0b5b7579ac80ea0ebb20a6c4540e6e3d4a9
     "react-native-responsive-fontsize": "^0.5.1",
-    "react-native-vector-icons": "^9.2.0",
-    "react-otp-input": "^2.4.0"
+    "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -43,13 +43,15 @@ export default class App extends React.Component {
         if (this.state.check_old_pass.length == 0) {
             this.setState({ text_check_old_pass: "", text_check_old_pass_text_color: "" })
         } else if (this.state.check_old_pass.length > 20) {
+            
             alert("خطأ في كلمه المرور القديمه")
         } else {
             if (!this.validatePassword(check_old_pass)) {
                 
-                alert("خطأ في كلمه المرور القديمه")
+            alert("خطأ في كلمه المرور القديمه")
             } else {
-                
+                // valid email
+                // console.log(" valid")
                 this.setState({ text_check_old_pass: "", text_check_old_pass_text_color:""})
             }
         }
@@ -67,10 +69,12 @@ export default class App extends React.Component {
             this.setState({ new_password_msg: "كلمه المرور يجب ان لا تزيد عن 20 حرف ورقم ", new_password_msg_color: COLORS.error })
         } else {
             if (!this.validatePassword(new_password)) {
-                
+                // not a valid email
+                // console.log("not valid")
                 this.setState({ new_password_msg: "كلمه المرور يجب لا تقل عن 6ارقام و حرف كبير و حرف صغير وعلامه مميزه ", new_password_msg_color: COLORS.error })
             } else {
-                
+                // valid email
+                // console.log(" valid")
                this.setState({ new_password_msg: "", new_password_msg_color:"" })
             }
         }
