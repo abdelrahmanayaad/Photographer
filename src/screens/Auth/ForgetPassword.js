@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   messageTitleStyle: {
     fontSize: RFValue(FONTS.h5),
     color: COLORS.gray,
-    marginBottom: RFValue(MARGIN.smMargin),
+    marginBottom: RFValue(MARGIN.xsMargin),
   },
   textInputViewStyle: {
     marginBottom: RFValue(MARGIN.xlMargin),

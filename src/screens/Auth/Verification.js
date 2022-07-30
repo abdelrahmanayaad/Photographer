@@ -46,14 +46,17 @@ export default class Test extends React.Component {
       <View style={styles.container}>
         <ScrollView>
           <TouchableOpacity
-            style={[styles.iconStyle, {alignSelf: 'flex-start', padding: 10}]}>
+            style={[
+              styles.iconStyle,
+              {alignSelf: 'flex-start', margin: RFValue(MARGIN.smMargin)},
+            ]}>
             <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
           </TouchableOpacity>
           <Image
             source={require('../../assets/Images/secur.png')}
             style={{
               width: '100%',
-              height: RFValue(200),
+              height: RFValue(180),
               marginVertical: 10,
             }}
             resizeMode="contain"
@@ -91,7 +94,11 @@ export default class Test extends React.Component {
               <Text
                 style={[
                   styles.messageTitleStyle,
-                  {color: COLORS.primary, fontWeight: 'bold'},
+                  {
+                    color: COLORS.primary,
+                    fontWeight: 'bold',
+                    textDecorationLine: 'underline',
+                  },
                 ]}>
                 أعد إرسال الرمز
               </Text>
@@ -100,7 +107,13 @@ export default class Test extends React.Component {
           <View
             style={[
               styles.buttonViewStyle,
-              {marginTop: MARGIN.smMargin, alignSelf: 'center'},
+              {
+                marginTop: MARGIN.smMargin,
+                alignSelf: 'center',
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              },
             ]}>
             <GeneralButton title="ارسل لي الان" bgcolor={COLORS.primary} />
           </View>
@@ -139,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: RFValue(MARGIN.smMargin),
   },
   titleStyle: {
-    fontSize: RFValue(FONTS.h4),
+    fontSize: RFValue(FONTS.h5),
     color: COLORS.black,
     fontWeight: 'bold',
   },
