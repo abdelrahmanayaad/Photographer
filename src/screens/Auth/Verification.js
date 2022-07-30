@@ -84,11 +84,14 @@ export default class Test extends React.Component {
               borderColor={COLORS.primary}
               width={RFValue(45)}
               height={RFValue(45)}
+              padding="1%"
               textAlign={'center'}
               fontSize={25}
               marginTop={MARGIN.lgMargin}
               inputContainerStyles={{
                 paddingHorizontal: 10,
+                
+                
               }}
             />
           </View>

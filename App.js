@@ -15,7 +15,7 @@ import {
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <SettingsScreen />;
+    return <ChangePassword />;
   }
 }
 const styles = StyleSheet.create({});
