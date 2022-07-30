@@ -9,8 +9,8 @@ import {
   ImageBackground,
   TextInput,
 } from 'react-native';
-import { Input, GeneralButton } from '../../components';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {Input, GeneralButton} from '../../components';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -37,7 +37,7 @@ export default class Login extends React.Component {
   secured_pass() {
     let securedPass = this.state.secured_pass;
     securedPass = !securedPass;
-    this.setState({ secured_pass: securedPass });
+    this.setState({secured_pass: securedPass});
   }
 
   validateEmail(email) {
@@ -65,7 +65,7 @@ export default class Login extends React.Component {
     } else if (email != 'marwa@gmail.com' && email != '') {
       email_error = 'البريد الذي ادخلته غير موجود';
     } else {
-      this.setState({ error_email: '' });
+      this.setState({error_email: ''});
     }
     if (Password == '') {
       password_error = 'يجب ادخال كلمه مرور';
@@ -77,14 +77,14 @@ export default class Login extends React.Component {
     } else if (Password != 'Mm!123456') {
       password_error = 'كلمة المرور التي ادخلتها غير صحيحة';
     } else {
-      this.setState({ error_password: '' });
+      this.setState({error_password: ''});
     }
     if (email == 'marwa@gmail.com' && Password == 'Mm!123456') {
       alert('تم التحقق من الايميل وكلمة المرور بنجاح .. مرحبا بك');
     } else {
       alert('يرجى التحقق من ادخال بياناتك بشكل صحيح');
     }
-    this.setState({ error_email: email_error, error_password: password_error });
+    this.setState({error_email: email_error, error_password: password_error});
   }
 
   render() {
@@ -109,7 +109,7 @@ export default class Login extends React.Component {
                 placeholder="البريد الالكتروني"
                 value={this.state.user_email}
                 onChangeText={value => {
-                  this.setState({ user_email: value });
+                  this.setState({user_email: value});
                 }}
               />
             </View>
@@ -122,7 +122,7 @@ export default class Login extends React.Component {
                 maxLength={10}
                 value={this.state.user_password}
                 onChangeText={value => {
-                  this.setState({ user_password: value });
+                  this.setState({user_password: value});
                 }}
               />
               <TouchableOpacity
@@ -167,11 +167,14 @@ export default class Login extends React.Component {
             justifyContent: 'center',
             // marginTop: '35%',
             // marginBottom: '40%'
-            marginTop:RFValue(MARGIN.xlMargin)
+            marginTop: RFValue(MARGIN.mdMargin),
           }}>
           <Text>ليس لديك حساب ؟ </Text>
-          <TouchableOpacity onPress={() => { }}>
-            <Text style={{ textDecorationLine: 'underline', color: COLORS.black }}>انشاء حساب</Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Text
+              style={{textDecorationLine: 'underline', color: COLORS.primary}}>
+              انشاء حساب
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -181,12 +184,12 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     margin: RFValue(MARGIN.smMargin),
-    justifyContent:'space-around'
+    justifyContent: 'space-around',
   },
   iconStyle: {
     // width: RFValue(IconsView.IconWidth),
     // height: RFValue(IconsView.IconHeight),
-    padding:RFValue(PADDING.xsPadding),
+    // padding: RFValue(PADDING.xsPadding),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginBottom: RFValue(MARGIN.xsMargin),

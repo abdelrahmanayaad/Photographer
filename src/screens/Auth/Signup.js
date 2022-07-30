@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   messageTitleStyle1: {
     fontSize: RFValue(FONTS.h5),
-    color: COLORS.black,
+    color: COLORS.primary,
     marginTop: RFValue(MARGIN.xsMargin),
     textDecorationLine: 'underline',
   },
