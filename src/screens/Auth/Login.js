@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(FONTS.h5),
   },
   erorMsg: {
-    alignSelf: 'center',
+    // alignSelf: 'center',
     color: COLORS.error,
   },
 });
