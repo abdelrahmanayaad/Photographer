@@ -114,15 +114,15 @@ export class Signup extends Component {
         //passwordconfirm
         if (this.state.passwordconfirm.trim() == "") {
             error++
-            this.setState({ passwordconfirmerorr: "لايجب ان يكون هذا الحقل فارغ" })
+            this.setState({ passwordconfirmerorr: "لايجب ان يكون هذا الحقل فارغ",Color:COLORS.error })
         }
         if (this.state.passwordconfirm != this.state.password) {
             error++
-            this.setState({ passwordconfirmerorr: "كلمة المرور غير متطابقة" })
+            this.setState({ passwordconfirmerorr: "كلمة المرور غير متطابقة",Color:COLORS.error })
         }
         else if ((this.state.passwordconfirm.trim()).length < 6) {
             error++
-            this.setState({ passwordconfirmerorr: "ادخل اكثر من 6 احرف" })
+            this.setState({ passwordconfirmerorr: "ادخل اكثر من 6 احرف",Color:COLORS.error })
         }
         else {
             this.setState({ passwordconfirmerorr: "كلمة المرور متطابقة",Color:COLORS.success })
