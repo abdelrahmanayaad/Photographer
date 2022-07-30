@@ -19,6 +19,7 @@ import {
     FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 export class Signup extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +34,7 @@ export class Signup extends Component {
             passworderorr: "",
             passwordconfirm: "",
             passwordconfirmerorr: "",
-
+            Color:COLORS.error
 
         }
     }
@@ -124,7 +125,7 @@ export class Signup extends Component {
             this.setState({ passwordconfirmerorr: "ادخل اكثر من 6 احرف" })
         }
         else {
-            this.setState({ passwordconfirmerorr: "كلمة المرور متطابقة" })
+            this.setState({ passwordconfirmerorr: "كلمة المرور متطابقة",Color:COLORS.success })
         }
 
 
@@ -192,7 +193,7 @@ export class Signup extends Component {
                             onChangeText={(value) => { this.setState({ passwordconfirm: value }) }}
                         />
                         <View style={styles.ErrorView}>
-                            <Text style={styles.ErrorText}>{this.state.passwordconfirmerorr}</Text>
+                            <Text style={[styles.ErrorText,{color:this.state.Color}]}>{this.state.passwordconfirmerorr}</Text>
                         </View>
 
                     </View>
@@ -280,11 +281,13 @@ const styles = StyleSheet.create({
     },
     ErrorText: {
         fontSize: RFValue(FONTS.h5),
-        color: COLORS.error,
-
+        color:COLORS.error
     },
     buttonViewStyle: {
+        width:"100%",
         alignSelf: 'center',
+        alignItems:"center",
+        justifyContent:"center",
         marginTop: RFValue(MARGIN.mdMargin),
     },
 
