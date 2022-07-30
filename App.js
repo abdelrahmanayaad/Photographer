@@ -4,12 +4,11 @@ import {COLORS, FONTS, ICONS, RADIUS, PADDING} from './src/constants';
 import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {ForgetPassword, Verification} from './src/screens';
-import Login from './src/screens/Auth/Login';
+import {ForgetPassword, Login, Verification} from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Login/>;
+    return <Login />;
   }
 }
 const styles = StyleSheet.create({});
