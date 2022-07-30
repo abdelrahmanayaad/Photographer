@@ -120,7 +120,11 @@ export default class App extends React.Component {
         <View style={styles.main_view_style}>
           <StatusBar />
           <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
+            <AntDesign
+              name="arrowright"
+              color={COLORS.gray}
+              size={ICONS.xlIcon}
+            />
           </TouchableOpacity>
           <View style={styles.ViewTitle}>
             <Text style={styles.titleStyle}>تغيير كلمة المرور</Text>
@@ -188,7 +192,7 @@ export default class App extends React.Component {
 //3
 const styles = StyleSheet.create({
   main_view_style: {
-    margin: RFValue(MARGIN.smMargin),
+    margin: RFValue(MARGIN.xsMargin),
   },
 
   each_textinput_viewstyle: {

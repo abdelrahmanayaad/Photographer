@@ -48,9 +48,13 @@ export default class Test extends React.Component {
           <TouchableOpacity
             style={[
               styles.iconStyle,
-              {alignSelf: 'flex-start', margin: RFValue(MARGIN.smMargin)},
+              {alignSelf: 'flex-start', margin: RFValue(MARGIN.xsMargin)},
             ]}>
-            <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
+            <AntDesign
+              name="arrowright"
+              color={COLORS.gray}
+              size={ICONS.xlIcon}
+            />
           </TouchableOpacity>
           <Image
             source={require('../../assets/Images/secur.png')}

@@ -132,7 +132,11 @@ export class Signup extends Component {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
+            <AntDesign
+              name="arrowright"
+              color={COLORS.gray}
+              size={ICONS.xlIcon}
+            />
           </TouchableOpacity>
           <View style={styles.ViewTitle}>
             <Text style={styles.titleStyle}>انشاء حساب</Text>
@@ -233,7 +237,7 @@ export class Signup extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    margin: RFValue(MARGIN.smMargin),
+    margin: RFValue(MARGIN.xsMargin),
   },
   iconStyle: {
     width: RFValue(IconsView.IconWidth),

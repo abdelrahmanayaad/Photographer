@@ -14,7 +14,7 @@ import {
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Signup />;
+    return <Login />;
   }
 }
 const styles = StyleSheet.create({});

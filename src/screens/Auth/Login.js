@@ -95,7 +95,7 @@ export default class Login extends React.Component {
             <TouchableOpacity style={styles.iconStyle}>
               <AntDesign
                 name="arrowright"
-                color={'#aaa'}
+                color={COLORS.gray}
                 size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
@@ -183,7 +183,7 @@ export default class Login extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    margin: RFValue(MARGIN.smMargin),
+    margin: RFValue(MARGIN.xsMargin),
     justifyContent: 'space-around',
   },
   iconStyle: {
