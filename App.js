@@ -4,19 +4,11 @@ import {COLORS, FONTS, ICONS, RADIUS, PADDING} from './src/constants';
 import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
-<<<<<<< HEAD
 import { ForgetPassword, Verification,ChangePassword } from './src/screens';
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
     return <ChangePassword />;
-=======
-import {ForgetPassword, Verification} from './src/screens';
-const {width, height} = Dimensions.get('window');
-export class App extends Component {
-  render() {
-    return <ForgetPassword />;
->>>>>>> dfc0d3c7ebe557316da398c536316439fd3188f9
   }
 }
 const styles = StyleSheet.create({});

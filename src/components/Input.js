@@ -20,12 +20,8 @@ export class Input extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-<<<<<<< HEAD
-    width: RFValue(300),
-=======
     width: "100%",
     // RFValue(300),
->>>>>>> dfc0d3c7ebe557316da398c536316439fd3188f9
     // width: width * 0.9,
     height: RFValue(60),
     // height: height * 0.065,
