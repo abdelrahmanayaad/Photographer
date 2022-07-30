@@ -11,10 +11,11 @@ import {
   Signup,
   Login,
 } from './src/screens';
+import {SettingsScreen} from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Signup />;
+    return <SettingsScreen />;
   }
 }
 const styles = StyleSheet.create({});
