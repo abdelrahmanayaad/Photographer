@@ -176,7 +176,6 @@ export class Signup extends Component {
                 this.setState({password: value});
               }}
             />
-
             <View style={styles.ErrorView}>
               <Text style={styles.ErrorText}>{this.state.passworderorr}</Text>
             </View>
@@ -212,7 +211,6 @@ export class Signup extends Component {
               <Text style={styles.ErrorText}>{this.state.phoneerorr}</Text>
             </View>
           </View>
-
           <View style={styles.buttonViewStyle}>
             <GeneralButton
               onPress={() => {

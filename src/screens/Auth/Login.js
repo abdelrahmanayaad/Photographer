@@ -33,26 +33,29 @@ export default class Login extends React.Component {
       error_password: '',
     };
   }
+
   secured_pass() {
     let securedPass = this.state.secured_pass;
     securedPass = !securedPass;
     this.setState({secured_pass: securedPass});
   }
+
   validateEmail(email) {
     var em =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return em.test(email);
   }
+
   validatePassword(password) {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
   }
+
   SIGN_IN() {
     let email = this.state.user_email.trim();
     let Password = this.state.user_password;
     let email_error = '';
     let password_error = '';
-
     if (email == '') {
       email_error = 'يرجى ادخال البريد الالكتروني';
     } else if (this.validateEmail(email) == false) {
@@ -64,7 +67,6 @@ export default class Login extends React.Component {
     } else {
       this.setState({error_email: ''});
     }
-
     if (Password == '') {
       password_error = 'يجب ادخال كلمه مرور';
     } else if (Password.length > 20) {
@@ -77,15 +79,14 @@ export default class Login extends React.Component {
     } else {
       this.setState({error_password: ''});
     }
-
     if (email == 'marwa@gmail.com' && Password == 'Mm!123456') {
       alert('تم التحقق من الايميل وكلمة المرور بنجاح .. مرحبا بك');
     } else {
       alert('يرجى التحقق من ادخال بياناتك بشكل صحيح');
     }
-
     this.setState({error_email: email_error, error_password: password_error});
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -97,11 +98,9 @@ export default class Login extends React.Component {
               size={RFValue(ICONS.xlIcon)}
             />
           </TouchableOpacity>
-
           <View style={styles.ViewTitle}>
             <Text style={styles.titleStyle}>تسجيل الدخول</Text>
           </View>
-
           <View>
             <Input
               autoCapitalize="none"
@@ -114,7 +113,6 @@ export default class Login extends React.Component {
             />
           </View>
           <Text style={styles.erorMsg}>{this.state.error_email}</Text>
-
           <View style={styles.textInputViewStyle}>
             <TextInput
               style={styles.inputPass}
@@ -138,7 +136,6 @@ export default class Login extends React.Component {
             </TouchableOpacity>
           </View>
           <Text style={styles.erorMsg}>{this.state.error_password}</Text>
-
           <View style={styles.forgetPassMsg}>
             <Text style={styles.forgetPassTxt}>هل نسيت كلمةالمرور؟</Text>
           </View>
@@ -152,7 +149,6 @@ export default class Login extends React.Component {
               }}
             />
           </TouchableOpacity>
-
           <Text style={styles.socialHeader}>او عن طريق</Text>
           <View style={styles.socialButtonsView}>
             <TouchableOpacity style={styles.socialButton}>
@@ -162,7 +158,6 @@ export default class Login extends React.Component {
               <Text style={styles.socialTxt}>انستجرام</Text>
             </TouchableOpacity>
           </View>
-
           <View
             style={{
               flexDirection: 'row',

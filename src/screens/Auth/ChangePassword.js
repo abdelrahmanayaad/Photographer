@@ -47,7 +47,6 @@ export default class App extends React.Component {
   old_pass_matches_endtyping() {
     //old pass user input value
     let check_old_pass = this.state.check_old_pass;
-
     if (this.state.check_old_pass.length == 0) {
       this.setState({
         text_check_old_pass: '',
@@ -70,7 +69,6 @@ export default class App extends React.Component {
   }
   new_password_check() {
     let new_password = this.state.new_password;
-
     if (this.state.new_password.length == 0) {
       this.setState({new_password_msg: '', new_password_msg_color: ''});
     } else if (this.state.new_password.length > 20) {
@@ -116,20 +114,17 @@ export default class App extends React.Component {
       }
     }
   }
-
   render() {
     return (
       <ScrollView>
         <View style={styles.main_view_style}>
           <StatusBar />
-
           <TouchableOpacity style={styles.iconStyle}>
             <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
           </TouchableOpacity>
           <View style={styles.ViewTitle}>
             <Text style={styles.titleStyle}>تغيير كلمة المرور</Text>
           </View>
-
           <View style={styles.view_after_header_style}>
             <View style={styles.each_textinput_viewstyle}>
               <Input
