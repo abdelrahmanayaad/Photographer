@@ -11,7 +11,7 @@ import {
   Signup,
   Login,
 } from './src/screens';
-import {SettingsScreen} from './src/screens';
+import {SettingsScreen} from './src/screens/SettingsScreen';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
