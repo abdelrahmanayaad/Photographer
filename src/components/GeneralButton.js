@@ -27,8 +27,7 @@ export class GeneralButton extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    // width: width * 0.7,
-    width:"80%",
+    width: '70%',
     // height: height * 0.065 >= 45 ? height * 0.065 : 40,
     height: RFValue(45),
     borderRadius: RFValue(RADIUS.xsRadius),

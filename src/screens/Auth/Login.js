@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     socialButtonsView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '80%',
+        width: '70%',
         paddingVertical: RFValue(PADDING.xsPadding),
         alignSelf: 'center'
     },
