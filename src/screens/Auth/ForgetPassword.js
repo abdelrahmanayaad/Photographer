@@ -67,7 +67,11 @@ export class ForgetPassword extends Component {
       <View style={styles.container}>
         <ScrollView>
           <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
+            <AntDesign
+              name="arrowright"
+              color={COLORS.gray}
+              size={ICONS.xlIcon}
+            />
           </TouchableOpacity>
           <View style={styles.ViewTitle}>
             <Text style={styles.titleStyle}>هل نسيت كلمة المرور ؟</Text>
@@ -112,7 +116,7 @@ export class ForgetPassword extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    margin: RFValue(MARGIN.smMargin),
+    margin: RFValue(MARGIN.xsMargin),
   },
   iconStyle: {
     width: RFValue(IconsView.IconWidth),
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
   messageTitleStyle: {
     fontSize: RFValue(FONTS.h5),
     color: COLORS.gray,
-    marginBottom: RFValue(MARGIN.smMargin),
+    marginBottom: RFValue(MARGIN.xsMargin),
   },
   textInputViewStyle: {
     marginBottom: RFValue(MARGIN.xlMargin),
