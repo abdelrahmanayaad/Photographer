@@ -124,6 +124,7 @@ export default class App extends React.Component {
                                 check_old_pass={this.state.check_old_pass}
                                 onChangeText={(value) => { this.setState({ check_old_pass: value }) }}
                             />
+                            <Text></Text>
                         </View>
                         <View style={styles.each_textinput_viewstyle}>
                             <Input placeholder="كلمة المرور الجديدة"
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     each_textinput_viewstyle: {
         //marginBottom:height*.02
         //marginBottom: RFValue(MARGIN.mdMargin),
-        width: '100%'
+        width: '100%',
 
     }, text_style: {
         color: COLORS.gray,
