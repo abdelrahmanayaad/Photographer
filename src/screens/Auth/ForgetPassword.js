@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
   },
   buttonViewStyle: {
     alignSelf: 'center',
+    width:"100%",
+    alignItems:"center",
+    justifyContent:"center"
   },
 });
 export default ForgetPassword;
