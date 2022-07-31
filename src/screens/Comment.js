@@ -213,15 +213,7 @@ export class SearchScreen extends Component {
 
         }}>
 
-          <TouchableOpacity style={{
-            marginRight: MARGIN.xsMargin,
-            backgroundColor: COLORS.white,
-            borderRadius: 30,
-            width: RFValue(40),
-            height: RFValue(40),
-            alignItems: "center",
-            justifyContent: "center"
-          }}
+          <TouchableOpacity style={styles.smallButtom}
             disabled={this.state.text == "" ? true : false}
             onPress={() => {
               this.add()
@@ -288,6 +280,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: RFValue(0.7),
     borderBottomColor: COLORS.gray,
+  },
+  smallButtom: {
+    marginRight: MARGIN.xsMargin,
+    backgroundColor: COLORS.white,
+    borderRadius: 30,
+    width: RFValue(40),
+    height: RFValue(40),
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 export default SearchScreen;
