@@ -8,7 +8,6 @@ import EditprofileScreen from '../screens/EditProfileScreen';
 import SearchScreen from './SearchScreen';
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
-
 export {
   Signup,
   Login,

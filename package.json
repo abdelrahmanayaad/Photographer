@@ -15,6 +15,7 @@
     "react-native": "0.69.3",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-responsive-fontsize": "^0.5.1",
+    "react-native-stories-media": "^0.0.7",
     "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
