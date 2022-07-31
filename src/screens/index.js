@@ -4,7 +4,7 @@ import ForgetPassword from '../screens/Auth/ForgetPassword';
 import ChangePassword from '../screens/Auth/ChangePassword';
 import Verification from '../screens/Auth/Verification';
 import SettingsScreen from './SettingsScreen';
-import EditprofileScreen from './EditprofileScreen';
+import EditprofileScreen from '../screens/EditProfileScreen';
 import SearchScreen from './SearchScreen';
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
