@@ -10,11 +10,14 @@ import {
   ChangePassword,
   Signup,
   Login,
+  SettingsScreen,
+  SearchScreen,
+  Comment
 } from './src/screens';
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Verification />;
+    return <SearchScreen />;
   }
 }
 const styles = StyleSheet.create({});

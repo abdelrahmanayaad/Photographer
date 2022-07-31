@@ -90,97 +90,106 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign
-              name="arrowright"
-              color={'#aaa'}
-              size={RFValue(ICONS.xlIcon)}
-            />
-          </TouchableOpacity>
-          <View style={styles.ViewTitle}>
-            <Text style={styles.titleStyle}>تسجيل الدخول</Text>
-          </View>
-          <View>
-            <Input
-              autoCapitalize="none"
-              keyboardType="email-address"
-              placeholder="البريد الالكتروني"
-              value={this.state.user_email}
-              onChangeText={value => {
-                this.setState({user_email: value});
-              }}
-            />
-          </View>
-          <Text style={styles.erorMsg}>{this.state.error_email}</Text>
-          <View style={styles.textInputViewStyle}>
-            <TextInput
-              style={styles.inputPass}
-              placeholder="كلمة المرور"
-              secureTextEntry={this.state.secured_pass}
-              maxLength={10}
-              value={this.state.user_password}
-              onChangeText={value => {
-                this.setState({user_password: value});
-              }}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                this.secured_pass();
-              }}>
-              <Entypo
-                name={this.state.secured_pass ? 'eye-with-line' : 'eye'}
-                size={ICONS.mIcon}
-                color={'#aaa'}
+        <View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <TouchableOpacity style={styles.iconStyle}>
+              <AntDesign
+                name="arrowright"
+                color={COLORS.gray}
+                size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
-          </View>
-          <Text style={styles.erorMsg}>{this.state.error_password}</Text>
-          <View style={styles.forgetPassMsg}>
-            <Text style={styles.forgetPassTxt}>هل نسيت كلمةالمرور؟</Text>
-          </View>
-          <TouchableOpacity style={styles.buttonViewStyle}>
-            <GeneralButton
-              title="تسجيل الدخول"
-              bgcolor={COLORS.primary}
-              activeOpacity={0.7}
-              onPress={() => {
-                this.SIGN_IN();
-              }}
-            />
+            <View style={styles.ViewTitle}>
+              <Text style={styles.titleStyle}>تسجيل الدخول</Text>
+            </View>
+            <View>
+              <Input
+                autoCapitalize="none"
+                keyboardType="email-address"
+                placeholder="البريد الالكتروني"
+                value={this.state.user_email}
+                onChangeText={value => {
+                  this.setState({user_email: value});
+                }}
+              />
+            </View>
+            <Text style={styles.erorMsg}>{this.state.error_email}</Text>
+            <View style={styles.textInputViewStyle}>
+              <TextInput
+                style={styles.inputPass}
+                placeholder="كلمة المرور"
+                secureTextEntry={this.state.secured_pass}
+                maxLength={10}
+                value={this.state.user_password}
+                onChangeText={value => {
+                  this.setState({user_password: value});
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => {
+                  this.secured_pass();
+                }}>
+                <Entypo
+                  name={this.state.secured_pass ? 'eye-with-line' : 'eye'}
+                  size={ICONS.mIcon}
+                  color={'#aaa'}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.erorMsg}>{this.state.error_password}</Text>
+            <View style={styles.forgetPassMsg}>
+              <Text style={styles.forgetPassTxt}>هل نسيت كلمةالمرور؟</Text>
+            </View>
+            <TouchableOpacity style={styles.buttonViewStyle}>
+              <GeneralButton
+                title="تسجيل الدخول"
+                bgcolor={COLORS.primary}
+                activeOpacity={0.7}
+                onPress={() => {
+                  this.SIGN_IN();
+                }}
+              />
+            </TouchableOpacity>
+            <Text style={styles.socialHeader}>او عن طريق</Text>
+            <View style={styles.socialButtonsView}>
+              <TouchableOpacity style={styles.socialButton}>
+                <Text style={styles.socialTxt}>فيسبوك</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.socialButton}>
+                <Text style={styles.socialTxt}>انستجرام</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            // marginTop: '35%',
+            // marginBottom: '40%'
+            marginTop: RFValue(MARGIN.mdMargin),
+          }}>
+          <Text>ليس لديك حساب ؟ </Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Text
+              style={{textDecorationLine: 'underline', color: COLORS.primary}}>
+              انشاء حساب
+            </Text>
           </TouchableOpacity>
-          <Text style={styles.socialHeader}>او عن طريق</Text>
-          <View style={styles.socialButtonsView}>
-            <TouchableOpacity style={styles.socialButton}>
-              <Text style={styles.socialTxt}>فيسبوك</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialButton}>
-              <Text style={styles.socialTxt}>انستجرام</Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: RFValue(200),
-            }}>
-            <Text>ليس لديك حساب ؟ </Text>
-            <TouchableOpacity onPress={() => {}}>
-              <Text style={{textDecorationLine: 'underline'}}>انشاء حساب</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+        </View>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    margin: RFValue(MARGIN.smMargin),
+    margin: RFValue(MARGIN.xsMargin),
+    justifyContent: 'space-around',
   },
   iconStyle: {
-    width: RFValue(IconsView.IconWidth),
-    height: RFValue(IconsView.IconHeight),
+    // width: RFValue(IconsView.IconWidth),
+    // height: RFValue(IconsView.IconHeight),
+    // padding: RFValue(PADDING.xsPadding),
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginBottom: RFValue(MARGIN.xsMargin),
@@ -250,7 +259,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(FONTS.h5),
   },
   erorMsg: {
-    alignSelf: 'center',
+    // alignSelf: 'center',
     color: COLORS.error,
   },
 });

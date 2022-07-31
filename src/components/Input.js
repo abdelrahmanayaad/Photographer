@@ -1,17 +1,18 @@
-import React, {Component} from 'react';
-import {Text, View, TextInput, StyleSheet, Dimensions} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {FONTS, COLORS} from '../constants';
-const {width, height} = Dimensions.get('window');
+import React, { Component } from 'react';
+import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { FONTS, COLORS } from '../constants';
+const { width, height } = Dimensions.get('window');
 export class Input extends Component {
   render() {
-    const {placeholder, TextInputWidth, style, ...rest} = this.props;
+    const { placeholder, TextInputWidth, style, ...rest } = this.props;
     return (
       <View>
         <TextInput
           {...rest}
           style={[styles.container, style]}
           placeholder={placeholder}
+
         />
       </View>
     );

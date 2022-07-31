@@ -50,7 +50,7 @@ export default class Test extends React.Component {
                             styles.iconStyle,
                             { alignSelf: 'flex-start' },
                         ]}>
-                        <AntDesign name="arrowright" color={'#aaa'} size={ICONS.xlIcon} />
+                        <AntDesign name="arrowright" color={COLORS.gray} size={ICONS.xlIcon} />
                     </TouchableOpacity>
                     <Image
                         source={require("../../assets/Images/secur.png")}
