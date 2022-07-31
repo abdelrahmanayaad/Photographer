@@ -35,12 +35,17 @@ export default class Test extends React.Component {
     handleOTPChange = otp => {
         this.setState({ otp });
     };
+
+    handleOTPChange = otp => {
+        this.setState({ otp });
+    };
     clearOTP = () => {
         this.setState({ otp: undefined });
     };
     autoFill = () => {
         this.setState({ otp: '221198' });
     };
+
     render() {
         return (
             <View style={styles.container}>
@@ -48,12 +53,16 @@ export default class Test extends React.Component {
                     <TouchableOpacity
                         style={[
                             styles.iconStyle,
-                            { alignSelf: 'flex-start' },
+                            { alignSelf: 'flex-start', margin: RFValue(MARGIN.xsMargin) },
                         ]}>
-                        <AntDesign name="arrowright" color={COLORS.gray} size={ICONS.xlIcon} />
+                        <AntDesign
+                            name="arrowright"
+                            color={COLORS.gray}
+                            size={ICONS.xlIcon}
+                        />
                     </TouchableOpacity>
                     <Image
-                        source={require("../../assets/Images/secur.png")}
+                        source={require('../../assets/Images/secur.png')}
                         style={{
                             width: '100%',
                             height: RFValue(180),
@@ -80,11 +89,14 @@ export default class Test extends React.Component {
                             borderColor={COLORS.primary}
                             width={RFValue(45)}
                             height={RFValue(45)}
+                            padding="1%"
                             textAlign={'center'}
                             fontSize={25}
                             marginTop={MARGIN.lgMargin}
                             inputContainerStyles={{
                                 paddingHorizontal: 10,
+
+
                             }}
                         />
                     </View>
