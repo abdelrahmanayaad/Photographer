@@ -1,6 +1,6 @@
-import {Dimensions} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-const {width, height} = Dimensions.get('window');
+import { Dimensions } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+const { width, height } = Dimensions.get('window');
 export const COLORS = {
   primary: '#FF7A7A',
   background: '#f4f4f4',
@@ -20,7 +20,7 @@ export const PADDING = {
   xlPadding: 25,
 };
 export const MARGIN = {
-  xsMargin: 15,
+  xsMargin: 10,
   smMargin: 20,
   mdMargin: 25,
   lgMargin: 30,

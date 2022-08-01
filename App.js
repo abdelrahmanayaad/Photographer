@@ -12,9 +12,10 @@ import {
   Login,
   SettingsScreen,
   SearchScreen,
-  ProfileScreen,
+  Comment,
   HomeScreen,
   EditprofileScreen,
+  ProfileScreen,
 } from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
