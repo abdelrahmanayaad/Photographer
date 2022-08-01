@@ -118,7 +118,7 @@ export default class App extends React.Component {
     return (
       <ScrollView>
         <View style={styles.main_view_style}>
-          <StatusBar />
+        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
           <TouchableOpacity style={styles.iconStyle}>
             <AntDesign
               name="arrowright"
