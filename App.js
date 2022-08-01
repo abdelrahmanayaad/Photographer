@@ -11,11 +11,15 @@ import {
   Signup,
   Login,
   SettingsScreen,
+  SearchScreen,
+  ProfileScreen,
+  HomeScreen,
+  EditprofileScreen,
 } from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <SettingsScreen />;
+    return <ProfileScreen />;
   }
 }
 const styles = StyleSheet.create({});
