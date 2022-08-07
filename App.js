@@ -17,10 +17,11 @@ import {
   EditprofileScreen,
   ProfileScreen,
 } from './src/screens';
+import { Splash } from './src/screens/Intro/Splash';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <HomeScreen />;
+    return <Splash />;
   }
 }
 const styles = StyleSheet.create({});

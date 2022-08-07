@@ -279,9 +279,9 @@ export class HomeScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View >
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <View style={styles.highlight_view_style}>
                 <TouchableOpacity style={styles.add_highlight_button_style}>
                   <AntDesign name='plus' size={ICONS.mIcon} />
@@ -300,7 +300,7 @@ export class HomeScreen extends Component {
 
         <Modal visible={this.state.modal_visible}>
           <View style={styles.moddal_container_style}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator ={false}>
               <View style={styles.headerView_model}>
                 <TouchableOpacity model_visible={this.state.modal_visible}
                   onPress={() => { this.setState({ modal_visible: false }) }} >
