@@ -13,6 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ProfileInfo } from './Intro/ProfileInfo';
 
 export class ProfileScreen extends Component {
   constructor(props) {
@@ -55,8 +56,8 @@ export class ProfileScreen extends Component {
       saves: [],
       // owner: false,
       // user: true,
-      owner: true,
-      user: false,
+      owner: false,
+      user: true,
       follow: false,
     };
   }
@@ -210,13 +211,11 @@ export class ProfileScreen extends Component {
     return (
       <View
         style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: RFValue(300),
+          // alignItems: 'center',
+          // justifyContent: 'center',
+          // height: RFValue(300),
         }}>
-        <Text style={{fontSize: FONTS.h3, color: COLORS.black}}>
-          Abdelrahman Ayad
-        </Text>
+        <ProfileInfo/>
       </View>
     );
   }

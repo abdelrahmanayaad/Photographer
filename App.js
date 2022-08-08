@@ -12,17 +12,15 @@ import {
   Login,
   SettingsScreen,
   SearchScreen,
-
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
 
 
 } from './src/screens';
-import { Followers } from "./src/screens/Followers"
-import { Comment } from './src/screens/Comment';
-
-const { width, height } = Dimensions.get('window');
+import { ProfileInfo } from './src/screens/Intro/ProfileInfo';
+import {Info} from './src/screens'
+const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
     return <Signup />;
