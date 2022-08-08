@@ -25,7 +25,7 @@ import { Comment } from './src/screens/Comment';
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Comment />;
+    return <Signup />;
   }
 }
 const styles = StyleSheet.create({});
