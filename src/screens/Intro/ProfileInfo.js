@@ -5,14 +5,16 @@ import {
     TouchableOpacity,
     StyleSheet,
     ScrollView,
+    Linking,
 } from 'react-native';
 import { MARGIN, COLORS, ICONS, FONTS, RADIUS, PADDING } from '../../constants';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Dialog from "react-native-dialog";
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import axios from 'axios'
+import Fontisto from 'react-native-vector-icons/Fontisto'
+import axios from 'axios';
 
-export class Splash extends React.Component {
+export class ProfileInfo extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -261,23 +263,69 @@ export class Splash extends React.Component {
 
 
     render() {
-        axios
-            .get(
-                'https://generation3.000webhostapp.com/project/Training/photographer_list.php'
-            )
-            .then(res => {
-                if (res.status == 200) {
-                    console.log(res.data)
-                }
-            });
+        // axios
+        //     .get(
+        //         'https://generation3.000webhostapp.com/project/Training/photographer_list.php'
+        //     )
+        //     .then(res => {
+        //         if (res.status == 200) {
+        //             console.log(res.data)
+        //         }
+        //     });
         return (
             <View style={styles.container}>
-                <View style={{ height: 200 }}>
-                    <ScrollView horizontal={true}>
+                <View>
+                    <Text style={styles.headerTxt}>حـول </Text>
+                    <View style={styles.infoContainer}>
+                        <AntDesign name='phone' size={RFValue(17)} />
+                        <Text
+                            selectable={true}
+                            style={[styles.headerTxt, { color: COLORS.success, fontSize: RFValue(FONTS.h5) }]}
+                        >01201234567</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Fontisto name='whatsapp' size={RFValue(17)} />
+                        <Text
+                            style={[styles.infoTxt,{textDecorationLine:'none'}]}
+                            onPress={() => { Linking.openURL('https://chat.whatsapp.com/H3j3YuRheL6FRUnnsqZcHC') }}
+                        >إرسال رسالة</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <AntDesign name='facebook-square' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL('https://www.facebook.com/campcoding/') }}
+                            style={styles.infoTxt}
+                        >https://www.facebook.com/campcoding/</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <AntDesign name='instagram' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL('https://www.instagram.com/BingeCircle/?fs=e&s=cl') }}
+                            style={styles.infoTxt}
+                        >@BingeCircle</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Fontisto name='world-o' size={RFValue(17)} />
+                        <Text
+                            style={styles.infoTxt}
+                            onPress={() => { Linking.openURL('https://tap.bio/@BingeCircle') }}
+                        >https://tap.bio/@BingeCircle</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <AntDesign name='enviromento' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL('https://goo.gl/maps/9vN8a7CdsPNMy6CFA') }}
+                            style={styles.infoTxt}
+                        >https://goo.gl/maps/9vN8a7CdsPNMy6CFA</Text>
+                    </View>
+                </View>
+                <View style={{ height: RFValue(235) }}>
+                    <Text style={styles.headerTxt}>الآراء </Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         <TouchableOpacity
                             style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center' }]}
                             onPress={() => { this.setState({ visible: true }) }}>
-                            <Text style={{ fontSize: 30, fontWeight: 'bold' }}>+</Text>
+                            <Text style={{ fontSize: RFValue(30), fontWeight: 'bold' }}>+</Text>
                         </TouchableOpacity>
                         <Dialog.Container visible={this.state.visible}>
                             <View style={{ flexDirection: 'row', justifyContent: 'center' }} >
@@ -306,7 +354,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingVertical: '5%'
     },
     photoAndName: {
         flexDirection: 'row',
@@ -319,6 +366,24 @@ const styles = StyleSheet.create({
         borderRadius: RFValue(20),
         marginRight: RFValue(10),
         borderWidth: RFValue(1)
+    },
+    headerTxt: {
+        color: COLORS.black,
+        margin: RFValue(MARGIN.xsMargin),
+        fontSize: RFValue(18)
+    },
+    infoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: RFValue(MARGIN.xsMargin),
+        marginLeft: RFValue(MARGIN.xsMargin)
+    },
+    infoTxt: {
+        textDecorationLine: 'underline',
+        color: '#71a8fb',
+        padding: RFValue(PADDING.xsPadding),
+        fontSize: RFValue(FONTS.h5)
     }
 
 })
+export default ProfileInfo;
