@@ -7,8 +7,9 @@ import SettingsScreen from './SettingsScreen';
 import SearchScreen from './SearchScreen';
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
-import EditprofileScreen from "../screens/EditProfileScreen"
-import Comment from "../screens/Comment"
+import EditprofileScreen from '../screens/EditProfileScreen';
+import Comment from '../screens/Comment';
+import AdminProfile from '../screens/AdminProfile';
 
 export {
   Signup,
@@ -21,5 +22,6 @@ export {
   SearchScreen,
   ProfileScreen,
   HomeScreen,
-  Comment
+  Comment,
+  AdminProfile,
 };

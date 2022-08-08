@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.10.0",
+    "axios": "^0.27.2",
     "react": "18.0.0",
     "react-native": "0.69.3",
     "react-native-actionsheet": "^2.4.2",

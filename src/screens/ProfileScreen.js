@@ -1,3 +1,5 @@
+//Tapview library -> switch
+// zoom in to picture
 import React, {Component} from 'react';
 import {
   Text,
@@ -25,6 +27,7 @@ export class ProfileScreen extends Component {
       informationUserPage: false,
       posts: [
         {
+          id: 1,
           photo: require('../assets/Images/post1.png'),
           likes: 130,
           comments: 20,
