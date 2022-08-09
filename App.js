@@ -16,16 +16,17 @@ import {
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
+  Followers,
+  Following
 
 
 } from './src/screens';
-import { Followers } from "./src/screens/Followers"
-// import { Comment } from './src/screens/Comment';
+
 
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Comment />;
+    return <Following />;
   }
 }
 const styles = StyleSheet.create({});

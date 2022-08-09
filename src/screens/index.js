@@ -9,6 +9,8 @@ import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
 import EditprofileScreen from "../screens/EditProfileScreen"
 import Comment from "../screens/Comment"
+import Followers from './Followers';
+import Following from './Following';
 
 export {
   Signup,
@@ -21,5 +23,7 @@ export {
   SearchScreen,
   ProfileScreen,
   HomeScreen,
-  Comment
+  Comment,
+  Followers,
+  Following
 };
