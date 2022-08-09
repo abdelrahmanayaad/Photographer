@@ -23,7 +23,7 @@ import {Info} from './src/screens'
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return (<ProfileScreen/>);
+    return (<HomeScreen/>);
   }
 }
 const styles = StyleSheet.create({});
