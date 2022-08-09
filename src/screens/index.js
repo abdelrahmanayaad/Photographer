@@ -9,6 +9,8 @@ import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
 import EditprofileScreen from "../screens/EditProfileScreen"
 import Comment from "../screens/Comment"
+import PhotographerSettingScreen from './PhotographerSettingScreen';
+import Intro from '../screens/Auth/Intro/Intro';
 
 export {
   Signup,
@@ -21,5 +23,8 @@ export {
   SearchScreen,
   ProfileScreen,
   HomeScreen,
-  Comment
+  Comment,
+  PhotographerSettingScreen,
+  Intro
+
 };

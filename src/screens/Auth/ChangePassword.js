@@ -9,8 +9,8 @@ import {
   StatusBar,
   ScrollView,
 } from 'react-native';
-import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('screen');
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('screen');
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   COLORS,
@@ -22,8 +22,10 @@ import {
 } from '../../constants';
 import GeneralButton from '../../components/GeneralButton';
 import Input from '../../components/Input';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MARGIN} from '../../constants/Constants';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { MARGIN } from '../../constants/Constants';
+import Dialog from "react-native-dialog";
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -38,6 +40,7 @@ export default class App extends React.Component {
       confirm_new_password: '',
       confirm_new_password_msg: '',
       confirm_new_password_msg_color: '',
+      dialog_visible: false
     };
   }
   validatePassword(password) {
@@ -53,10 +56,13 @@ export default class App extends React.Component {
         text_check_old_pass_text_color: '',
       });
     } else if (this.state.check_old_pass.length > 20) {
-      alert('خطأ في كلمه المرور القديمه');
+      //alert('خطأ في كلمه المرور القديمه');
+      this.setState({ dialog_visible: true })
     } else {
       if (!this.validatePassword(check_old_pass)) {
-        alert('خطأ في كلمه المرور القديمه');
+        //alert('خطأ في كلمه المرور القديمه');
+        this.setState({ dialog_visible: true })
+
       } else {
         // valid email
         // console.log(" valid")
@@ -70,7 +76,7 @@ export default class App extends React.Component {
   new_password_check() {
     let new_password = this.state.new_password;
     if (this.state.new_password.length == 0) {
-      this.setState({new_password_msg: '', new_password_msg_color: ''});
+      this.setState({ new_password_msg: '', new_password_msg_color: '' });
     } else if (this.state.new_password.length > 20) {
       this.setState({
         new_password_msg: 'كلمه المرور يجب ان لا تزيد عن 20 حرف ورقم ',
@@ -88,7 +94,7 @@ export default class App extends React.Component {
       } else {
         // valid email
         // console.log(" valid")
-        this.setState({new_password_msg: '', new_password_msg_color: ''});
+        this.setState({ new_password_msg: '', new_password_msg_color: '' });
       }
     }
   }
@@ -114,16 +120,36 @@ export default class App extends React.Component {
       }
     }
   }
+  changeButtomPress() {
+    let old_pass = this.state.check_old_pass
+    let new_pass = this.state.new_password
+    let confirm_new_password = this.state.confirm_new_password
+    if (new_pass == "") {
+      this.setState({ new_password_msg: "يجب ادخال كلمة السر الجديدة", new_password_msg_color: COLORS.error })
+
+    } if (confirm_new_password == "") {
+      this.setState({ confirm_new_password_msg: "يجب ادخال تاكيد كلمة السر الجديدة", confirm_new_password_msg_color: COLORS.error })
+
+    } if (old_pass != "" && new_pass != "" && confirm_new_password != "") {
+      this.setState({
+        text_check_old_pass: "", text_check_old_pass_text_color: "",
+        new_password_msg: "", new_password_msg_color: "",
+        confirm_new_password_msg: "", confirm_new_password_msg_color: ""
+      })
+
+    }
+  }
   render() {
     return (
-      <ScrollView>
-        <View style={styles.main_view_style}>
-        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
+
+      <View style={styles.main_view_style}>
+        <ScrollView>
+          <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
           <TouchableOpacity style={styles.iconStyle}>
             <AntDesign
               name="arrowright"
               color={COLORS.gray}
-              size={ICONS.xlIcon}
+              size={RFValue(ICONS.xlIcon)}
             />
           </TouchableOpacity>
           <View style={styles.ViewTitle}>
@@ -134,8 +160,8 @@ export default class App extends React.Component {
               <Input
                 placeholder="كلمة المرور القديمة "
                 check_old_pass={this.state.check_old_pass}
-                onChangeText={value => {
-                  this.setState({check_old_pass: value});
+                onChangeText={(value) => {
+                  this.setState({ check_old_pass: value });
                 }}
               />
               <Text></Text>
@@ -144,33 +170,33 @@ export default class App extends React.Component {
               <Input
                 placeholder="كلمة المرور الجديدة"
                 new_password={this.state.new_password}
-                onChangeText={value => {
-                  this.setState({new_password: value});
+                onChangeText={(value) => {
+                  this.setState({ new_password: value });
                 }}
                 onBlur={() => {
                   this.new_password_check();
                 }}
               />
-              <Text style={{color: this.state.new_password_msg_color}}>
+              <Text style={{ color: this.state.new_password_msg_color }}>
                 {this.state.new_password_msg}
               </Text>
             </View>
             <View
               style={[
                 styles.each_textinput_viewstyle,
-                {marginBottom: RFValue(MARGIN.xlMargin)},
+                { marginBottom: RFValue(MARGIN.xlMargin) },
               ]}>
               <Input
                 placeholder="تاكيد كلمة المرور الجديدة"
                 confirm_new_password={this.state.confirm_new_password}
-                onChangeText={value => {
-                  this.setState({confirm_new_password: value});
+                onChangeText={(value) => {
+                  this.setState({ confirm_new_password: value });
                 }}
                 onBlur={() => {
                   this.confirm_password();
                 }}
               />
-              <Text style={{color: this.state.confirm_new_password_msg_color}}>
+              <Text style={{ color: this.state.confirm_new_password_msg_color }}>
                 {this.state.confirm_new_password_msg}
               </Text>
             </View>
@@ -179,20 +205,30 @@ export default class App extends React.Component {
                 title={'تغيير كلمة المرور'}
                 bgcolor={COLORS.primary}
                 onPress={() => {
+                  this.changeButtomPress()
                   this.old_pass_matches_endtyping();
                 }}
               />
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+        <Dialog.Container visible={this.state.dialog_visible}>
+          <Dialog.Description>
+            خطأ في كلمة المرور القديمة
+          </Dialog.Description>
+          <Dialog.Button label="انهاء" style={{ color: COLORS.primary }} onPress={() => { this.setState({ dialog_visible: false }) }} />
+        </Dialog.Container>
+      </View>
+
     );
   }
 }
 //3
 const styles = StyleSheet.create({
   main_view_style: {
-    margin: RFValue(MARGIN.xsMargin),
+    flex: 1,
+    padding: RFValue(PADDING.xsPadding),
+    backgroundColor: COLORS.background
   },
 
   each_textinput_viewstyle: {

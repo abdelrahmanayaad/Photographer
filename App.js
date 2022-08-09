@@ -16,11 +16,13 @@ import {
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
+  PhotographerSettingScreen,
+  Intro
 } from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <HomeScreen />;
+    return <HomeScreen/>
   }
 }
 const styles = StyleSheet.create({});
