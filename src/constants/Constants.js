@@ -1,6 +1,6 @@
-import { Dimensions } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-const { width, height } = Dimensions.get('window');
+import {Dimensions} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+const {width, height} = Dimensions.get('window');
 export const COLORS = {
   primary: '#FF7A7A',
   background: '#f4f4f4',
@@ -40,8 +40,9 @@ export const FONTS = {
   h2: 30,
   h3: 23,
   h4: 20,
-  h5: 15,
-  h6: 13,
+  h5: 16,
+  h6: 14,
+  h7: 18,
 };
 
 export const ICONS = {
