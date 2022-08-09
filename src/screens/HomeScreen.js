@@ -209,21 +209,8 @@ export class HomeScreen extends Component {
   renderhighlights() {
     return this.state.highlights.map((item, index) => {
       return (
-        <TouchableOpacity
-          style={{
-            width: RFValue(60),
-            height: RFValue(60),
-            borderRadius: RFValue(RADIUS.xlRadius),
-            marginHorizontal: RFValue(5),
-          }}>
-          <Image
-            source={item.img}
-            style={{
-              width: '100%',
-              height: '100%',
-              borderRadius: RFValue(RADIUS.xlRadius),
-            }}
-          />
+        <TouchableOpacity style={styles.each_highlight_style}>
+          <Image source={item.img} style={styles.each_img_in_highlight_style} />
         </TouchableOpacity>
       );
     });
@@ -367,9 +354,11 @@ export class HomeScreen extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View>
-            <ScrollView horizontal={true}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
               <View style={styles.highlight_view_style}>
                 <TouchableOpacity style={styles.add_highlight_button_style}>
                   <AntDesign name="plus" size={ICONS.mIcon} />
@@ -384,8 +373,8 @@ export class HomeScreen extends Component {
         </ScrollView>
 
         <Modal visible={this.state.modal_visible}>
-          <View style={{padding: '4%'}}>
-            <ScrollView>
+          <View style={styles.moddal_container_style}>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.headerView_model}>
                 <TouchableOpacity
                   model_visible={this.state.modal_visible}
@@ -562,6 +551,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ///////////////Modal
+  moddal_container_style: {
+    padding: '4%',
+  },
   headerView_model: {
     width: '96%',
     flexDirection: 'row',

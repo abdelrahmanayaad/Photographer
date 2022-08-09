@@ -9,15 +9,15 @@ import {
   TextInput,
   StyleSheet,
   Modal,
-  ImageBackground
+  ImageBackground,
+  Button
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Component } from 'react';
 import { Input, GeneralButton } from '../components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import OTPInput from 'react-native-otp-inputs';
-
+// import RBSheet from "react-native-raw-bottom-sheet";
 import {
   PADDING,
   IconsView,
@@ -29,11 +29,14 @@ import {
 } from '../constants';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-export class SearchScreen extends Component {
+export class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: "",
+      visible: true,
+      replay_comment: "",
+      current_index: "",
 
       comments: [
 
@@ -41,50 +44,41 @@ export class SearchScreen extends Component {
           name: "الشاذلى",
           image: require("../assets/Images/secur.png"),
           comment: "التقدير خسرنا كتير ",
-          likes: "",
-          replay: {
-
-          }
+          replay: ""
         },
         {
           name: "عياد",
           image: require("../assets/Images/images.png"),
           comment: "لو انت مش فارق ....يبقى تفارق",
-          likes: "",
-          replay: {
-
-          }
+          replay: ""
 
         },
         {
           name: "مروه",
           image: require("../assets/Images/secur.png"),
           comment: "تلاشانى ؟ علشانك مش عشانى",
-          likes: "",
-          replay: {
-
-          }
+          replay: ""
         },
         {
           name: "مطحنه",
           image: require("../assets/Images/images.png"),
           comment: "الوشوش هتتقابل بس القلوب موعدكش",
-          likes: "",
-          replay: {
+          replay: ""
 
-          }
         }
         ,
         {
           name: "اسراء",
           image: require("../assets/Images/images.png"),
           comment: " الرزق ان يضع الله لك قبولا ف قلب كل من يراك",
-          likes: "",
-          replay: {
+          replay: "",
 
-          }
         }
+
+
+
       ],
+
 
     };
   }
@@ -96,8 +90,8 @@ export class SearchScreen extends Component {
     let obj = {
       image: require("../assets/Images/secur.png"),
       name: "الشاذلى",
-      count_likes: "",
       comment: this.state.text,
+      replay: "",
 
     }
 
@@ -111,6 +105,22 @@ export class SearchScreen extends Component {
     })
 
   }
+  Add_Replay(index) {
+    let items = this.state.comments
+    let comm = this.state.replay_comment
+    let item = items[index]
+
+    item.replay = comm
+
+    this.setState({
+
+      comments: items,
+      replay_comment: ""
+
+
+
+    })
+  }
 
 
   render() {
@@ -122,44 +132,46 @@ export class SearchScreen extends Component {
         backgroundColor: COLORS.primary,
 
       }]}>
+        {/* <ScrollView
+          showsVerticalScrollIndicator={false}> */}
 
         <View style={{
-          flex: 5,
+          flex: 1,
           backgroundColor: COLORS.background,
           borderBottomLeftRadius: RFValue(40),
           borderBottomRightRadius: RFValue(40),
-          padding: PADDING.xsPadding
+          paddingBottom: PADDING.lgPadding
+
         }}>
 
           <View style={styles.container}>
-            <ScrollView>
-
-              {/* View Header */}
-              <View style={styles.view}>
-
-                <TouchableOpacity>
-                  <AntDesign name="arrowright" color={COLORS.gray} size={ICONS.xlIcon} />
-                </TouchableOpacity>
-
-                <Text style={styles.titleStyle}>التعليقات</Text>
-
-                <TouchableOpacity>
-                  <FontAwesome5 name="ellipsis-h" color={COLORS.gray} size={ICONS.lIcon} />
-                </TouchableOpacity>
-
-              </View>
 
 
+            {/* View Header */}
+            <View style={styles.view}>
+
+              <TouchableOpacity>
+                <AntDesign name="arrowright" color={COLORS.gray} size={ICONS.xlIcon} />
+              </TouchableOpacity>
+
+              <Text style={styles.titleStyle}>التعليقات</Text>
+
+              <TouchableOpacity>
+                <FontAwesome5 name="ellipsis-h" color={COLORS.gray} size={ICONS.lIcon} />
+              </TouchableOpacity>
+
+            </View>
+
+            <ScrollView showsVerticalScrollIndicator={false}>
 
               {/* map */}
-              {this.state.comments.map((comments, index) => (
-
-                <View style={styles.container_profile}
+              {this.state.comments.map((comment, index) => (
+                <View style={[styles.container_profile, { borderBottomWidth: index == this.state.comments.length - 1 ? 0 : 1 }]}
                 >
                   <View style={{ alignItems: "center" }}>
 
                     <Image
-                      source={comments.image}
+                      source={comment.image}
                       style={{
                         width: RFValue(50),
                         height: RFValue(50),
@@ -174,23 +186,38 @@ export class SearchScreen extends Component {
                     paddingHorizontal: PADDING.mdPadding,
                     width: "90%"
                   }}>
-                    <View style={{}}>
-                      <Text style={styles.titleStyle}>{comments.name}</Text>
-                      <Text style={styles.messageTitleStyle}>{comments.comment}</Text>
-                    </View>
-                    {/* <View style={[styles.view, { width: "20%", marginTop: MARGIN.xsMargin }]}>
-                      <TouchableOpacity
-                        onPress={(color) => {
-                          this.setState({
 
+
+                    <View style={{}}>
+                      <Text style={styles.titleStyle}>{comment.name}</Text>
+                      <Text style={styles.messageTitleStyle}>{comment.comment}</Text>
+
+                      {
+                        comment.replay == "" ? null : (<Text style={{
+                          marginLeft: 20,
+                          fontSize: 15,
+                          color: COLORS.black
+                        }}>{comment.replay}</Text>)
+                      }
+
+
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.setState({
+                            current_index: index
                           })
-                        }}>
-                        <Text style={{ color: COLORS.gray, fontWeight: "bold" }}>اعجبنى</Text>
+                          // this.RBSheet.open()
+                        }}
+                      >
+                        <Text style={{ fontSize: 20 }}>الرد</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity>
-                        <Text style={{ color: COLORS.gray, fontWeight: "bold" }}>الرد</Text>
-                      </TouchableOpacity>
-                    </View> */}
+                    </View>
+                    <View style={{
+                      flexDirection: "row",
+                      alignItems: "center"
+                    }}>
+
+                    </View>
                   </View>
                 </View>
 
@@ -198,18 +225,26 @@ export class SearchScreen extends Component {
 
             </ScrollView>
 
-          </View>
+          </View >
+        </View >
+
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+
         </View>
-        {/* <ScrollView> */}
+
         <View style={{
-          flex: 1,
+
           backgroundColor: COLORS.primary,
           marginTop: MARGIN.lgMargin,
           alignSelf: "center",
-          width: "95%",
+          width: "100%",
           flexDirection: "row",
           alignItems: "center",
-          // borderWidth: 1,
+          justifyContent: "center",
+          height: RFValue(50),
+          marginBottom: MARGIN.lgMargin,
+
+
 
         }}>
 
@@ -217,33 +252,105 @@ export class SearchScreen extends Component {
             disabled={this.state.text == "" ? true : false}
             onPress={() => {
               this.add()
+
             }}
           >
             <FontAwesome5 name="paper-plane" color={COLORS.error} size={ICONS.xlIcon} />
           </TouchableOpacity>
 
-          <Input
+
+          <TextInput
             style={{
+              width: "80%",
+              // borderWidth: 1,
               alignItems: "center",
               backgroundColor: COLORS.white,
               borderRadius: RADIUS.lgRadius,
               height: RFValue(40),
-              width: RFValue(250),
+
+
               paddingHorizontal: PADDING.lgPadding,
-
             }}
+            placeholder={"اكتب تعليقك"}
 
-            textAlign="right"
-            autoCapitalize="none"
-            placeholder="اكتب تعليق"
             value={this.state.text}
-            onChangeText={value => {
-              this.setState({ text: value });
+            onChangeText={(newValue) => {
+              this.setState({
+                text: newValue
+
+              })
             }}
           />
         </View>
 
+
+        {/* <View style={[styles.view]}>
+          <RBSheet
+            ref={ref => {
+              this.RBSheet = ref;
+            }}
+            height={200}
+            openDuration={250}
+
+            customStyles={{
+              container: {
+                justifyContent: "center",
+                alignItems: "center",
+
+              }
+            }}
+          >
+            <View style={{
+
+              backgroundColor: COLORS.primary,
+
+              alignSelf: "center",
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+
+
+
+
+            }}>
+
+              <TouchableOpacity style={styles.smallButtom}
+                disabled={this.state.replay_comment == "" ? true : false}
+                onPress={() => {
+                  this.Add_Replay(this.state.current_index)
+                  this.RBSheet.close()
+                }}
+              >
+                <FontAwesome5 name="paper-plane" color={COLORS.error} size={ICONS.xlIcon} />
+              </TouchableOpacity>
+
+
+              <TextInput
+                style={{
+                  width: "80%",
+                  // borderWidth: 1,
+                  alignItems: "center",
+                  backgroundColor: COLORS.white,
+                  borderRadius: RADIUS.lgRadius,
+                  height: RFValue(40),
+                  paddingHorizontal: PADDING.lgPadding,
+                }}
+                placeholder={"اكتب تعليقك"}
+                value={this.state.replay_comment}
+                onChangeText={(newValue) => {
+                  this.setState({
+                    replay_comment: newValue
+                  })
+                }}
+              />
+            </View>
+          </RBSheet>
+        </View> */}
+
         {/* </ScrollView > */}
+
 
       </View >
 
@@ -280,15 +387,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: RFValue(0.7),
     borderBottomColor: COLORS.gray,
+    paddingBottom: PADDING.lgPadding
+
   },
   smallButtom: {
     marginRight: MARGIN.xsMargin,
     backgroundColor: COLORS.white,
-    borderRadius: 30,
+    borderRadius: RADIUS.lgRadius,
     width: RFValue(40),
     height: RFValue(40),
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    // position: "absolute"
   }
 });
-export default SearchScreen;
+export default Comment;

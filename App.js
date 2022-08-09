@@ -12,13 +12,13 @@ import {
   Login,
   SettingsScreen,
   SearchScreen,
-  Comment,
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
   AdminProfile,
 } from './src/screens';
 import axios from 'axios';
+import {Info} from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
