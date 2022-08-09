@@ -12,22 +12,23 @@ import {
   Login,
   SettingsScreen,
   SearchScreen,
-  Comment,
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
+  Intro,
+  PhotographerSettingScreen,
+  AdminProfile,
+  Followering,
   Followers,
-  Following
-
+  Comment
 
 } from './src/screens';
-
-
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <Following />;
+    return <HomeScreen />
   }
 }
 const styles = StyleSheet.create({});
 export default App;
+// https://generation3.000webhostapp.com/project/Training/photographer_list.php
