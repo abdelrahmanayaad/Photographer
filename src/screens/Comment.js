@@ -84,6 +84,8 @@ export class Comment extends Component {
   }
 
 
+
+
   add() {
     let list = this.state.comments
 

@@ -12,7 +12,7 @@ import {
   Login,
   SettingsScreen,
   SearchScreen,
-
+  Comment,
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
@@ -20,7 +20,7 @@ import {
 
 } from './src/screens';
 import { Followers } from "./src/screens/Followers"
-import { Comment } from './src/screens/Comment';
+// import { Comment } from './src/screens/Comment';
 
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
