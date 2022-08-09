@@ -22,6 +22,7 @@
     "react-native-responsive-fontsize": "^0.5.1",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-stories-media": "^0.0.7",
+    "react-native-swipe-modal-up-down": "^1.1.0",
     "react-native-vector-icons": "^9.2.0"
   },
   "devDependencies": {
