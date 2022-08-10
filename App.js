@@ -20,13 +20,14 @@ import {
   AdminProfile,
   Followering,
   Followers,
-  Comment
+  Comment,
+  NewPassword
 
 } from './src/screens';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <HomeScreen/>
+    return <NewPassword/>
   }
 }
 const styles = StyleSheet.create({});

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, PermissionsAndroid, YellowBox, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, PermissionsAndroid, YellowBox, StatusBar,Linking } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -244,6 +244,11 @@ export class PhotographerSettingScreen extends Component {
                         <Text style={styles.error_text_style}>{this.state.address_error}</Text>
 
                     </View>
+                    {/*<View>
+                        <Text onPress={()=>{ Linking.openURL('https://www.google.com/maps/place/%D8%AF%D9%87%D8%A8%D8%8C+%D8%B3%D8%A7%D9%86%D8%AA+%D9%83%D8%A7%D8%AA%D8%B1%D9%8A%D9%86%D8%8C+%D8%AC%D9%86%D9%88%D8%A8+%D8%B3%D9%8A%D9%86%D8%A7%D8%A1%E2%80%AD/@28.4956735,34.5354459,13z/data=!3m1!4b1!4m5!3m4!1s0x15ab4b29bfad585f:0xac65238d793319bf!8m2!3d28.5091355!4d34.5136344');}}>
+                             تحديد المكان علي الخريطه
+                        </Text>
+                            </View>*/}
                     <View >
                         <Input
                             placeholder="الخدمات"

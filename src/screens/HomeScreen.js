@@ -15,8 +15,10 @@ import {
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MARGIN } from '../constants';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Dialog from "react-native-dialog";
+import Fontisto from 'react-native-vector-icons/Fontisto'
 
 
 export class HomeScreen extends Component {
@@ -57,14 +59,29 @@ export class HomeScreen extends Component {
         id: 6,
         img: require('../assets/Images/photo.jpg'),
         story: "",
-      },
+      }, {
+        id: 7,
+        img: require('../assets/Images/photo.jpg'),
+        story: require('../assets/Images/post.jpg'),
+
+      }, {
+        id: 8,
+        img: require('../assets/Images/photo.jpg'),
+        story: require('../assets/Images/post.jpg'),
+
+      }, {
+        id: 9,
+        img: require('../assets/Images/photo.jpg'),
+        story: require('../assets/Images/post.jpg'),
+
+      }
       ], posts: [{
         id: 1,
         profile_img: require('../assets/Images/photo.jpg'),
         post_img: require('../assets/Images/post.jpg'),
         name: "اسراء الجز",
         email: "esraaelgiz",
-        discribtion: "",
+        discribtion: "صوره للطبيعه",
         favourite: false,
         saved: false,
         likes_number: 130,
@@ -162,13 +179,13 @@ export class HomeScreen extends Component {
     return this.state.arr.map((item, index) => {
       return (
 
-          <ImageBackground source={item.story} style={{ width: '100%', height: "100%" }} >
+        <ImageBackground source={item.story} style={{ width: '100%', height: "100%" }} resizeMode="cover" >
 
-            <TouchableOpacity onPress={() => { this.setState({ stories_modal_visible: false }), this.state.arr.pop() }}
-              style={{  marginTop: RFValue(MARGIN.xsMargin) }}>
-              <AntDesign name='arrowright' /*style={{marginRight:'93%'}} */ size={RFValue(ICONS.lIcon)} />
-            </TouchableOpacity>
-          </ImageBackground>
+          <TouchableOpacity onPress={() => { this.setState({ stories_modal_visible: false }), this.state.arr.pop() }}
+            style={styles.exit_buttom_in_story_style}>
+            <Feather name="x" size={RFValue(ICONS.lIcon)} color={COLORS.black} />
+          </TouchableOpacity>
+        </ImageBackground>
 
       )
 
@@ -187,12 +204,12 @@ export class HomeScreen extends Component {
             <TouchableOpacity style={styles.button_of_img_in_the_header_of_each_post_style}>
               <Image source={item.profile_img != "" ? item.profile_img : require('../assets/Images/user.png')} style={styles.img_in_the_header_of_each_post_style} />
             </TouchableOpacity>
-            <View>
+            <View style={styles.view_for_text_at_header_style}>
               <View>
-                <Text style={{ fontSize: RFValue(FONTS.h4), fontWeight: 'bold' }}>{item.name}</Text>
+                <Text style={styles.text_for_header_at_post_style}>{item.name}</Text>
               </View>
               <View>
-                <Text style={{fontSize: RFValue(FONTS.h4)}}>{item.upload_time}</Text>
+                <Text style={styles.timedatepost}>{item.upload_time}</Text>
               </View>
 
 
@@ -211,7 +228,7 @@ export class HomeScreen extends Component {
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
               <TouchableOpacity onPress={() => { this.commentpress(item, index) }} >
-                <FontAwesome name="comment-o" color={COLORS.gray} size={RFValue(ICONS.mIcon)} />
+                <Fontisto name="comment" color={COLORS.gray} size={RFValue(ICONS.mIcon)} />
               </TouchableOpacity>
               <Text style={styles.text_near_each_icon_style}>{item.comment_number > 0 ? item.comment_number : ""}</Text>
             </View>
@@ -221,8 +238,18 @@ export class HomeScreen extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View>
-            <Text>{item.discribtion}</Text>
+          <View style={styles.captionView}>
+            <Text
+              style={[styles.nameunderpost, { fontSize: RFValue(12) }]}>
+              {item.name}{' '}
+              <Text
+                style={[
+                  styles.textCaptionStyle,
+                  { fontSize: RFValue(12) },
+                ]}>
+                {item.discribtion}
+              </Text>
+            </Text>
           </View>
 
 
@@ -305,11 +332,11 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontWeight: 'bold',
   }, highlight_view_style: {
-    width: '100%',
+    //width: '100%',
     flexDirection: 'row',
-    //marginBottom:RFValue(MARGIN.xsMargin)
+    marginBottom: RFValue(MARGIN.xsMargin),
     marginLeft: RFValue(MARGIN.xsMargin),
-
+    justifyContent: 'flex-start'
   }, add_highlight_button_style: {
     width: RFValue(60),
     height: RFValue(60),
@@ -320,63 +347,102 @@ const styles = StyleSheet.create({
     marginRight: RFValue(5),
     backgroundColor: "#ddd",
   }, each_highlight_style: {
-    width: RFValue(60),
-    height: RFValue(60),
-    borderRadius: RFValue(RADIUS.xlRadius),
-    marginHorizontal: RFValue(5)
+    width: RFValue(50),
+    height: RFValue(50),
+    borderRadius: RFValue(25),
+    marginRight: RFValue(5)
   }, each_img_in_highlight_style: {
-    width: "100%",
-    height: "100%",
-    borderRadius: RFValue(RADIUS.xlRadius)
-  }, view_for_each_post_style: {
-    marginTop: RFValue(MARGIN.xsMargin),
+    width: RFValue(50),
+    height: RFValue(50),
+    borderRadius: RFValue(25),
+    borderWidth: RFValue(2),
+    borderColor: COLORS.primary
+  }, view_for_text_at_header_style: {
+    alignItems: 'flex-start',
+    marginLeft: RFValue(MARGIN.xsMargin)
+  },
+  text_for_header_at_post_style: {
+    fontSize: RFValue(FONTS.h4),
+    fontWeight: 'bold',
+    color: COLORS.black
+
+  },
+  timedatepost: {
+    color: COLORS.gray
+  },
+  view_for_each_post_style: {
+    //marginTop: RFValue(MARGIN.xsMargin),
     marginRight: RFValue(MARGIN.xsMargin),
     marginLeft: RFValue(MARGIN.xsMargin),
     //height:RFValue(330),
+    alignItems: 'flex-start',
 
 
   }, view_for_profilenameandimg_in_each_post: {
     flexDirection: 'row',
-    marginBottom: RFValue(10),
-    alignItems: 'center',
+    marginBottom: RFValue(MARGIN.xsMargin),
+    //alignItems: 'center',
 
   }, button_of_img_in_the_header_of_each_post_style: {
-    width: RFValue(60),
-    height: RFValue(60),
-    borderRadius: RFValue(RADIUS.xlRadius),
+    width: RFValue(50),
+    height: RFValue(50),
+    borderRadius: RFValue(25),
     // marginRight:'5%'
-    marginRight: RFValue(MARGIN.smMargin)
+    //marginRight: RFValue(MARGIN.smMargin)
   }, img_in_the_header_of_each_post_style: {
-    width: "100%",
-    height: "100%",
-    borderRadius: RFValue(RADIUS.xlRadius)
+    width: RFValue(50),
+    height: RFValue(50),
+    borderRadius: RFValue(25),
   }, view_for_img_in_post_style: {
     width: '100%',
-    height: RFValue(200)
+    maxHeight: RFValue(450)
     //height:'63%',
     , marginBottom: RFValue(MARGIN.xsMargin),
     //marginBottom:'4%'
 
 
-
   }, img_in_post_style: {
-    height: "100%",
+    maxHeight: RFValue(450),
     width: "100%",
     borderRadius: RFValue(RADIUS.xsRadius)
   }, view_for_icons_in_post_style: {
     width: '50%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: RFValue(MARGIN.xsMargin),
+
 
   }, view_for_each_iconandtext_for_each_post_style: {
     flexDirection: 'row',
     alignItems: 'center'
   }, text_near_each_icon_style: {
-    marginLeft: RFValue(5),
-    fontSize: RFValue(16),
+    marginLeft: RFValue(MARGIN.xsMargin),
+    fontSize: RFValue(FONTS.h6),
+    color: COLORS.black
+  },
+  captionView: {
+    marginBottom: RFValue(MARGIN.mdMargin),
+  },
+  exit_buttom_in_story_style: {
+    width: RFValue(50),
+    height: RFValue(50),
+    backgroundColor: '#eee',
+    margin: RFValue(MARGIN.xsMargin),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: RFValue(20),
+    // elevation: 2,
+
+  }, nameunderpost: {
+    fontSize: RFValue(FONTS.h6),
+    color: COLORS.black,
     fontWeight: 'bold',
-    color: COLORS.gray
-  }
+  }, textCaptionStyle: {
+    fontSize: RFValue(FONTS.h5),
+    color: COLORS.black,
+    fontWeight: '100',
+  },
 
 });
 export default HomeScreen;

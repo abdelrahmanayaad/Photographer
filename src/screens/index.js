@@ -14,6 +14,7 @@ import PhotographerSettingScreen from '../screens/PhotographerSettingScreen'
 import Followers from '../screens/Followers'
 import Followering from '../screens/Following'
 import AdminProfile from "../screens/AdminProfile"
+import NewPassword from '../screens/Auth/NewPassword'
 
 
 export {
@@ -33,6 +34,7 @@ export {
   Followers,
   Followering,
   AdminProfile,
+  NewPassword
 
 
 };
