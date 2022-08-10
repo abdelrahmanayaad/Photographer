@@ -118,7 +118,7 @@ export class Following extends Component {
 
                                 textAlign="right"
                                 autoCapitalize="none"
-                                placeholder="ابحث"
+                                placeholder="البحث"
                                 value={this.state.search}
                                 onChangeText={value => {
                                     this.setState({ search: value });
@@ -127,9 +127,7 @@ export class Following extends Component {
 
                         </View>
 
-                        <TouchableOpacity>
-                            <FontAwesome5 name="microphone" color={COLORS.gray} size={ICONS.mIcon} />
-                        </TouchableOpacity>
+
 
                     </View>
 
@@ -203,13 +201,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#ccc",
         borderRadius: RADIUS.mdRadius,
         paddingHorizontal: PADDING.mdPadding,
-        height: RFValue(40),
+        height: RFValue(30),
         width: "100%"
     },
     container_profile: {
         flexDirection: "row",
         width: "100%",
-        height: RFValue(80),
+        height: RFValue(60),
         alignItems: "center",
         borderBottomWidth: RFValue(0.7),
         borderBottomColor: COLORS.gray,
