@@ -11,7 +11,8 @@ import {
   Dimensions,
   FlatList,
   Button,
-  TextInput
+  TextInput,
+  StatusBar
 } from 'react-native';
 import { Input, GeneralButton } from '../../components';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -26,6 +27,8 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
+// import messaging from '@react-native-firebase/messaging';
+// import axios from 'axios';
 
 const { width, height } = Dimensions.get('window');
 
@@ -53,9 +56,57 @@ export class Signup extends Component {
         { name: " مصور" }
         ,
         { name: "ميكب ارتست" }
-      ]
+      ],
+      token: ""
     };
   }
+
+  //   SendUser() {
+  //     let data_to_send = {
+  //       name: this.state.name,
+  //       email: this.state.Email,
+  //       pass: this.state.password,
+  //       type: this.state.arr,
+  //       token: this.state.token
+  //     }
+  //     axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+  //       .then((res) => {
+  //         if (res.status == 200) {
+  //           if ( (res.data) == "successful") {
+  //             alert("done")
+  //           } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+  //             alert("من فضلك تأكد من صحة البيانات")
+  //           } else if (res.data == "email is already exist") {
+  //             alert("هذا البريد موجود بالفعل")
+  //           }
+  //         } else {
+  //           alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+  //         }
+  //         this.setState({ name: "" })
+  //         this.setState({ password: "" })
+  //         this.setState({ phoneerorr: "" })
+  //         this.setState({ Email: "" })
+  //         this.setState({ passwordconfirm: "" })
+  //       })
+  //   }
+
+
+  // componentDidMount(){
+  //   messaging()
+  //   .getToken()
+  //   .then(token => {
+  //       // alert(token)
+  //       setToken(token)
+
+  //   });
+
+
+  // return messaging().onTokenRefresh(token => {
+  //   setToken(token)
+
+  // });
+
+  // }
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -193,6 +244,7 @@ export class Signup extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <TouchableOpacity style={styles.iconStyle}>
             <AntDesign
@@ -475,7 +527,7 @@ const styles = StyleSheet.create({
     marginBottom: MARGIN.xsMargin
   },
   containerContent: {
-    height: height ,
+    height: RFValue(height),
     marginTop: 30
   },
   headerContent: {
@@ -483,7 +535,7 @@ const styles = StyleSheet.create({
   },
   Modal: {
     backgroundColor: '#fff',
-    height: height / 2.5,
+    height: RFValue(height / 2.5),
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     padding: PADDING.mdPadding
