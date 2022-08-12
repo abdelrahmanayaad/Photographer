@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import {Text, View, TextInput, StyleSheet, Dimensions} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {FONTS, COLORS} from '../constants';
-const {width, height} = Dimensions.get('window');
+import React, { Component } from 'react';
+import { Text, View, TextInput, StyleSheet, Dimensions } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { FONTS, COLORS } from '../constants';
+const { width, height } = Dimensions.get('window');
 export class Input extends Component {
   render() {
-    const {placeholder, TextInputWidth, style, ...rest} = this.props;
+    const { placeholder, TextInputWidth, style, ...rest } = this.props;
     return (
       <View>
-        <TextInput 
-        
+        <TextInput
           {...rest}
           style={[styles.container, style]}
           placeholder={placeholder}
+
         />
       </View>
     );
@@ -20,11 +20,8 @@ export class Input extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    // RFValue(300),
-    // width: width * 0.9,
-    height: RFValue(60),
-    // height: height * 0.065,
+    width: '100%',
+    height: RFValue(50),
     borderBottomWidth: RFValue(0.7),
     borderBottomColor: COLORS.gray,
     color: COLORS.black,

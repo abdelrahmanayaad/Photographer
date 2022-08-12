@@ -33,48 +33,19 @@ export default class App extends React.Component {
     super();
     this.state = {
       
-      check_old_pass: '',
-      text_check_old_pass: '',
-      text_check_old_pass_text_color: '',
       new_password: '',
       new_password_msg: '',
       new_password_msg_color: '',
       confirm_new_password: '',
       confirm_new_password_msg: '',
       confirm_new_password_msg_color: '',
-      dialog_visible: false
     };
   }
   validatePassword(password) {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
   }
-  old_pass_matches_endtyping() {
-    //old pass user input value
-    let check_old_pass = this.state.check_old_pass;
-    if (this.state.check_old_pass.length == 0) {
-      this.setState({
-        text_check_old_pass: '',
-        text_check_old_pass_text_color: '',
-      });
-    } else if (this.state.check_old_pass.length > 20) {
-      //alert('خطأ في كلمه المرور القديمه');
-      this.setState({ dialog_visible: true })
-    } else {
-      if (!this.validatePassword(check_old_pass)) {
-        //alert('خطأ في كلمه المرور القديمه');
-        this.setState({ dialog_visible: true })
-
-      } else {
-        // valid email
-        // console.log(" valid")
-        this.setState({
-          text_check_old_pass: '',
-          text_check_old_pass_text_color: '',
-        });
-      }
-    }
-  }
+ 
   new_password_check() {
     let new_password = this.state.new_password;
     if (this.state.new_password.length == 0) {
@@ -123,18 +94,16 @@ export default class App extends React.Component {
     }
   }
   changeButtomPress() {
-    let old_pass = this.state.check_old_pass
     let new_pass = this.state.new_password
     let confirm_new_password = this.state.confirm_new_password
     if (new_pass == "") {
-      this.setState({ new_password_msg: "يجب ادخال كلمة السر الجديدة", new_password_msg_color: COLORS.error })
+      this.setState({ new_password_msg: "يجب ادخال كلمة المرور الجديدة", new_password_msg_color: COLORS.error })
 
     } if (confirm_new_password == "") {
-      this.setState({ confirm_new_password_msg: "يجب ادخال تاكيد كلمة السر الجديدة", confirm_new_password_msg_color: COLORS.error })
+      this.setState({ confirm_new_password_msg: "يجب ادخال تاكيد كلمة المرور الجديدة", confirm_new_password_msg_color: COLORS.error })
 
-    } if (old_pass != "" && new_pass != "" && confirm_new_password != "") {
+    } if ( new_pass != "" && confirm_new_password != "") {
       this.setState({
-        text_check_old_pass: "", text_check_old_pass_text_color: "",
         new_password_msg: "", new_password_msg_color: "",
         confirm_new_password_msg: "", confirm_new_password_msg_color: ""
       })
@@ -168,16 +137,7 @@ export default class App extends React.Component {
             <Text style={styles.titleStyle}>تغيير كلمة المرور</Text>
           </View>
           <View style={styles.view_after_header_style}>
-            <View style={styles.each_textinput_viewstyle}>
-              <Input
-                placeholder="كلمة المرور القديمة "
-                check_old_pass={this.state.check_old_pass}
-                onChangeText={(value) => {
-                  this.setState({ check_old_pass: value });
-                }}
-              />
-              <Text></Text>
-            </View>
+            
             <View style={styles.each_textinput_viewstyle}>
               <Input
                 placeholder="كلمة المرور الجديدة"
@@ -218,18 +178,12 @@ export default class App extends React.Component {
                 bgcolor={COLORS.primary}
                 onPress={() => {
                   this.changeButtomPress()
-                  this.old_pass_matches_endtyping();
                 }}
               />
             </View>
           </View>
         </ScrollView>
-        <Dialog.Container visible={this.state.dialog_visible}>
-          <Dialog.Description>
-            خطأ في كلمة المرور القديمة
-          </Dialog.Description>
-          <Dialog.Button label="انهاء" style={{ color: COLORS.primary }} onPress={() => { this.setState({ dialog_visible: false }) }} />
-        </Dialog.Container>
+        
       </View>
 
     );

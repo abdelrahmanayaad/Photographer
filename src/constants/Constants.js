@@ -20,11 +20,11 @@ export const PADDING = {
   xlPadding: 25,
 };
 export const MARGIN = {
-  xsMargin: 15,
+  xsMargin: 10,
   smMargin: 20,
   mdMargin: 25,
   lgMargin: 30,
-  xlMargin: 60,
+  xlMargin: 45,
 };
 
 export const RADIUS = {
@@ -38,10 +38,11 @@ export const RADIUS = {
 export const FONTS = {
   h1: 35,
   h2: 30,
-  h3: 25,
+  h3: 23,
   h4: 20,
-  h5: 15,
-  h6: 10,
+  h5: 16,
+  h6: 14,
+  h7: 18,
 };
 
 export const ICONS = {
