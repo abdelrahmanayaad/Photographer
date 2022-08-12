@@ -5,10 +5,12 @@ import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {ForgetPassword, Verification} from './src/screens';
+import LoginWithG from './src/screens/Auth/LoginWithG';
+
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <ForgetPassword />;
+    return <LoginWithG />;
   }
 }
 const styles = StyleSheet.create({});
