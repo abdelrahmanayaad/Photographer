@@ -21,16 +21,33 @@ import {
   Followering,
   Followers,
   Comment,
-  NewPassword
-
+  NewPassword,
 } from './src/screens';
 const { width, height } = Dimensions.get('window');
-export class App extends Component {
-  render() {
-    return <Signup/>
-
-  }
+// export class App extends Component {
+//   render() {
+//     return (
+//       <>
+//       <All/>
+//     <Text>vkdsmvlnf</Text>
+//       </>
+//     )
+    
+//   }
+// }
+function App(navigation) {
+  return( 
+    <>
+     <Signup/>
+    </>
+)
 }
 const styles = StyleSheet.create({});
-export default App;
 // https://generation3.000webhostapp.com/project/Training/photographer_list.php
+
+
+
+
+
+export default App;
+
