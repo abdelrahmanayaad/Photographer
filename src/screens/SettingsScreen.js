@@ -6,10 +6,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  ImageBackground,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
-import { Input, GeneralButton } from '../../components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
@@ -20,95 +19,83 @@ import {
   FONTS,
 } from '../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 const { width, height } = Dimensions.get('window');
 export class SettingsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      setting: [
-        {
-          name: "تعديل الحساب",
-          ICON:"arrowright"
-        },
-        {
-          name: "تغيير كلمه المرور",
-          ICON:"arrowright"
-
-        },
-        {
-          name: "الاشعارات",
-          ICON:"arrowright"
-
-        },
-        {
-          name: "اللغة",
-          ICON:"arrowright"
-
-        },
-        {
-          name: "الحصول علي المساعدة",
-          ICON:"arrowright"
-
-        },
-        {
-          name: "الابلاغ عن مشكلة",
-          ICON:"arrowright"
-
-        },
-        {
-          name: "شروط الاستخدام",
-          ICON:"arrowright"
-
-        },
-        {
-          name: "تسجيل الخروج",
-          ICON:"logout"
-
-        },
-
-
-
+      settings: [{
+        name: "تعديل الملف الشخصى",
+        icon_name: 'arrowleft'
+      }, {
+        name: "تغيير كلمه المرور",
+        icon_name: 'arrowleft'
+      }, {
+        name: "الاشعارات",
+        icon_name: 'arrowleft'
+      }, {
+        name: "احصل علي المساعده",
+        icon_name: 'arrowleft'
+      }, {
+        name: "الابلاغ عن مشكله",
+        icon_name: 'arrowleft'
+      }, {
+        name: "تعليمات الاستخدام",
+        icon_name: 'arrowleft'
+      }, {
+        name: "تسجيل الخروج",
+        icon_name: 'logout'
+      }
       ]
 
+
     }
+  }
+
+  renderserring() {
+    return this.state.settings.map((item, index) => {
+      return (
+        <View style={styles.each_view_in_map_style}>
+          <TouchableOpacity style={styles.each_button_style}>
+            <Text style={styles.each_text_style}>{item.name}</Text>
+            <View>
+              {index == 6 ? <SimpleLineIcons name={item.icon_name} size={RFValue(ICONS.lIcon)} color={COLORS.gray} /> : <AntDesign name={item.icon_name} size={RFValue(ICONS.lIcon)} color={COLORS.gray} />
+              }
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
+
+    })
+
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.Header}>
+        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
+
+        <View style={styles.headerView}>
           <TouchableOpacity  >
             <AntDesign
               name="arrowright"
               color={COLORS.gray}
-              size={ICONS.xlIcon}
+              size={RFValue(ICONS.xlIcon)}
             />
           </TouchableOpacity>
-          <Text style={styles.HeaderName}>الاعدادات</Text>
+          <View>
+            <Text style={styles.headerTxt}>الاعدادات</Text>
+          </View>
+          <View></View>
+        </View>
+        <ScrollView>
 
           <View>
+            {this.renderserring()}
           </View>
+        </ScrollView>
 
-
-
-        </View>
-        {this.state.setting.map(item => (
-          <TouchableOpacity style={styles.ToView}>
-
-            <TouchableOpacity >
-              <AntDesign
-                name={item.ICON}
-                color={COLORS.gray}
-                size={ICONS.xlIcon}
-              />
-            </TouchableOpacity>
-
-            <Text style={styles.adress}>{item.name}</Text>
-
-
-          </TouchableOpacity>
-        ))}
 
 
       </View>
@@ -118,40 +105,34 @@ export class SettingsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    padding:MARGIN.xsMargin
-  },
-  Header: {
-    height: RFValue(height / 12),
-    width: RFValue(330),
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
+    padding: RFValue(PADDING.xsPadding),
 
-  HeaderName: {
-    fontSize: RFValue(FONTS.h4),
-    fontWeight: "bold",
-    color: COLORS.black
 
-  },
+  }, headerView: {
+    width: '92%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: RFValue(20)
 
-  ToView: {
-    height: RFValue(height / 12),
-    width: RFValue(330),
-    borderBottomWidth: 0.5,
+  }, headerTxt: {
+    color: COLORS.black,
+    fontSize: RFValue(FONTS.h3),
+    fontWeight: 'bold'
+  }, each_view_in_map_style: {
+    borderBottomWidth: RFValue(1),
     borderColor: COLORS.gray,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-
-},
-adress: {
-  fontSize: RFValue(FONTS.h5),
-  fontWeight: "bold",
-  color: COLORS.black
-
-}
+    height: RFValue(70),
+    alignItems: 'center',
+    justifyContent: 'center'
+  }, each_button_style: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between'
+  }, each_text_style: {
+    fontSize: RFValue(FONTS.h4),
+    color: COLORS.black
+  }
 
 
 });

@@ -1,4 +1,4 @@
-// import { Button } from "native-ba+++++++++++++se";
+// import { Button } from "native-base";
 import * as React from 'react';
 import {
   Text,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
     borderRadius: RADIUS.mdRadius,
     paddingHorizontal: PADDING.mdPadding,
-    height: RFValue(40),
+    height: RFValue(30),
     width: "100%"
   },
   container_profile: {

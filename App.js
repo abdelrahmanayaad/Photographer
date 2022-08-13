@@ -10,21 +10,26 @@ import {
   ChangePassword,
   Signup,
   Login,
+  LoginWithG,
   SettingsScreen,
   SearchScreen,
   HomeScreen,
   EditprofileScreen,
   ProfileScreen,
-
+  Intro,
+  PhotographerSettingScreen,
+  AdminProfile,
+  Followering,
+  Followers,
+  Comment
 
 } from './src/screens';
-import { ProfileInfo } from './src/screens/Intro/ProfileInfo';
-import {Info} from './src/screens'
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return (<HomeScreen/>);
+    return <LoginWithG/>
   }
 }
 const styles = StyleSheet.create({});
 export default App;
+// https://generation3.000webhostapp.com/project/Training/photographer_list.php

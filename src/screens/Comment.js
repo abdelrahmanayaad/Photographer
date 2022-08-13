@@ -1,4 +1,4 @@
-// import { Button } from "native-ba+++++++++++++se";
+
 import * as React from 'react';
 import {
   Text,
@@ -82,6 +82,8 @@ export class Comment extends Component {
 
     };
   }
+
+
 
 
   add() {

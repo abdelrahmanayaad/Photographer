@@ -28,6 +28,11 @@ import {
     RADIUS,
 } from '../constants';
 
+
+
+
+
+
 export class Followers extends Component {
     constructor(props) {
         super(props);
@@ -63,6 +68,18 @@ export class Followers extends Component {
     }
 
 
+
+    delete(index) {
+        let items = this.state.photoghrapher
+
+        items.splice(index, 1);
+
+
+        this.setState({
+            photoghrapher: items
+        })
+
+    }
 
     render() {
         return (
@@ -108,7 +125,7 @@ export class Followers extends Component {
 
                                 textAlign="right"
                                 autoCapitalize="none"
-                                placeholder="ابحث"
+                                placeholder="البحث"
                                 value={this.state.search}
                                 onChangeText={value => {
                                     this.setState({ search: value });
@@ -117,18 +134,20 @@ export class Followers extends Component {
 
                         </View>
 
-                        <TouchableOpacity>
-                            <FontAwesome5 name="microphone" color={COLORS.gray} size={ICONS.mIcon} />
-                        </TouchableOpacity>
+
 
                     </View>
 
                     {/* map */}
                     {this.state.photoghrapher.map((photoghrapher, index) => (
                         photoghrapher.name.toLowerCase().includes(this.state.search.toLowerCase()) ?
-                            (<TouchableOpacity style={styles.container_profile}
+                            (<View style={styles.container_profile}
                             >
-                                <View style={{ alignItems: "center" }}>
+                                <TouchableOpacity style={{
+                                    alignItems: "center",
+                                    flexDirection: "row",
+                                    width: "70%"
+                                }}>
 
                                     <Image
                                         source={photoghrapher.image}
@@ -140,16 +159,30 @@ export class Followers extends Component {
                                         resizeMode="contain"
                                         borderRadius={35}
                                     />
+                                    <View style={{
+                                        paddingHorizontal: PADDING.mdPadding,
+                                        alignItems: "center",
 
-                                </View>
-                                <View style={{
-                                    paddingHorizontal: PADDING.mdPadding,
-                                    alignItems: "center",
+                                    }}>
+                                        <Text style={styles.titleStyle}>{photoghrapher.name}</Text>
+                                    </View>
+                                </TouchableOpacity>
 
-                                }}>
-                                    <Text style={styles.titleStyle}>{photoghrapher.name}</Text>
-                                </View>
-                            </TouchableOpacity>) : null
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        this.delete(index)
+                                    }}
+
+                                    style={{
+                                        width: "15%",
+                                        height: RFValue(25),
+                                        backgroundColor: "#ccc",
+                                        borderRadius: 15,
+                                        justifyContent: "center"
+                                    }} >
+                                    <Text style={[styles.titleStyle, { fontWeight: "normal", }]}>حذف</Text>
+                                </TouchableOpacity>
+                            </View>) : null
 
                     ))}
 
@@ -182,16 +215,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#ccc",
         borderRadius: RADIUS.mdRadius,
         paddingHorizontal: PADDING.mdPadding,
-        height: RFValue(40),
+        height: RFValue(30),
         width: "100%"
     },
     container_profile: {
         flexDirection: "row",
         width: "100%",
-        height: RFValue(80),
+        height: RFValue(60),
         alignItems: "center",
         borderBottomWidth: RFValue(0.7),
         borderBottomColor: COLORS.gray,
+        justifyContent: "space-between"
     }
 });
 export default Followers;
