@@ -8,14 +8,14 @@ import SettingsScreen from './SettingsScreen';
 import SearchScreen from './SearchScreen';
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
-import EditprofileScreen from "../screens/EditProfileScreen"
-import Comment from "../screens/Comment"
+import EditprofileScreen from '../screens/EditProfileScreen';
+import Comment from '../screens/Comment';
 import Intro from '../screens/Auth/Intro/Intro';
-import PhotographerSettingScreen from '../screens/PhotographerSettingScreen'
-import Followers from '../screens/Followers'
-import Followering from '../screens/Following'
-import AdminProfile from "../screens/AdminProfile"
-import NewPassword from '../screens/Auth/NewPassword'
+import PhotographerSettingScreen from '../screens/PhotographerSettingScreen';
+import Followers from '../screens/Followers';
+import Followering from '../screens/Following';
+import AdminProfile from '../screens/AdminProfile';
+import NewPassword from '../screens/Auth/NewPassword';
 
 export {
   Signup,
@@ -35,6 +35,5 @@ export {
   Followers,
   Followering,
   AdminProfile,
-  NewPassword
-
+  NewPassword,
 };
