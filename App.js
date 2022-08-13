@@ -32,7 +32,7 @@ import{
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <ProfileScreen/>;
+    return <Signup/>;
   }
 }
 const styles = StyleSheet.create({});
