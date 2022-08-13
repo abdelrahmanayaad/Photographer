@@ -27,8 +27,8 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
-// import messaging from '@react-native-firebase/messaging';
-// import axios from 'axios';
+import messaging from '@react-native-firebase/messaging';
+import axios from 'axios';
 
 const { width, height } = Dimensions.get('window');
 export default function Signup() {
@@ -56,35 +56,34 @@ export default function Signup() {
   ]);
   const [token, setToken] = useState("")
 
-  //   SendUser() {
-  //     let data_to_send = {
-  //       name:  name,
-  //       email:  Email,
-  //       pass:  password,
-  //       type:  arr,
-  //       token:  token
-  //     }
-  //     axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
-  //       .then((res) => {
-  //         if (res.status == 200) {
-  //           if ( (res.data) == "successful") {
-  //             alert("done")
-  //           } else if (res.data == "Not Valid Values" || res.data == "error happen") {
-  //             alert("من فضلك تأكد من صحة البيانات")
-  //           } else if (res.data == "email is already exist") {
-  //             alert("هذا البريد موجود بالفعل")
-  //           }
-  //         } else {
-  //           alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-  //         }
-  //         this.setState({ name: "" })
-  //         this.setState({ password: "" })
-  //         setPhoneError( "" )
-  //         this.setState({ Email: "" })
-  //         this.setState({ passwordconfirm: "" })
-  //       })
-  //   }
-
+    // SendUser=()=> {
+    //   let data_to_send = {
+    //     name:  name,
+    //     email:  Email,
+    //     pass:  password,
+    //     type:  arr,
+    //     token:  token
+    //   }
+    //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+    //     .then((res) => {
+    //       if (res.status == 200) {
+    //         if ( (res.data) == "successful") {
+    //           alert("done")
+    //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+    //           alert("من فضلك تأكد من صحة البيانات")
+    //         } else if (res.data == "email is already exist") {
+    //           alert("هذا البريد موجود بالفعل")
+    //         }
+    //       } else {
+    //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+    //       }
+    //       setName( "" )
+    //       setPassword("")
+    //       setPhoneError( "" )
+    //       setEmail("")
+    //       setConPass("")
+    //     })
+    // }
 
   // componentDidMount(){
   //   messaging()
@@ -102,6 +101,34 @@ export default function Signup() {
   // });
 
   // }
+//   useEffect(() => {
+    
+//     messaging()
+//         .getToken()
+//         .then(token => {
+//             console.log(token)
+//             // setToken(token)
+
+//         });
+
+
+//     return messaging().onTokenRefresh(token => {
+//         // setToken(token)
+//         console.log(token)
+
+//     });
+
+//     // const getToken = async () => {
+//     //   try {
+//     //     const token = await messaging().getToken();
+//     //     if (token) return console.log(token);
+//     //   } catch (error) {
+//     //     console.log(error);
+//     //   }
+//     // };
+//     // getToken()
+
+// }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -195,9 +222,9 @@ export default function Signup() {
     }
 
 
-    if (error == 0) {
-      alert("WELCOME")
-    }
+    // if (error == 0) {
+    //   alert("WELCOME")
+    // }
 
   }
   onChangeEmail = value => {
