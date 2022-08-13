@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Text,
     View,
@@ -14,83 +14,78 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import axios from 'axios';
 
-export class ProfileInfo extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            reviews: [{
-                id: 1,
-                profile_img: '',
-                name: 'اسراء رضا',
-                email: 'EsraaReda53',
-                rate: 1,
-                opinion: 'good'
-            }, {
-                id: 2,
-                profile_img: '',
-                name: 'عبدالرحمن عياد',
-                email: 'abdelrahmanayad74',
-                rate: 4,
-                opinion: 'very talanted'
-            }, {
-                id: 3,
-                profile_img: '',
-                name: 'محمد مطحنه',
-                email: 'Mohamed70',
-                rate: 3,
-                opinion: 'he do a great job'
-            }, {
-                id: 3,
-                profile_img: '',
-                name: 'عبدالرحمن الشازلى',
-                email: 'abdelrahman37',
-                rate: 2,
-                opinion: 'he do a great job'
-            }],
-            visible: false,
-            id: 0,
-            profile_img: '',
-            name: 'مروه السودانى',
-            email: 'MarwaElsodany89',
-            rate: 4,
-            opinion: '',
-            stars: [{
-                id: 1,
-                color: '#000',
-                icon: 'staro',
-                selected: false
-            }, {
-                id: 2,
-                color: '#000',
-                icon: 'staro',
-                selected: false
-            }, {
-                id: 3,
-                color: '#000',
-                icon: 'staro',
-                selected: false
-            }, {
-                id: 4,
-                color: '#000',
-                icon: 'staro',
-                selected: false
-            }, {
-                id: 5,
-                color: '#000',
-                icon: 'staro',
-                selected: false
-            }]
-        }
-    }
-    addReview() {
-        let my_id = this.state.id
-        let my_img = this.state.profile_img
-        let my_name = this.state.name
-        let my_email = this.state.email
-        let my_rate = this.state.rate
-        let my_opinion = this.state.opinion
+function ProfileInfo() {
+    const [reviews, setReviews] = useState([{
+        id: 1,
+        profile_img: '',
+        name: 'اسراء رضا',
+        email: 'EsraaReda53',
+        rate: 1,
+        opinion: 'good'
+    }, {
+        id: 2,
+        profile_img: '',
+        name: 'عبدالرحمن عياد',
+        email: 'abdelrahmanayad74',
+        rate: 4,
+        opinion: 'very talanted'
+    }, {
+        id: 3,
+        profile_img: '',
+        name: 'محمد مطحنه',
+        email: 'Mohamed70',
+        rate: 3,
+        opinion: 'he do a great job'
+    }, {
+        id: 3,
+        profile_img: '',
+        name: 'عبدالرحمن الشازلى',
+        email: 'abdelrahman37',
+        rate: 2,
+        opinion: 'he do a great job'
+    }])
+    const [visible, setVisible] = useState(false)
+    const [id, setId] = useState(0)
+    const [profile_img, setProfile_img] = useState('')
+    const [name, setName] = useState('مروه السودانى')
+    const [email, setEmail] = useState('MarwaElsodany89')
+    const [rate, setRate] = useState(0)
+    const [opinion, setOpenion] = useState('')
+    const [stars, setStars] = useState([{
+        id: 1,
+        color: '#000',
+        icon: 'staro',
+        selected: false
+    }, {
+        id: 2,
+        color: '#000',
+        icon: 'staro',
+        selected: false
+    }, {
+        id: 3,
+        color: '#000',
+        icon: 'staro',
+        selected: false
+    }, {
+        id: 4,
+        color: '#000',
+        icon: 'staro',
+        selected: false
+    }, {
+        id: 5,
+        color: '#000',
+        icon: 'staro',
+        selected: false
+    }])
+    const addReview = () => {
+        let my_id = id
+        let my_img = profile_img
+        let my_name = name
+        let my_email = email
+        let my_rate = rate
+        let my_opinion = opinion
         let obj = {}
-        my_id = this.state.reviews.length + 1
+        my_id = reviews.length + 1
         obj = {
             id: my_id,
             profile_img: my_img,
@@ -99,25 +94,24 @@ export class ProfileInfo extends React.Component {
             rate: my_rate,
             opinion: my_opinion
         }
-        let arr = this.state.reviews
+        let arr = [...reviews]
         arr.push(obj)
-        this.setState({ reviews: arr })
-
+        setReviews(reviews => arr)
     }
-    rating_fun(index) {
-        let arr = this.state.stars
+    const rating_fun = (index) => {
+        let arr = [...stars]
         for (let i = 0; i < arr.length; i = i + 1) {
             arr[i].selected = false
         }
         for (let i = 0; i < index; i = i + 1) {
             arr[i].selected = true
         }
-        this.setState({ stars: arr })
+        setStars(stars => arr)
     }
-    render_rating() {
-        return this.state.stars.map((item, index) => {
+    const render_rating = () => {
+        return stars.map((item, index) => {
             return (
-                <TouchableOpacity onPress={() => { this.setState({ rate: index + 1 }), this.rating_fun(index + 1) }}>
+                <TouchableOpacity onPress={() => { setRate(rate => index + 1), rating_fun(index + 1) }}>
                     <AntDesign name={item.selected ? 'star' : 'staro'} size={20} color={item.selected ? '#FDCC0D' : '#000'} />
                 </TouchableOpacity>
             )
@@ -125,8 +119,8 @@ export class ProfileInfo extends React.Component {
 
     }
 
-    reviews() {
-        return this.state.reviews.map((item, index) => {
+    const reviewsMap = () => {
+        return reviews.map((item, index) => {
             return (
                 <View style={styles.review_container}>
                     <View style={styles.photoAndName}>
@@ -262,85 +256,83 @@ export class ProfileInfo extends React.Component {
     }
 
 
-    render() {
-        // axios
-        //     .get(
-        //         'https://generation3.000webhostapp.com/project/Training/photographer_list.php'
-        //     )
-        //     .then(res => {
-        //         if (res.status == 200) {
-        //             console.log(res.data)
-        //         }
-        //     });
-        return (
-            <View style={styles.container}>
-                <View>
-                    <Text style={styles.headerTxt}>حـول </Text>
-                    <View style={styles.infoContainer}>
-                        <AntDesign name='phone' size={RFValue(17)} />
-                        <Text
-                            selectable={true}
-                            style={[styles.headerTxt, { color: COLORS.success, fontSize: RFValue(FONTS.h5) }]}
-                        >01201234567</Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <Fontisto name='whatsapp' size={RFValue(17)} />
-                        <Text
-                            style={[styles.infoTxt,{textDecorationLine:'none'}]}
-                            onPress={() => { Linking.openURL('https://chat.whatsapp.com/H3j3YuRheL6FRUnnsqZcHC') }}
-                        >إرسال رسالة</Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <AntDesign name='facebook-square' size={RFValue(17)} />
-                        <Text selectable={true}
-                            onPress={() => { Linking.openURL('https://www.facebook.com/campcoding/') }}
-                            style={styles.infoTxt}
-                        >https://www.facebook.com/campcoding/</Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <AntDesign name='instagram' size={RFValue(17)} />
-                        <Text selectable={true}
-                            onPress={() => { Linking.openURL('https://www.instagram.com/BingeCircle/?fs=e&s=cl') }}
-                            style={styles.infoTxt}
-                        >@BingeCircle</Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <Fontisto name='world-o' size={RFValue(17)} />
-                        <Text
-                            style={styles.infoTxt}
-                            onPress={() => { Linking.openURL('https://tap.bio/@BingeCircle') }}
-                        >https://tap.bio/@BingeCircle</Text>
-                    </View>
-                    <View style={styles.infoContainer}>
-                        <AntDesign name='enviromento' size={RFValue(17)} />
-                        <Text selectable={true}
-                            onPress={() => { Linking.openURL('https://goo.gl/maps/9vN8a7CdsPNMy6CFA') }}
-                            style={styles.infoTxt}
-                        >https://goo.gl/maps/9vN8a7CdsPNMy6CFA</Text>
-                    </View>
+    // axios
+    //     .get(
+    //         'https://generation3.000webhostapp.com/project/Training/photographer_list.php'
+    //     )
+    //     .then(res => {
+    //         if (res.status == 200) {
+    //             console.log(res.data)
+    //         }
+    //     });
+    return (
+        <View style={styles.container}>
+            <View>
+                <Text style={styles.headerTxt}>حـول </Text>
+                <View style={styles.infoContainer}>
+                    <AntDesign name='phone' size={RFValue(17)} />
+                    <Text
+                        selectable={true}
+                        style={[styles.headerTxt, { color: COLORS.success, fontSize: RFValue(FONTS.h5) }]}
+                    >01201234567</Text>
                 </View>
-                <View style={{ height: RFValue(235) }}>
-                    <Text style={styles.headerTxt}>الآراء </Text>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <TouchableOpacity
-                            style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center' }]}
-                            onPress={() => { this.setState({ visible: true }) }}>
-                            <Text style={{ fontSize: RFValue(30), fontWeight: 'bold' }}>+</Text>
-                        </TouchableOpacity>
-                        <Dialog.Container visible={this.state.visible}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center' }} >
-                                {this.render_rating()}
-                            </View>
-                            <Dialog.Input placeholder='ادخل رأيك عنا' style={{ marginTop: 10 }} value={this.state.opinion} onChangeText={(value) => { this.setState({ opinion: value }) }} />
-                            <Dialog.Button label="تم" onPress={() => { this.addReview(), this.setState({ visible: false }) }} />
-                        </Dialog.Container>
-                        {this.reviews()}
-                    </ScrollView>
+                <View style={styles.infoContainer}>
+                    <Fontisto name='whatsapp' size={RFValue(17)} />
+                    <Text
+                        style={[styles.infoTxt, { textDecorationLine: 'none' }]}
+                        onPress={() => { Linking.openURL('https://chat.whatsapp.com/H3j3YuRheL6FRUnnsqZcHC') }}
+                    >إرسال رسالة</Text>
                 </View>
-
+                <View style={styles.infoContainer}>
+                    <AntDesign name='facebook-square' size={RFValue(17)} />
+                    <Text selectable={true}
+                        onPress={() => { Linking.openURL('https://www.facebook.com/campcoding/') }}
+                        style={styles.infoTxt}
+                    >https://www.facebook.com/campcoding/</Text>
+                </View>
+                <View style={styles.infoContainer}>
+                    <AntDesign name='instagram' size={RFValue(17)} />
+                    <Text selectable={true}
+                        onPress={() => { Linking.openURL('https://www.instagram.com/BingeCircle/?fs=e&s=cl') }}
+                        style={styles.infoTxt}
+                    >@BingeCircle</Text>
+                </View>
+                <View style={styles.infoContainer}>
+                    <Fontisto name='world-o' size={RFValue(17)} />
+                    <Text
+                        style={styles.infoTxt}
+                        onPress={() => { Linking.openURL('https://tap.bio/@BingeCircle') }}
+                    >https://tap.bio/@BingeCircle</Text>
+                </View>
+                <View style={styles.infoContainer}>
+                    <AntDesign name='enviromento' size={RFValue(17)} />
+                    <Text selectable={true}
+                        onPress={() => { Linking.openURL('https://goo.gl/maps/9vN8a7CdsPNMy6CFA') }}
+                        style={styles.infoTxt}
+                    >https://goo.gl/maps/9vN8a7CdsPNMy6CFA</Text>
+                </View>
             </View>
-        )
-    }
+            <View style={{ height: RFValue(235) }}>
+                <Text style={styles.headerTxt}>الآراء </Text>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    <TouchableOpacity
+                        style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center' }]}
+                        onPress={() => { setVisible(visible => true) }}>
+                        <Text style={{ fontSize: RFValue(30), fontWeight: 'bold' }}>+</Text>
+                    </TouchableOpacity>
+                    <Dialog.Container visible={visible}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center' }} >
+                            {render_rating()}
+                        </View>
+                        <Dialog.Input placeholder='ادخل رأيك عنا' style={{ marginTop: 10 }} value={opinion} onChangeText={(value) => { setOpenion(opinion => value) }} />
+                        <Dialog.Button label="تم" onPress={() => { addReview(), setVisible(visible => false), rating_fun(0), setOpenion(opinion => '') }} />
+                    </Dialog.Container>
+                    {reviewsMap()}
+                </ScrollView>
+            </View>
+
+        </View>
+    )
 }
 const styles = StyleSheet.create({
     review_container: {
