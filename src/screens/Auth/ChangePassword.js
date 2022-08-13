@@ -1,14 +1,5 @@
-import * as React from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  StatusBar,
-  ScrollView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Text, StyleSheet, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -17,8 +8,6 @@ import {
   FONTS,
   ICONS,
   PADDING,
-  RADIUS,
-  IconsView,
 } from '../../constants';
 import GeneralButton from '../../components/GeneralButton';
 import Input from '../../components/Input';
@@ -27,214 +16,202 @@ import { MARGIN } from '../../constants/Constants';
 import Dialog from "react-native-dialog";
 import axios from 'axios'
 
+function ChangePassword() {
+  const [check_old_pass, setcheck_old_pass] = useState("")
+  const [text_check_old_pass, settext_check_old_pass] = useState("")
+  const [text_check_old_pass_text_color, settext_check_old_pass_text_color] = useState("")
+  const [new_password, setnew_password] = useState("")
+  const [new_password_msg, setnew_password_msg] = useState("")
+  const [new_password_msg_color, setnew_password_msg_color] = useState("")
+  const [confirm_new_password, setconfirm_new_password] = useState("")
+  const [confirm_new_password_msg, setconfirm_new_password_msg] = useState("")
+  const [confirm_new_password_msg_color, setconfirm_new_password_msg_color] = useState("")
+  const [dialog_visible, setdialog_visible] = useState(false)
 
-export default class App extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      
-      check_old_pass: '',
-      text_check_old_pass: '',
-      text_check_old_pass_text_color: '',
-      new_password: '',
-      new_password_msg: '',
-      new_password_msg_color: '',
-      confirm_new_password: '',
-      confirm_new_password_msg: '',
-      confirm_new_password_msg_color: '',
-      dialog_visible: false
-    };
-  }
-  validatePassword(password) {
+  const validatePassword = (password) => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
   }
-  old_pass_matches_endtyping() {
+  const old_pass_matches_endtyping = () => {
     //old pass user input value
-    let check_old_pass = this.state.check_old_pass;
-    if (this.state.check_old_pass.length == 0) {
-      this.setState({
-        text_check_old_pass: '',
-        text_check_old_pass_text_color: '',
-      });
-    } else if (this.state.check_old_pass.length > 20) {
+    if (check_old_pass.length == 0) {
+
+      //settext_check_old_pass(text_check_old_pass => "")
+      //settext_check_old_pass_text_color(text_check_old_pass_text_color => "")
+      setdialog_visible(dialog_visible => true)
+
+    } else if (check_old_pass.length > 20) {
       //alert('خطأ في كلمه المرور القديمه');
-      this.setState({ dialog_visible: true })
+      setdialog_visible(dialog_visible => true)
     } else {
-      if (!this.validatePassword(check_old_pass)) {
+      if (!validatePassword(check_old_pass)) {
         //alert('خطأ في كلمه المرور القديمه');
-        this.setState({ dialog_visible: true })
+
+        setdialog_visible(dialog_visible => true)
 
       } else {
         // valid email
         // console.log(" valid")
-        this.setState({
-          text_check_old_pass: '',
-          text_check_old_pass_text_color: '',
-        });
+        //settext_check_old_pass(text_check_old_pass => "")
+        // settext_check_old_pass_text_color(text_check_old_pass_text_color => "")
+        setdialog_visible(dialog_visible => false)
+
       }
     }
   }
-  new_password_check() {
-    let new_password = this.state.new_password;
-    if (this.state.new_password.length == 0) {
-      this.setState({ new_password_msg: '', new_password_msg_color: '' });
-    } else if (this.state.new_password.length > 20) {
-      this.setState({
-        new_password_msg: 'كلمه المرور يجب ان لا تزيد عن 20 حرف ورقم ',
-        new_password_msg_color: COLORS.error,
-      });
+
+  const new_password_check = () => {
+    if (new_password.length == 0) {
+      setnew_password_msg(new_password_msg => "")
+      setnew_password_msg_color(new_password_msg_color => "")
+    } else if (new_password.length > 20) {
+
+      setnew_password_msg(new_password_msg => 'كلمه المرور يجب ان لا تزيد عن 20 حرف ورقم')
+      setnew_password_msg_color(new_password_msg_color => COLORS.error)
     } else {
-      if (!this.validatePassword(new_password)) {
+      if (!validatePassword(new_password)) {
         // not a valid email
         // console.log("not valid")
-        this.setState({
-          new_password_msg:
-            'كلمه المرور يجب لا تقل عن 6ارقام و حرف كبير و حرف صغير وعلامه مميزه ',
-          new_password_msg_color: COLORS.error,
-        });
+
+        setnew_password_msg(new_password_msg => 'كلمه المرور يجب لا تقل عن 6ارقام و حرف كبير و حرف صغير وعلامه مميزه ')
+        setnew_password_msg_color(new_password_msg_color => COLORS.error)
       } else {
         // valid email
         // console.log(" valid")
-        this.setState({ new_password_msg: '', new_password_msg_color: '' });
+        setnew_password_msg(new_password_msg => "")
+        setnew_password_msg_color(new_password_msg_color => "")
       }
     }
   }
-  confirm_password() {
-    if (this.state.confirm_new_password.length == 0) {
-      this.setState({
-        confirm_new_password_msg: '',
-        confirm_new_password_msg_color: '',
-      });
+
+  const confirm_password = () => {
+    if (confirm_new_password.length == 0) {
+
+      setconfirm_new_password_msg(confirm_new_password_msg => "")
+      setconfirm_new_password_msg_color(confirm_new_password_msg_color => "")
     } else {
-      if (this.state.new_password == this.state.confirm_new_password) {
+      if (new_password == confirm_new_password) {
         // valid email
         // console.log(" valid")
-        this.setState({
-          confirm_new_password_msg: '',
-          confirm_new_password_msg_color: '',
-        });
+
+        setconfirm_new_password_msg(confirm_new_password_msg => "")
+        setconfirm_new_password_msg_color(confirm_new_password_msg_color => "")
       } else {
-        this.setState({
-          confirm_new_password_msg: 'كلمه المرور غير متطابقه',
-          confirm_new_password_msg_color: COLORS.error,
-        });
+
+        setconfirm_new_password_msg(confirm_new_password_msg => 'كلمه المرور غير متطابقه')
+        setconfirm_new_password_msg_color(confirm_new_password_msg_color => COLORS.error)
       }
     }
   }
-  changeButtomPress() {
-    let old_pass = this.state.check_old_pass
-    let new_pass = this.state.new_password
-    let confirm_new_password = this.state.confirm_new_password
+
+  const changeButtomPress = () => {
+    let new_pass = new_password
+
     if (new_pass == "") {
-      this.setState({ new_password_msg: "يجب ادخال كلمة السر الجديدة", new_password_msg_color: COLORS.error })
+
+      setnew_password_msg(new_password_msg => "يجب ادخال كلمة المرور الجديدة")
+      setnew_password_msg_color(new_password_msg_color => COLORS.error)
 
     } if (confirm_new_password == "") {
-      this.setState({ confirm_new_password_msg: "يجب ادخال تاكيد كلمة السر الجديدة", confirm_new_password_msg_color: COLORS.error })
 
-    } if (old_pass != "" && new_pass != "" && confirm_new_password != "") {
-      this.setState({
-        text_check_old_pass: "", text_check_old_pass_text_color: "",
-        new_password_msg: "", new_password_msg_color: "",
-        confirm_new_password_msg: "", confirm_new_password_msg_color: ""
-      })
+      setconfirm_new_password_msg(confirm_new_password_msg => "يجب ادخال تاكيد كلمة المرور الجديدة")
+      setconfirm_new_password_msg_color(confirm_new_password_msg_color => COLORS.error)
+
+    } if (new_pass != "" && confirm_new_password != "") {
+
+      setnew_password_msg(new_password_msg => "")
+      setnew_password_msg_color(new_password_msg_color => "")
+      setconfirm_new_password_msg(confirm_new_password_msg => "")
+      setconfirm_new_password_msg_color(confirm_new_password_msg_color => "")
 
     }
   }
-  render() {
-    /*axios
-      .get(
-        'https://generation3.000webhostapp.com/project/Training/Auth/reset_password.php'
-      )
-      .then(res=>{
-        if(res.status==200){
-          console.log(res.data)
-        }
-      });*/
-    return (
-      
 
-      <View style={styles.main_view_style}>
-        <ScrollView>
-          <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
-          <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign
-              name="arrowright"
-              color={COLORS.gray}
-              size={RFValue(ICONS.xlIcon)}
-            />
-          </TouchableOpacity>
-          <View style={styles.ViewTitle}>
-            <Text style={styles.titleStyle}>تغيير كلمة المرور</Text>
-          </View>
-          <View style={styles.view_after_header_style}>
-            <View style={styles.each_textinput_viewstyle}>
-              <Input
-                placeholder="كلمة المرور القديمة "
-                check_old_pass={this.state.check_old_pass}
-                onChangeText={(value) => {
-                  this.setState({ check_old_pass: value });
-                }}
-              />
-              <Text></Text>
-            </View>
-            <View style={styles.each_textinput_viewstyle}>
-              <Input
-                placeholder="كلمة المرور الجديدة"
-                new_password={this.state.new_password}
-                onChangeText={(value) => {
-                  this.setState({ new_password: value });
-                }}
-                onBlur={() => {
-                  this.new_password_check();
-                }}
-              />
-              <Text style={{ color: this.state.new_password_msg_color }}>
-                {this.state.new_password_msg}
-              </Text>
-            </View>
-            <View
-              style={[
-                styles.each_textinput_viewstyle,
-                { marginBottom: RFValue(MARGIN.xlMargin) },
-              ]}>
-              <Input
-                placeholder="تاكيد كلمة المرور الجديدة"
-                confirm_new_password={this.state.confirm_new_password}
-                onChangeText={(value) => {
-                  this.setState({ confirm_new_password: value });
-                }}
-                onBlur={() => {
-                  this.confirm_password();
-                }}
-              />
-              <Text style={{ color: this.state.confirm_new_password_msg_color }}>
-                {this.state.confirm_new_password_msg}
-              </Text>
-            </View>
-            <View style={styles.view_button_style}>
-              <GeneralButton
-                title={'تغيير كلمة المرور'}
-                bgcolor={COLORS.primary}
-                onPress={() => {
-                  this.changeButtomPress()
-                  this.old_pass_matches_endtyping();
-                }}
-              />
-            </View>
-          </View>
-        </ScrollView>
-        <Dialog.Container visible={this.state.dialog_visible}>
-          <Dialog.Description>
-            خطأ في كلمة المرور القديمة
-          </Dialog.Description>
-          <Dialog.Button label="انهاء" style={{ color: COLORS.primary }} onPress={() => { this.setState({ dialog_visible: false }) }} />
-        </Dialog.Container>
-      </View>
-
-    );
+  const multipleFunctionOnpress = () => {
+    changeButtomPress();
+    old_pass_matches_endtyping();
   }
+  return (
+
+
+    <View style={styles.main_view_style}>
+      <ScrollView>
+        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
+        <TouchableOpacity style={styles.iconStyle}>
+          <AntDesign
+            name="arrowright"
+            color={COLORS.gray}
+            size={RFValue(ICONS.xlIcon)}
+          />
+        </TouchableOpacity>
+        <View style={styles.ViewTitle}>
+          <Text style={styles.titleStyle}>تغيير كلمة المرور</Text>
+        </View>
+        <View style={styles.view_after_header_style}>
+          <View style={styles.each_textinput_viewstyle}>
+            <Input
+              placeholder="كلمة المرور القديمة "
+              check_old_pass={check_old_pass}
+              onChangeText={value => { setcheck_old_pass(check_old_pass => value) }}
+            />
+            <Text></Text>
+          </View>
+          <View style={styles.each_textinput_viewstyle}>
+            <Input
+              placeholder="كلمة المرور الجديدة"
+              new_password={new_password}
+              onChangeText={value => {
+                setnew_password(new_password => value)
+              }}
+              onBlur={
+                new_password_check}
+            />
+            <Text style={{ color: new_password_msg_color }}>
+              {new_password_msg}
+            </Text>
+          </View>
+          <View
+            style={[
+              styles.each_textinput_viewstyle,
+              { marginBottom: RFValue(MARGIN.xlMargin) },
+            ]}>
+            <Input
+              placeholder="تاكيد كلمة المرور الجديدة"
+              confirm_new_password={confirm_new_password}
+              onChangeText={value => {
+                setconfirm_new_password(confirm_new_password => value)
+              }}
+              onBlur={
+                confirm_password
+              }
+            />
+            <Text style={{ color: confirm_new_password_msg_color }}>
+              {confirm_new_password_msg}
+            </Text>
+          </View>
+          <View style={styles.view_button_style}>
+            <GeneralButton
+              title={'تغيير كلمة المرور'}
+              bgcolor={COLORS.primary}
+              onPress={
+                multipleFunctionOnpress
+              }
+            />
+          </View>
+        </View>
+      </ScrollView>
+      <Dialog.Container visible={dialog_visible}>
+        <Dialog.Description>
+          خطأ في كلمة المرور القديمة
+        </Dialog.Description>
+        <Dialog.Button label="انهاء" style={{ color: COLORS.primary }} onPress={() => setdialog_visible(dialog_visible => false)} />
+      </Dialog.Container>
+    </View>
+
+  );
+
 }
+
 //3
 const styles = StyleSheet.create({
   main_view_style: {
@@ -280,3 +257,4 @@ const styles = StyleSheet.create({
     marginBottom: RFValue(MARGIN.xsMargin),
   },
 });
+export default ChangePassword;
