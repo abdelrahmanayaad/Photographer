@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -19,30 +19,25 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-export class ForgetPassword extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      emailError: '',
-    };
-  }
+export function ForgetPassword(props) {
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
-  handelPress = value => {
+  const handelPress = value => {
     let errors = 0;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(value.trim()) == false) {
-      this.setState({emailError: 'برجاء إدخال بريد الكترونى صحيح!'});
+      setEmailError('برجاء إدخال بريد الكترونى صحيح!');
       errors++;
     } else {
-      this.setState({emailError: ''});
+      setEmailError('');
     }
     if (errors == 0) {
       alert('Change Pass');
     }
   };
 
-  onChangeEmail = value => {
+  const onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     return reg.test(value.trim());
   };
@@ -58,61 +53,59 @@ export class ForgetPassword extends Component {
   };
 
   sendCode = () => {
-    const code = this.generatCode();
+    const code = generatCode();
     alert(code);
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign
-              name="arrowright"
-              color={COLORS.gray}
-              size={RFValue(ICONS.xlIcon)}
-            />
-          </TouchableOpacity>
-          <View style={styles.ViewTitle}>
-            <Text style={styles.titleStyle}>هل نسيت كلمة المرور ؟</Text>
-          </View>
-          <View style={styles.ViewTitle}>
-            <Text style={styles.messageTitleStyle}>
-              من فضلك ادخل البريد الالكتروني الخاص بك لارسال تعليمات اعادة تعيين
-              كلمة المرور
-            </Text>
-          </View>
-          <View style={styles.textInputViewStyle}>
-            <Input
-              onChangeText={value => {
-                this.setState({email: value});
-                if (this.onChangeEmail(value)) {
-                  this.setState({emailError: ''});
-                }
-              }}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              placeholder="البريد الالكتروني"
-            />
-            {this.state.emailError ? (
-              <Text style={styles.textErrorStyle}>{this.state.emailError}</Text>
-            ) : null}
-          </View>
-          <View style={styles.buttonViewStyle}>
-            <GeneralButton
-              title="ارسل لي الان"
-              bgcolor={COLORS.primary}
-              onPress={() => {
-                this.handelPress(this.state.email);
-                // this.generatCode();
-                // this.sendCode();
-              }}
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        <TouchableOpacity style={styles.iconStyle}>
+          <AntDesign
+            name="arrowright"
+            color={COLORS.gray}
+            size={RFValue(ICONS.xlIcon)}
+          />
+        </TouchableOpacity>
+        <View style={styles.ViewTitle}>
+          <Text style={styles.titleStyle}>هل نسيت كلمة المرور ؟</Text>
+        </View>
+        <View style={styles.ViewTitle}>
+          <Text style={styles.messageTitleStyle}>
+            من فضلك ادخل البريد الالكتروني الخاص بك لارسال تعليمات اعادة تعيين
+            كلمة المرور
+          </Text>
+        </View>
+        <View style={styles.textInputViewStyle}>
+          <Input
+            onChangeText={value => {
+              setEmail(value);
+              if (onChangeEmail(value)) {
+                setEmailError('');
+              }
+            }}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="البريد الالكتروني"
+          />
+          {emailError ? (
+            <Text style={styles.textErrorStyle}>{emailError}</Text>
+          ) : null}
+        </View>
+        <View style={styles.buttonViewStyle}>
+          <GeneralButton
+            title="ارسل لي الان"
+            bgcolor={COLORS.primary}
+            onPress={() => {
+              handelPress(email);
+              // this.generatCode();
+              // this.sendCode();
+            }}
+          />
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   container: {
