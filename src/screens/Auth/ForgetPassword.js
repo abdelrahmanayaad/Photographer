@@ -70,7 +70,7 @@ export class ForgetPassword extends Component {
             <AntDesign
               name="arrowright"
               color={COLORS.gray}
-              size={ICONS.xlIcon}
+              size={RFValue(ICONS.xlIcon)}
             />
           </TouchableOpacity>
           <View style={styles.ViewTitle}>

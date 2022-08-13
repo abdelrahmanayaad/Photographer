@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import {
   Text,
@@ -11,7 +11,8 @@ import {
   Dimensions,
   FlatList,
   Button,
-  TextInput
+  TextInput,
+  StatusBar
 } from 'react-native';
 import { Input, GeneralButton } from '../../components';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -26,36 +27,108 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
+import messaging from '@react-native-firebase/messaging';
+import axios from 'axios';
 
 const { width, height } = Dimensions.get('window');
+export default function Signup() {
 
-export class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      nameerorr: '',
-      Email: '',
-      Emailerorr: '',
-      phone: '',
-      phoneerorr: '',
-      password: '',
-      passworderorr: '',
-      passwordconfirm: '',
-      passwordconfirmerorr: '',
-      secured_pass: true,
-      secured_pass1: true,
-      ShowComment: false,
-      animateModal: false,
-      arr: [
-        { name: "مستخدم", }
-        ,
-        { name: " مصور" }
-        ,
-        { name: "ميكب ارتست" }
-      ]
-    };
-  }
+  const [name, setName] = useState("");
+  const [nameerorr, setNameerorr] = useState("")
+  const [Email, setEmail] = useState("");
+  const [Emailerorr, setEmailError] = useState("")
+  const [phone, setPhone] = useState("");
+  const [phoneerorr, setPhoneError] = useState("")
+  const [password, setPassword] = useState("");
+  const [passworderorr, setPassError] = useState("")
+  const [passwordconfirm, setConPass] = useState("");
+  const [passwordconfirmerorr, setConPassError] = useState("")
+  const [secured_pass, setSecured_pass] = useState(true);
+  const [secured_pass1, setSecured_pass1] = useState(true)
+  const [ShowComment, setShowComment] = useState(false);
+  const [animateModal, setAnimateModal] = useState(false)
+  const [arr, setArr] = useState([
+    { name: "مستخدم", }
+    ,
+    { name: " مصور" }
+    ,
+    { name: "ميكب ارتست" }
+  ]);
+  const [token, setToken] = useState("")
+
+    // SendUser=()=> {
+    //   let data_to_send = {
+    //     name:  name,
+    //     email:  Email,
+    //     pass:  password,
+    //     type:  arr,
+    //     token:  token
+    //   }
+    //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+    //     .then((res) => {
+    //       if (res.status == 200) {
+    //         if ( (res.data) == "successful") {
+    //           alert("done")
+    //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+    //           alert("من فضلك تأكد من صحة البيانات")
+    //         } else if (res.data == "email is already exist") {
+    //           alert("هذا البريد موجود بالفعل")
+    //         }
+    //       } else {
+    //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+    //       }
+    //       setName( "" )
+    //       setPassword("")
+    //       setPhoneError( "" )
+    //       setEmail("")
+    //       setConPass("")
+    //     })
+    // }
+
+  // componentDidMount(){
+  //   messaging()
+  //   .getToken()
+  //   .then(token => {
+  //       // alert(token)
+  //       setToken(token)
+
+  //   });
+
+
+  // return messaging().onTokenRefresh(token => {
+  //   setToken(token)
+
+  // });
+
+  // }
+//   useEffect(() => {
+    
+//     messaging()
+//         .getToken()
+//         .then(token => {
+//             console.log(token)
+//             // setToken(token)
+
+//         });
+
+
+//     return messaging().onTokenRefresh(token => {
+//         // setToken(token)
+//         console.log(token)
+
+//     });
+
+//     // const getToken = async () => {
+//     //   try {
+//     //     const token = await messaging().getToken();
+//     //     if (token) return console.log(token);
+//     //   } catch (error) {
+//     //     console.log(error);
+//     //   }
+//     // };
+//     // getToken()
+
+// }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -80,86 +153,78 @@ export class Signup extends Component {
     return re.test(String(name).toLowerCase());
   }
 
-  signup() {
+  signup = value => {
     let error = 0;
     //name
 
-    if (this.state.name.trim() == '') {
+    if (name.trim() == '') {
       error++;
-      this.setState({ nameerorr: 'لايجب ان يكون هذا الحقل فارغ' });
+      setNameerorr('لايجب ان يكون هذا الحقل فارغ');
     }
 
-    else if (!this.validateName(this.state.name)) {
+    else if (!validateName(name)) {
       error++;
-      this.setState({ nameerorr: 'أدخل اسم صالح ' });
+      setNameerorr('أدخل اسم صالح ');
     } else {
-      this.setState({ nameerorr: '' });
+      setNameerorr('');
     }
 
     //email
-    if (this.state.Email == '') {
+    if (Email == '') {
       error++;
-      this.setState({ Emailerorr: 'لايجب ان يكون هذا الحقل فارغ' });
-    } else if (!this.validateEmail(this.state.Email)) {
+      setEmailError('لايجب ان يكون هذا الحقل فارغ');
+    } else if (!validateEmail(Email)) {
       error++;
-      this.setState({ Emailerorr: 'تأكد من كتابة البريد الالكترونى بشكل صحيح ' });
+      setEmailError('تأكد من كتابة البريد الالكترونى بشكل صحيح ');
     } else {
-      this.setState({ Emailerorr: '' });
+      setEmailError('');
     }
 
     //phone
-    if (this.state.phone == '') {
+    if (phone == '') {
       error++;
-      this.setState({ phoneerorr: 'لايجب ان يكون هذا الحقل فارغ' });
-    } else if (!this.validatePhone(this.state.phone)) {
+      setPhoneError('لايجب ان يكون هذا الحقل فارغ');
+    } else if (!validatePhone(phone)) {
       error++;
-      this.setState({ phoneerorr: 'أدخل رقم هاتف صالح ' });
+      setPhoneError('أدخل رقم هاتف صالح ');
     } else {
-      this.setState({ phoneerorr: '' });
+      setPhoneError('');
     }
 
     //password
-    if (this.state.password.trim() == '') {
+    if (password.trim() == '') {
       error++;
-      this.setState({ passworderorr: 'لايجب ان يكون هذا الحقل فارغ' });
-    } else if (this.state.password.length > 20) {
+      setPassError('لايجب ان يكون هذا الحقل فارغ');
+    } else if (password.length > 20) {
       error++;
-      this.setState({ passworderorr: 'كلمه المرور يجب ألا تزيد عن 20 حرف و رقم' });
+      setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
 
-    } else if (!this.validatePassword(this.state.password)) {
+    } else if (!validatePassword(password)) {
       error++;
-      this.setState({ passworderorr: 'كلمه المرور يجب لا تقل عن 6 ارقام و حرف كبير و حرف صغير وعلامه مميزه' });
+      setPassError('كلمه المرور يجب لا تقل عن 6 ارقام و حرف كبير و حرف صغير وعلامه مميزه');
     } else {
-      this.setState({ passworderorr: '' });
+      setPassError('');
     }
     //passwordconfirm
-    if (this.state.passwordconfirm.trim() == '') {
+    if (passwordconfirm.trim() == '') {
       error++;
-      this.setState({
-        passwordconfirmerorr: 'لايجب ان يكون هذا الحقل فارغ',
-      });
+      setConPassError('لايجب ان يكون هذا الحقل فارغ');
     }
-    if (this.state.passwordconfirm != this.state.password) {
+    if (passwordconfirm != password) {
       error++;
-      this.setState({
-        passwordconfirmerorr: 'كلمة المرور غير متطابقة',
-      });
-    } else if (this.state.passwordconfirm.trim().length < 6) {
+      setConPassError('كلمة المرور غير متطابقة');
+    } else if (passwordconfirm.trim().length < 6) {
       error++;
-      this.setState({
-        passwordconfirmerorr: 'ادخل اكثر من 6 احرف',
-      });
+      setConPassError('ادخل اكثر من 6 احرف');
     }
     else {
-      this.setState({
-        passwordconfirmerorr: '',
-      });
+      setConPassError('');
     }
 
 
-    if (error == 0) {
-      alert("WELCOME")
-    }
+    // if (error == 0) {
+    //   alert("WELCOME")
+    // }
 
   }
   onChangeEmail = value => {
@@ -179,214 +244,219 @@ export class Signup extends Component {
     const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{4,30}$/
     return re.test(value.trim());
   }
-  secured_pass() {
-    let securedPass = this.state.secured_pass;
+  const secured_password = e => {
+    let securedPass = secured_pass;
     securedPass = !securedPass;
-    this.setState({ secured_pass: securedPass });
-  }
-  secured_pass1() {
-    let securedPass = this.state.secured_pass1;
+    setSecured_pass(securedPass)
+  };
+  const secured_Con_password = e => {
+    let securedPass = secured_pass1;
     securedPass = !securedPass;
-    this.setState({ secured_pass1: securedPass });
+    setSecured_pass1(securedPass)
   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <TouchableOpacity style={styles.iconStyle}>
-            <AntDesign
-              name="arrowright"
-              color={COLORS.gray}
-              size={ICONS.xlIcon}
-            />
-          </TouchableOpacity>
-          <View style={styles.ViewTitle}>
-            <Text style={styles.titleStyle}>انشاء حساب</Text>
-          </View>
-          <View style={styles.textInputViewStyle}>
-            <Input
-              autoCapitalize="none"
-              keyboardType="default"
-              placeholder="الاسم"
-              value={this.state.name}
-              onChangeText={value => {
-                this.setState({ name: value });
-                if (this.onChangename(value)) {
-                  this.setState({ nameerorr: '' });
-                }
-
-              }}
-            />
-            <View style={styles.ErrorView}>
-              <Text style={styles.ErrorText}>{this.state.nameerorr}</Text>
-            </View>
-          </View>
-          <View style={styles.textInputViewStyle}>
-            <Input
-              autoCapitalize="none"
-              keyboardType="email-address"
-              placeholder="البريد الالكتروني"
-              value={this.state.Email}
-              onChangeText={value => {
-                this.setState({ Email: value });
-                if (this.onChangeEmail(value)) {
-                  this.setState({ Emailerorr: '' });
-                }
-              }
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <TouchableOpacity style={styles.iconStyle}>
+          <AntDesign
+            name="arrowright"
+            color={COLORS.gray}
+            size={ICONS.xlIcon}
+          />
+        </TouchableOpacity>
+        <View style={styles.ViewTitle}>
+          <Text style={styles.titleStyle}>انشاء حساب</Text>
+        </View>
+        <View style={styles.textInputViewStyle}>
+          <Input
+            autoCapitalize="none"
+            keyboardType="default"
+            placeholder="الاسم"
+            value={name}
+            onChangeText={value => {
+              setName(value)
+              if (onChangename(value)) {
+                setNameerorr('');
               }
 
-
-
-
-            />
-            <View style={styles.ErrorView}>
-              <Text style={styles.ErrorText}>{this.state.Emailerorr}</Text>
-            </View>
-          </View>
-          <View style={styles.textInputpassword}>
-            <TextInput
-              style={styles.inputPass}
-              placeholder="كلمة المرور"
-              secureTextEntry={this.state.secured_pass}
-              maxLength={10}
-              value={this.state.password}
-              onChangeText={value => {
-                this.setState({ password: value });
-                if (this.onChangePassword(value)) {
-                  this.setState({ passworderorr: '' });
-                }
-
-              }}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                this.secured_pass();
-              }}>
-              <Entypo
-                name={this.state.secured_pass ? 'eye-with-line' : 'eye'}
-                size={ICONS.mIcon}
-                color={'#aaa'}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.ErrorText}>{this.state.passworderorr}</Text>
-
-          <View style={styles.textInputpassword}>
-            <TextInput
-              style={styles.inputPass}
-              placeholder="تأكيد كلمة المرور"
-              secureTextEntry={this.state.secured_pass1}
-              maxLength={10}
-              value={this.state.passwordconfirm}
-              onChangeText={value => {
-                this.setState({ passwordconfirm: value });
-                if (this.onChangePassword(value)) {
-                  this.setState({ passwordconfirmerorr: '' });
-                }
-
-              }}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                this.secured_pass1();
-              }}>
-              <Entypo
-                name={this.state.secured_pass1 ? 'eye-with-line' : 'eye'}
-                size={ICONS.mIcon}
-                color={'#aaa'}
-              />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.ErrorText}>{this.state.passwordconfirmerorr}</Text>
-
-          <View style={styles.textInputViewStyle}>
-            <Input
-              autoCapitalize="none"
-              keyboardType="number-pad"
-              placeholder="رقم الهاتف"
-              value={this.state.phone}
-              onChangeText={value => {
-                this.setState({ phone: value });
-                if (this.onChangephone(value)) {
-                  this.setState({ phoneerorr: '' });
-                }
-
-              }}
-            />
-            <View style={styles.ErrorView}>
-              <Text style={styles.ErrorText}>{this.state.phoneerorr}</Text>
-            </View>
-          </View>
-          <View style={styles.buttonViewStyle}>
-            <GeneralButton
-              onPress={() => {
-                this.signup();
-              }}
-              title="انشاء حساب"
-              bgcolor={COLORS.primary}
-            />
-          </View>
-          <View style={styles.buttonViewStyle}>
-            <GeneralButton
-              onPress={() => this.setState({ ShowComment: true, animateModal: true })}
-              title="تحديد النوع"
-              bgcolor={COLORS.primary}
-            />
-          </View>
-          <SwipeUpDownModal
-            modalVisible={this.state.ShowComment}
-            PressToanimate={this.state.animateModal}
-            ContentModal={
-              <View style={styles.containerContent}>
-                <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>حدد نوع المستخدم</Text>
-
-                <FlatList
-                  data={this.state.arr}
-                  renderItem={({ item, index }) => (
-                    <>
-
-                      <TouchableOpacity
-                        style={styles.buttonmodal}
-                        onPress={() => {
-                          this.setState({ ShowComment: false })
-                        }}>
-                        <Text style={styles.fontModal}>{item.name}</Text>
-
-                        <AntDesign
-                          name="arrowleft"
-                          color={COLORS.gray}
-                          size={ICONS.xlIcon}
-                        />
-
-                      </TouchableOpacity>
-                    </>
-                  )}
-
-                />
-              </View>
-            }
-            HeaderStyle={styles.headerContent}
-            ContentModalStyle={styles.Modal}
-
-            onClose={() => {
-              this.setState({ animateModal: true, ShowComment: false })
             }}
           />
-
-          <View style={styles.ViewTitle1}>
-            <Text style={styles.messageTitleStyle}>هل لديك حساب؟ </Text>
-            <TouchableOpacity>
-              <Text style={styles.messageTitleStyle1}>تسجيل دخول</Text>
-            </TouchableOpacity>
+          <View style={styles.ErrorView}>
+            <Text style={styles.ErrorText}>{nameerorr}</Text>
           </View>
+        </View>
+        <View style={styles.textInputViewStyle}>
+          <Input
+            autoCapitalize="none"
+            keyboardType="email-address"
+            placeholder="البريد الالكتروني"
+            value={Email}
+            onChangeText={value => {
+              setEmail(value)
+              if (onChangeEmail(value)) {
+                setEmailError('');
+              }
+            }
+            }
 
-        </ScrollView>
 
-      </View>
-    );
-  }
+
+
+          />
+          <View style={styles.ErrorView}>
+            <Text style={styles.ErrorText}>{Emailerorr}</Text>
+          </View>
+        </View>
+        <View style={styles.textInputpassword}>
+          <TextInput
+            style={styles.inputPass}
+            placeholder="كلمة المرور"
+            secureTextEntry={secured_pass}
+            maxLength={10}
+            value={password}
+            onChangeText={value => {
+              setPassword(value)
+              if (onChangePassword(value)) {
+                setPassError('');
+              }
+
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              secured_password()
+            }}>
+            <Entypo
+              name={secured_pass ? 'eye-with-line' : 'eye'}
+              size={ICONS.mIcon}
+              color={COLORS.gray}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.ErrorText}>{passworderorr}</Text>
+
+        <View style={styles.textInputpassword}>
+          <TextInput
+            style={styles.inputPass}
+            placeholder="تأكيد كلمة المرور"
+            secureTextEntry={secured_pass1}
+            maxLength={10}
+            value={passwordconfirm}
+            onChangeText={value => {
+              setConPass(value);
+              if (onChangePassword(value)) {
+                setConPassError('');
+              }
+
+            }}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              secured_Con_password();
+            }}>
+            <Entypo
+              name={secured_pass1 ? 'eye-with-line' : 'eye'}
+              size={ICONS.mIcon}
+              color={'#aaa'}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.ErrorText}>{passwordconfirmerorr}</Text>
+
+        <View style={styles.textInputViewStyle}>
+          <Input
+            autoCapitalize="none"
+            keyboardType="number-pad"
+            placeholder="رقم الهاتف"
+            value={phone}
+            onChangeText={value => {
+              setPhone(value);
+              if (onChangephone(value)) {
+                setPhoneError('');
+              }
+
+            }}
+          />
+          <View style={styles.ErrorView}>
+            <Text style={styles.ErrorText}>{phoneerorr}</Text>
+          </View>
+        </View>
+        <View style={styles.buttonViewStyle}>
+          <GeneralButton
+            onPress={() => {
+              signup();
+            }}
+            title="انشاء حساب"
+            bgcolor={COLORS.primary}
+          />
+        </View>
+        <View style={styles.buttonViewStyle}>
+          <GeneralButton
+            onPress={() => {
+              setAnimateModal(true),
+                setShowComment(true)
+            }
+            }
+            title="تحديد النوع"
+            bgcolor={COLORS.primary}
+          />
+        </View>
+        <SwipeUpDownModal
+          modalVisible={ShowComment}
+          PressToanimate={animateModal}
+          ContentModal={
+            <View style={styles.containerContent}>
+              <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>حدد نوع المستخدم</Text>
+
+              <FlatList
+                data={arr}
+                renderItem={({ item, index }) => (
+                  <>
+
+                    <TouchableOpacity
+                      style={styles.buttonmodal}
+                      onPress={() => {
+                        setShowComment(false)
+                      }}>
+                      <Text style={styles.fontModal}>{item.name}</Text>
+
+                      <AntDesign
+                        name="arrowleft"
+                        color={COLORS.gray}
+                        size={ICONS.lIcon}
+                      />
+
+                    </TouchableOpacity>
+                  </>
+                )}
+
+              />
+            </View>
+          }
+          HeaderStyle={styles.headerContent}
+          ContentModalStyle={styles.Modal}
+
+          onClose={() => {
+            setAnimateModal(true),
+              setShowComment(false)
+          }}
+        />
+
+        <View style={styles.ViewTitle1}>
+          <Text style={styles.messageTitleStyle}>هل لديك حساب؟ </Text>
+          <TouchableOpacity>
+            <Text style={styles.messageTitleStyle1}>تسجيل دخول</Text>
+          </TouchableOpacity>
+        </View>
+
+      </ScrollView>
+
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
   container: {
     margin: RFValue(MARGIN.xsMargin),
@@ -437,8 +507,6 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontSize: RFValue(FONTS.h5),
   },
-
-
   ErrorView: {
     alignItems: 'flex-start',
     alignSelf: 'flex-start',
@@ -455,7 +523,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: RFValue(MARGIN.mdMargin),
   },
-
   fontModal: {
     fontSize: RFValue(FONTS.h5),
     alignSelf: "center",
@@ -475,19 +542,18 @@ const styles = StyleSheet.create({
     marginBottom: MARGIN.xsMargin
   },
   containerContent: {
-    height: height ,
+    height: RFValue(height),
     marginTop: 30
   },
   headerContent: {
     height: 50
   },
   Modal: {
-    backgroundColor: '#fff',
-    height: height / 2.5,
+    backgroundColor: COLORS.background,
+    height: RFValue(height / 2.5),
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     padding: PADDING.mdPadding
 
   }
 });
-export default Signup;

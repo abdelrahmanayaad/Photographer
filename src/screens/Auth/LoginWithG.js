@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import {
     GoogleSignin,
-    GoogleSigninButton,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { COLORS, ICONS, RADIUS, FONTS } from '../../constants';
+import { TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 GoogleSignin.configure({
 
@@ -11,10 +14,10 @@ GoogleSignin.configure({
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
 
 })
-export class LoginWithG extends Component {
+function LoginWithG() {
 
 
-    signIn = async () => {
+    const signIn = async () => {
         try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
@@ -31,16 +34,34 @@ export class LoginWithG extends Component {
             }
         }
     };
-    render() {
-        return (
-            <GoogleSigninButton
-                style={{ width: 192, height: 48 }}
-                size={GoogleSigninButton.Size.Wide}
-                color={GoogleSigninButton.Color.Dark}
-                onPress={this._signIn}
-                // disabled={this.state.isSigninInProgress}
-            />
-        )
-    }
+    return (
+        // <GoogleSigninButton
+        //     style={{ width: 192, height: 48}}
+        //     size={GoogleSigninButton.Size.Wide}
+        //     // color='#FF7A7A'
+        //     onPress={this.signIn}
+        //     // disabled={this.state.isSigninInProgress}
+        // />
+        <TouchableOpacity style={styles.container} onPress={signIn}>
+            <Text style={styles.titleStyle}>تسجيل الدخول بإستخدام</Text>
+            <AntDesign name='google' color="#fff" size={RFValue(ICONS.xlIcon)} />
+        </TouchableOpacity>
+    )
 }
+const styles = StyleSheet.create({
+    container: {
+        width: RFValue(200),
+        height: RFValue(48),
+        backgroundColor: COLORS.primary,
+        flexDirection: 'row',
+        borderRadius: RFValue(RADIUS.xsRadius),
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    titleStyle: {
+        color: COLORS.white,
+        fontSize: RFValue(FONTS.h5),
+        fontWeight: 'bold',
+    },
+})
 export default LoginWithG;

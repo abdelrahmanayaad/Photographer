@@ -21,6 +21,7 @@ import {
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import LoginWithG from './LoginWithG';
 
 function Login() {
 
@@ -155,12 +156,7 @@ function Login() {
           </TouchableOpacity>
           <Text style={styles.socialHeader}>او عن طريق</Text>
           <View style={styles.socialButtonsView}>
-            <TouchableOpacity style={styles.socialButton}>
-              <Text style={styles.socialTxt}>فيسبوك</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialButton}>
-              <Text style={styles.socialTxt}>انستجرام</Text>
-            </TouchableOpacity>
+            <LoginWithG/>
           </View>
         </ScrollView>
       </View>
@@ -239,11 +235,11 @@ const styles = StyleSheet.create({
     fontSize: RFValue(FONTS.h5),
   },
   socialButtonsView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '70%',
-    paddingVertical: RFValue(PADDING.xsPadding),
-    alignSelf: 'center',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // width: '70%',
+    // paddingVertical: RFValue(PADDING.xsPadding),
+    alignItems: 'center',
   },
   socialButton: {
     borderWidth: 1,

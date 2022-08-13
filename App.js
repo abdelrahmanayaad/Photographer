@@ -22,14 +22,25 @@ import {
   Followering,
   Followers,
   Comment
+} from './src/screens'
+import ProfileInfo from './src/screens/Intro/ProfileInfo';
+// import { ForgetPassword, Signup, SettingsScreen, Verification } from './src/screens';
+// import LoginWithG from './src/screens/Auth/LoginWithG';
 
-} from './src/screens';
+
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <LoginWithG/>
+
+    return <ProfileScreen/>;
+
   }
 }
 const styles = StyleSheet.create({});
-export default App;
 // https://generation3.000webhostapp.com/project/Training/photographer_list.php
+
+
+
+
+
+export default App;

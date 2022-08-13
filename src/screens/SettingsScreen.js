@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -21,11 +21,8 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 const { width, height } = Dimensions.get('window');
-export class SettingsScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      settings: [{
+ export default function SettingsScreen() {
+  const [settings, setSettings] = useState([{
         name: "تعديل الملف الشخصى",
         icon_name: 'arrowleft'
       }, {
@@ -47,14 +44,12 @@ export class SettingsScreen extends Component {
         name: "تسجيل الخروج",
         icon_name: 'logout'
       }
-      ]
+      ])
 
 
-    }
-  }
 
-  renderserring() {
-    return this.state.settings.map((item, index) => {
+  renderserring=()=> {
+    return settings.map((item, index) => {
       return (
         <View style={styles.each_view_in_map_style}>
           <TouchableOpacity style={styles.each_button_style}>
@@ -71,7 +66,6 @@ export class SettingsScreen extends Component {
 
   }
 
-  render() {
     return (
       <View style={styles.container}>
         <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
@@ -92,7 +86,7 @@ export class SettingsScreen extends Component {
         <ScrollView>
 
           <View>
-            {this.renderserring()}
+            {renderserring()}
           </View>
         </ScrollView>
 
@@ -101,7 +95,7 @@ export class SettingsScreen extends Component {
       </View>
     );
   }
-}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -113,7 +107,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: RFValue(20)
+    marginBottom: RFValue(10),
+    marginTop: RFValue(10)
 
   }, headerTxt: {
     color: COLORS.black,
@@ -137,4 +132,3 @@ const styles = StyleSheet.create({
 
 });
 
-export default SettingsScreen;

@@ -1,13 +1,19 @@
-import org.apache.tools.ant.taskdefs.condition.Os
+// import org.apache.tools.ant.taskdefs.condition.Os
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
     ext {
+    googlePlayServicesVersion = "+" // default: "+"
+    firebaseMessagingVersion = "21.1.0" // default: "21.1.0"
+
         buildToolsVersion = "31.0.0"
         minSdkVersion = 21
         compileSdkVersion = 31
         targetSdkVersion = 31
+        playServicesVersion = "17.0.0" // or find latest version
+        androidMapsUtilsVersion = "+0.5"
+        supportLibVersion = "27.1.1"
         googlePlayServicesAuthVersion = "19.2.0"
 
         if (System.properties['os.arch'] == "aarch64") {
@@ -27,6 +33,9 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("de.undercouch:gradle-download-task:5.0.1")
         classpath("com.google.gms:google-services:4.3.10")
+        classpath 'com.google.gms:google-services:4.3.13'
+        //  classpath 'com.android.tools.build:gradle:4.2.1' // <--- use this version or newer
+        // classpath 'com.google.gms:google-services:4.3.10' // <--- use this version or newer
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
