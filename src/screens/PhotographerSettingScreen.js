@@ -216,8 +216,8 @@ function PhotographerSettingScreen() {
                         style={styles.editView}
                         onPress={() => setShowComment(ShowComment => true)}>
                         <Entypo name='edit' size={RFValue(ICONS.smIcon)} color='#fff' style={styles.editIcon} />
-
-                        <SwipeUpDownModal
+<ScrollView>                 
+           <SwipeUpDownModal
                             modalVisible={ShowComment}
                             //PressToanimate={animateModal}
                             ContentModal={
@@ -266,6 +266,7 @@ function PhotographerSettingScreen() {
                                 setShowComment(ShowComment => false)
                             }}
                         />
+</ScrollView>
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: RFValue(MARGIN.mdMargin) }}>
