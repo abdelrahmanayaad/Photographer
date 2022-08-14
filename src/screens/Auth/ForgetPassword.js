@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -19,11 +19,11 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-export function ForgetPassword(props) {
+export function ForgetPassword({ navigation }) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  const handelPress = value => {
+  const handelPress = (value) => {
     let errors = 0;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(value.trim()) == false) {
@@ -42,20 +42,26 @@ export function ForgetPassword(props) {
     return reg.test(value.trim());
   };
 
-  generatCode = () => {
-    let code = '';
-    const numbers = '0123456789';
-    for (let i = 0; i < 4; i++) {
-      code += numbers[Math.floor(Math.random() * numbers.length)];
-    }
-    // alert(code);
-    return code;
-  };
+  // generatCode = () => {
+  //   let code = '';
+  //   const numbers = '0123456789';
+  //   for (let i = 0; i < 4; i++) {
+  //     code += numbers[Math.floor(Math.random() * numbers.length)];
+  //   }
+  //   // alert(code);
+  //   return code;
+  // };
 
-  sendCode = () => {
-    const code = generatCode();
-    alert(code);
-  };
+  // sendCode = () => {
+  //   const code = generatCode();
+  //   alert(code);
+  // };
+  const sendpress = () => {
+    //handelPress(email);
+    // navigation.navigate("Otp");
+
+
+  }
 
   return (
     <View style={styles.container}>
@@ -96,11 +102,13 @@ export function ForgetPassword(props) {
           <GeneralButton
             title="ارسل لي الان"
             bgcolor={COLORS.primary}
-            onPress={() => {
-              handelPress(email);
-              // this.generatCode();
-              // this.sendCode();
-            }}
+            onPress={
+              () => {
+                handelPress(email);
+                // this.generatCode();
+                // this.sendCode();
+              }
+            }
           />
         </View>
       </ScrollView>

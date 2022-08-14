@@ -23,7 +23,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import LoginWithG from './LoginWithG';
 
-function Login() {
+function Login({navigation}) {
 
   const [secured_pass, set_secured_pass] = useState(false)
   const [user_email, set_email] = useState('')
@@ -141,9 +141,9 @@ function Login() {
             </TouchableOpacity>
           </View>
           <Text style={styles.erorMsg}>{error_password}</Text>
-          <View style={styles.forgetPassMsg}>
+          <TouchableOpacity style={styles.forgetPassMsg} onPress={()=>navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassTxt}>هل نسيت كلمةالمرور؟</Text>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.buttonViewStyle}>
             <GeneralButton
               title="تسجيل الدخول"
@@ -167,7 +167,7 @@ function Login() {
           marginTop: RFValue(MARGIN.mdMargin),
         }}>
         <Text>ليس لديك حساب ؟ </Text>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text
             style={{ textDecorationLine: 'underline', color: COLORS.primary }}>
             انشاء حساب

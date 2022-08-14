@@ -3,11 +3,12 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, StatusBar 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { RFValue } from 'react-native-responsive-fontsize';
 import AppIntroSlider from 'react-native-app-intro-slider';
-const { width, height } = Dimensions.get("screen")
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { COLORS, ICONS, FONTS, } from '../../../constants';
 
-function Intro() {
+function Intro({navigation}) {
     const [screens, setscreens] = useState(
         [{
             id: 1,
@@ -42,10 +43,10 @@ function Intro() {
             renderNextButton={() => <View style={styles.view_for_next_style}><Text style={styles.next_button_style}>التالي</Text></View>}
             renderDoneButton={() =>
                 <TouchableOpacity style={styles.arrow_botton_style}
-                    onPress={() => {
-                        /*this.set_intro(1),
-                        this.props.navigation.navigate("StackList")*/
-                    }}
+                    onPress={() => 
+                        //this.set_intro(1),
+                        navigation.navigate('Login')
+                    }
                 >
                     <AntDesign name="arrowleft" color={COLORS.background} size={RFValue(ICONS.xlIcon)} />
                 </TouchableOpacity>}
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
         width: RFValue(25)
     }, view_for_next_style: {
-        // marginTop: RFValue(15),
+         marginTop: RFValue(9),
 
     }, next_button_style: {
         color: COLORS.primary,
