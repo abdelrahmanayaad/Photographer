@@ -4,6 +4,7 @@ import {COLORS, FONTS, ICONS, RADIUS, PADDING} from './src/constants';
 import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
+import {NavigationContainer} from '@react-navigation/native';
 import {
   Signup,
   Login,
@@ -24,11 +25,10 @@ import {
   NewPassword,
 } from './src/screens';
 // import LoginWithG from './src/screens/Auth/LoginWithG';
-
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <ForgetPassword />;
+    return <AdminProfile />;
   }
 }
 const styles = StyleSheet.create({});
