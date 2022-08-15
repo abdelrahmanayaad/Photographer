@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import ProfileInfo from './src/screens/Intro/ProfileInfo';
 
 // import { ForgetPassword, Signup, SettingsScreen, Verification } from './src/screens';
-import{
+import {
   Signup,
   Login,
   ForgetPassword,
@@ -33,7 +33,7 @@ import Navigation from './src/navigation/Navigation';
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <ForgetPassword/>
+    return <Comment />
 
   }
 }

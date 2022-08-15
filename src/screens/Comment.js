@@ -17,7 +17,7 @@ import { Component } from 'react';
 import { Input, GeneralButton } from '../components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-// import RBSheet from "react-native-raw-bottom-sheet";
+import RBSheet from "react-native-raw-bottom-sheet";
 import {
   PADDING,
   IconsView,
@@ -36,34 +36,37 @@ export class Comment extends Component {
       text: "",
       visible: true,
       replay_comment: "",
+      replay_name: "محمد",
+      replay_image: require("../assets/Images/images.png"),
       current_index: "",
 
       comments: [
 
         {
           name: "الشاذلى",
-          image: require("../assets/Images/secur.png"),
+          image: require("../assets/Images/images.png"),
           comment: "التقدير خسرنا كتير ",
-          replay: ""
+          replay: []
+
         },
         {
           name: "عياد",
           image: require("../assets/Images/images.png"),
           comment: "لو انت مش فارق ....يبقى تفارق",
-          replay: ""
+          replay: [],
 
         },
         {
           name: "مروه",
-          image: require("../assets/Images/secur.png"),
+          image: require("../assets/Images/images.png"),
           comment: "تلاشانى ؟ علشانك مش عشانى",
-          replay: ""
+          replay: [],
         },
         {
           name: "مطحنه",
           image: require("../assets/Images/images.png"),
           comment: "الوشوش هتتقابل بس القلوب موعدكش",
-          replay: ""
+          replay: [],
 
         }
         ,
@@ -71,7 +74,9 @@ export class Comment extends Component {
           name: "اسراء",
           image: require("../assets/Images/images.png"),
           comment: " الرزق ان يضع الله لك قبولا ف قلب كل من يراك",
-          replay: "",
+          replay: [
+
+          ],
 
         }
 
@@ -93,7 +98,7 @@ export class Comment extends Component {
       image: require("../assets/Images/secur.png"),
       name: "الشاذلى",
       comment: this.state.text,
-      replay: "",
+      replay: [],
 
     }
 
@@ -110,9 +115,10 @@ export class Comment extends Component {
   Add_Replay(index) {
     let items = this.state.comments
     let comm = this.state.replay_comment
+    let name = this.state.replay_name
     let item = items[index]
 
-    item.replay = comm
+    item.replay.push(comm + "\n")
 
     this.setState({
 
@@ -146,7 +152,7 @@ export class Comment extends Component {
 
         }}>
 
-          <View style={styles.container}>
+          <View style={{ padding: PADDING.smPadding, }}>
 
 
             {/* View Header */}
@@ -168,58 +174,84 @@ export class Comment extends Component {
 
               {/* map */}
               {this.state.comments.map((comment, index) => (
-                <View style={[styles.container_profile, { borderBottomWidth: index == this.state.comments.length - 1 ? 0 : 1 }]}
+                <View style={[styles.container_comment, { borderBottomWidth: index == this.state.comments.length - 1 ? 0 : 1 }]}
                 >
-                  <View style={{ alignItems: "center" }}>
+                  <View style={{}}>
 
                     <Image
                       source={comment.image}
                       style={{
-                        width: RFValue(50),
-                        height: RFValue(50),
+                        width: RFValue(40),
+                        height: RFValue(40),
                         backgroundColor: "#ccc",
                       }}
                       resizeMode="contain"
-                      borderRadius={35}
+                      borderRadius={30}
                     />
 
                   </View>
                   <View style={{
-                    paddingHorizontal: RFValue(PADDING.mdPadding),
-                    width: "90%"
+                    minWidth: "50%",
+                    marginLeft: MARGIN.xsMargin,
+
                   }}>
 
-
-                    <View style={{}}>
+                    <View style={{
+                      backgroundColor: "#fff",
+                      minHeight: RFValue(50),
+                      paddingHorizontal: PADDING.smPadding,
+                      borderRadius: RFValue(10),
+                      elevation: 2
+                    }}>
                       <Text style={styles.titleStyle}>{comment.name}</Text>
                       <Text style={styles.messageTitleStyle}>{comment.comment}</Text>
-
+                    </View>
+                    <View style={{ flexDirection: "row" }}>
                       {
-                        comment.replay == "" ? null : (<Text style={{
-                          marginLeft: RFValue(20),
-                          fontSize: RFValue(15),
-                          color: COLORS.black
-                        }}>{comment.replay}</Text>)
-                      }
+                        comment.replay == "" ? null : <Image
+                          source={this.state.replay_image}
+                          style={{
+                            width: RFValue(25),
+                            height: RFValue(25),
+                            marginTop: MARGIN.xsMargin,
+                            marginRight: MARGIN.xsMargin,
 
+                          }}
+                          resizeMode="contain"
+                          borderRadius={20}
+                        />}
+                      {comment.replay == "" ? null :
+                        <View style={{
+                          backgroundColor: "#fff",
+                          minWidth: "40%",
+                          minHeight: RFValue(40),
+                          borderRadius: RADIUS.smRadius,
+                          paddingHorizontal: PADDING.xsPadding,
+                          marginTop: MARGIN.xsMargin,
+                          elevation: 2
+                        }}>
+                          <Text style={[styles.titleStyle, { alignItems: "flex-end" }]}>{this.state.replay_name}</Text>
+                          <Text style={{
+                            marginLeft: RFValue(20),
+                            fontSize: RFValue(15),
+                            color: COLORS.black
+                          }}>{comment.replay}</Text>
 
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.setState({
-                            current_index: index
-                          })
-                          // this.RBSheet.open()
-                        }}
-                      >
-                        <Text style={{ fontSize:RFValue(20) }}>الرد</Text>
-                      </TouchableOpacity>
+                        </View>}
+
                     </View>
-                    <View style={{
-                      flexDirection: "row",
-                      alignItems: "center"
-                    }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          current_index: index
+                        })
+                        this.RBSheet.open()
+                      }}
+                    >
+                      <Text style={styles.titleStyle}>الرد</Text>
+                    </TouchableOpacity>
 
-                    </View>
+
                   </View>
                 </View>
 
@@ -234,47 +266,20 @@ export class Comment extends Component {
 
         </View>
 
-        <View style={{
-
-          backgroundColor: COLORS.primary,
-          marginTop: MARGIN.lgMargin,
-          alignSelf: "center",
-          width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          height: RFValue(50),
-          marginBottom: MARGIN.lgMargin,
-
-
-
-        }}>
+        <View style={styles.container_add_comment}>
 
           <TouchableOpacity style={styles.smallButtom}
             disabled={this.state.text == "" ? true : false}
             onPress={() => {
               this.add()
-
             }}
           >
-            <FontAwesome5 name="paper-plane" color={COLORS.error} size={RFValue(ICONS.xlIcon)} />
+            <FontAwesome5 name="paper-plane" color={COLORS.error} size={RFValue(ICONS.lIcon)} />
           </TouchableOpacity>
 
-
           <TextInput
-            style={{
-              width: "80%",
-              // borderWidth: 1,
-              alignItems: "center",
-              backgroundColor: COLORS.white,
-              borderRadius: RFValue(RADIUS.lgRadius),
-              height: RFValue(40),
-
-
-              paddingHorizontal:RFValue( PADDING.lgPadding),
-            }}
+            style={styles.input}
             placeholder={"اكتب تعليقك"}
-
             value={this.state.text}
             onChangeText={(newValue) => {
               this.setState({
@@ -286,7 +291,7 @@ export class Comment extends Component {
         </View>
 
 
-        {/* <View style={[styles.view]}>
+        <View style={[styles.view]}>
           <RBSheet
             ref={ref => {
               this.RBSheet = ref;
@@ -302,21 +307,9 @@ export class Comment extends Component {
               }
             }}
           >
-            <View style={{
-
-              backgroundColor: COLORS.primary,
-
-              alignSelf: "center",
-              width: "100%",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              flex: 1,
-
-
-
-
-            }}>
+            <View style={[styles.container_add_comment, {
+              flex: 1, marginBottom: 0, marginTop: 0
+            }]}>
 
               <TouchableOpacity style={styles.smallButtom}
                 disabled={this.state.replay_comment == "" ? true : false}
@@ -330,15 +323,7 @@ export class Comment extends Component {
 
 
               <TextInput
-                style={{
-                  width: "80%",
-                  // borderWidth: 1,
-                  alignItems: "center",
-                  backgroundColor: COLORS.white,
-                  borderRadius: RADIUS.lgRadius,
-                  height: RFValue(40),
-                  paddingHorizontal: PADDING.lgPadding,
-                }}
+                style={styles.input}
                 placeholder={"اكتب تعليقك"}
                 value={this.state.replay_comment}
                 onChangeText={(newValue) => {
@@ -349,7 +334,7 @@ export class Comment extends Component {
               />
             </View>
           </RBSheet>
-        </View> */}
+        </View>
 
         {/* </ScrollView > */}
 
@@ -379,22 +364,20 @@ const styles = StyleSheet.create({
     color: COLORS.black,
 
   },
-  container: {
-    margin: RFValue(MARGIN.xsMargin),
-  },
-  container_profile: {
+
+  container_comment: {
     flexDirection: "row",
     width: "100%",
-    height: RFValue(80),
-    alignItems: "center",
+    minheight: RFValue(50),
+    // alignItems: "center",
     borderBottomWidth: RFValue(0.7),
     borderBottomColor: COLORS.gray,
     paddingBottom: RFValue(PADDING.lgPadding),
-    marginTop:RFValue(MARGIN.xsMargin)
+    marginTop: RFValue(MARGIN.xsMargin)
 
   },
   smallButtom: {
-    marginRight:RFValue(MARGIN.xsMargin) ,
+    marginRight: RFValue(MARGIN.xsMargin),
     backgroundColor: COLORS.white,
     borderRadius: RFValue(RADIUS.lgRadius),
     width: RFValue(40),
@@ -402,6 +385,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     // position: "absolute"
+  },
+  input: {
+    width: "80%",
+
+    alignItems: "center",
+    backgroundColor: COLORS.white,
+    borderRadius: RADIUS.lgRadius,
+    height: RFValue(40),
+    paddingHorizontal: PADDING.lgPadding,
+  },
+  container_add_comment: {
+    backgroundColor: COLORS.primary,
+    marginTop: MARGIN.lgMargin,
+    alignSelf: "center",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    height: RFValue(50),
+    marginBottom: MARGIN.lgMargin,
   }
 });
 export default Comment;
