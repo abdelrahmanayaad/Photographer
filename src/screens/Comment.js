@@ -185,7 +185,7 @@ export class Comment extends Component {
 
                   </View>
                   <View style={{
-                    paddingHorizontal: PADDING.mdPadding,
+                    paddingHorizontal: RFValue(PADDING.mdPadding),
                     width: "90%"
                   }}>
 
@@ -196,8 +196,8 @@ export class Comment extends Component {
 
                       {
                         comment.replay == "" ? null : (<Text style={{
-                          marginLeft: 20,
-                          fontSize: 15,
+                          marginLeft: RFValue(20),
+                          fontSize: RFValue(15),
                           color: COLORS.black
                         }}>{comment.replay}</Text>)
                       }
@@ -211,7 +211,7 @@ export class Comment extends Component {
                           // this.RBSheet.open()
                         }}
                       >
-                        <Text style={{ fontSize: 20 }}>الرد</Text>
+                        <Text style={{ fontSize:RFValue(20) }}>الرد</Text>
                       </TouchableOpacity>
                     </View>
                     <View style={{
@@ -257,7 +257,7 @@ export class Comment extends Component {
 
             }}
           >
-            <FontAwesome5 name="paper-plane" color={COLORS.error} size={ICONS.xlIcon} />
+            <FontAwesome5 name="paper-plane" color={COLORS.error} size={RFValue(ICONS.xlIcon)} />
           </TouchableOpacity>
 
 
@@ -267,11 +267,11 @@ export class Comment extends Component {
               // borderWidth: 1,
               alignItems: "center",
               backgroundColor: COLORS.white,
-              borderRadius: RADIUS.lgRadius,
+              borderRadius: RFValue(RADIUS.lgRadius),
               height: RFValue(40),
 
 
-              paddingHorizontal: PADDING.lgPadding,
+              paddingHorizontal:RFValue( PADDING.lgPadding),
             }}
             placeholder={"اكتب تعليقك"}
 
@@ -389,13 +389,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: RFValue(0.7),
     borderBottomColor: COLORS.gray,
-    paddingBottom: PADDING.lgPadding
+    paddingBottom: RFValue(PADDING.lgPadding),
+    marginTop:RFValue(MARGIN.xsMargin)
 
   },
   smallButtom: {
-    marginRight: MARGIN.xsMargin,
+    marginRight:RFValue(MARGIN.xsMargin) ,
     backgroundColor: COLORS.white,
-    borderRadius: RADIUS.lgRadius,
+    borderRadius: RFValue(RADIUS.lgRadius),
     width: RFValue(40),
     height: RFValue(40),
     alignItems: "center",

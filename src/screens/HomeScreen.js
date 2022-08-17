@@ -1,17 +1,9 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, Modal, StatusBar, ImageBackground } from 'react-native';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import Entypo from 'react-native-vector-icons/Entypo'
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
-import {
-  COLORS,
-  FONTS,
-  ICONS,
-  PADDING,
-  RADIUS,
-  IconsView,
-} from '../constants';
+import { COLORS, FONTS, ICONS, PADDING, RADIUS } from '../constants';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MARGIN } from '../constants';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -20,115 +12,110 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Dialog from "react-native-dialog";
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
+function HomeScreen() {
+  const [highlights, sethighlights] = useState(
+    [{
+      id: 0,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
-export class HomeScreen extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      highlights: [{
-        id: 0,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
+    }, {
+      id: 1,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post2.jpg')
 
-      }, {
-        id: 1,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post2.jpg')
+    }, {
+      id: 2,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/photo.jpg')
 
-      }, {
-        id: 2,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/photo.jpg')
+    }, {
+      id: 3,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
-      }, {
-        id: 3,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
+    }, {
+      id: 4,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
-      }, {
-        id: 4,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
+    }, {
+      id: 5,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
-      }, {
-        id: 5,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
+    }, {
+      id: 6,
+      img: require('../assets/Images/photo.jpg'),
+      story: "",
+    }, {
+      id: 7,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
-      }, {
-        id: 6,
-        img: require('../assets/Images/photo.jpg'),
-        story: "",
-      }, {
-        id: 7,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
+    }, {
+      id: 8,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
-      }, {
-        id: 8,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
-
-      }, {
-        id: 9,
-        img: require('../assets/Images/photo.jpg'),
-        story: require('../assets/Images/post.jpg'),
-
-      }
-      ], posts: [{
-        id: 1,
-        profile_img: require('../assets/Images/photo.jpg'),
-        post_img: require('../assets/Images/post.jpg'),
-        name: "اسراء الجز",
-        email: "esraaelgiz",
-        discribtion: "صوره للطبيعه",
-        favourite: false,
-        saved: false,
-        likes_number: 130,
-        comment_number: 20,
-        upload_time: "منذ دقيقه واحده"
-
-      }, {
-        id: 2,
-        profile_img: require('../assets/Images/photo.jpg'),
-        post_img: require('../assets/Images/post2.jpg'),
-        name: "مروه السوداني",
-        email: "marwaelsodany",
-        discribtion: "",
-        favourite: false,
-        saved: false,
-        likes_number: 300,
-        comment_number: 120,
-        upload_time: "منذ دقيقه واحده"
-      }, {
-        id: 3,
-        profile_img: require('../assets/Images/photo.jpg'),
-        post_img: require('../assets/Images/post.jpg'),
-        name: "اسراء الجز",
-        email: "esraaelgiz",
-        discribtion: "",
-        favourite: false,
-        saved: false,
-        likes_number: 250,
-        comment_number: 60,
-        upload_time: "منذ دقيقه واحده"
-      }
-      ],
-      email: "esraaelgiz@gmail.com",
-      password: "123456",
-      dialog_visible: false,
-      stories_modal_visible: false,
-      arr: []
-
+    }, {
+      id: 9,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
 
     }
-  }
+    ])
+  const [posts, setposts] = useState(
+    [{
+      id: 1,
+      profile_img: require('../assets/Images/photo.jpg'),
+      post_img: require('../assets/Images/post.jpg'),
+      name: "اسراء الجز",
+      email: "esraaelgiz",
+      discribtion: "صوره للطبيعه",
+      favourite: false,
+      saved: false,
+      likes_number: 130,
+      comment_number: 20,
+      upload_time: "منذ دقيقه واحده"
 
-  favouritepress(item, index) {
-    let posts_arr = this.state.posts
-    if (this.state.email == "" || this.state.password == "") {
-      this.setState({ dialog_visible: true })
-    } else if (this.state.email != "" && this.state.password != "") {
+    }, {
+      id: 2,
+      profile_img: require('../assets/Images/photo.jpg'),
+      post_img: require('../assets/Images/post2.jpg'),
+      name: "مروه السوداني",
+      email: "marwaelsodany",
+      discribtion: "",
+      favourite: false,
+      saved: false,
+      likes_number: 300,
+      comment_number: 120,
+      upload_time: "منذ دقيقه واحده"
+    }, {
+      id: 3,
+      profile_img: require('../assets/Images/photo.jpg'),
+      post_img: require('../assets/Images/post.jpg'),
+      name: "اسراء الجز",
+      email: "esraaelgiz",
+      discribtion: "",
+      favourite: false,
+      saved: false,
+      likes_number: 250,
+      comment_number: 60,
+      upload_time: "منذ دقيقه واحده"
+    }
+    ])
+  const [email, setemail] = useState("esraaelgiz@gmail.com")
+  const [password, setpassword] = useState("123456")
+  const [dialog_visible, setdialog_visible] = useState(false)
+  const [stories_modal_visible, setstories_modal_visible] = useState(false)
+  const [arr_for_each_story, setarr_for_each_story] = useState([])
+
+  const favouritepress = (item, index) => {
+    let posts_arr = [...posts]
+    if (email == "" || password == "") {
+      setdialog_visible(dialog_visible => true)
+    } else if (email != "" && password != "") {
       posts_arr[index].favourite = !posts_arr[index].favourite
       if (posts_arr[index].favourite == true) {
         posts_arr[index].likes_number = (posts_arr[index].likes_number) + 1
@@ -136,52 +123,63 @@ export class HomeScreen extends Component {
         posts_arr[index].likes_number = (posts_arr[index].likes_number) - 1
 
       }
-      this.setState({ posts: posts_arr })
+      setposts(posts => posts_arr)
     }
-
-
-
   }
-  savedpress(item, index) {
-    let posts_arr = this.state.posts
-    if (this.state.email == "" || this.state.password == "") {
-      this.setState({ dialog_visible: true })
-    } else if (this.state.email != "" && this.state.password != "") {
+
+  const savedpress = (item, index) => {
+    let posts_arr = [...posts]
+    if (email == "" || password == "") {
+      setdialog_visible(dialog_visible => true)
+    } else if (email != "" && password != "") {
       posts_arr[index].saved = !posts_arr[index].saved
-      this.setState({ posts: posts_arr })
+      setposts(posts => posts_arr)
     }
   }
-  commentpress(item, index) {
-    let posts_arr = this.state.posts
-    if (this.state.email == "" || this.state.password == "") {
-      this.setState({ dialog_visible: true })
-    }
-
-  }
-  notificationpress() {
-    if (this.state.email == "" || this.state.password == "") {
-      this.setState({ dialog_visible: true })
+  const commentpress = (item, index) => {
+    let posts_arr = [...posts]
+    if (email == "" || password == "") {
+      setdialog_visible(dialog_visible => true)
     }
 
   }
-  renderhighlights() {
-    return this.state.highlights.map((item, index) => {
+  const notificationpress = () => {
+    if (email == "" || password == "") {
+      setdialog_visible(dialog_visible => true)
+    }
+
+  }
+
+  const renderhighlights = () => {
+    return highlights.map((item, index) => {
       return (
         item.story != "" ?
-          <TouchableOpacity onPress={() => { this.state.arr.push(item), this.setState({ stories_modal_visible: true }) }} style={styles.each_highlight_style}>
+          <TouchableOpacity onPress={() => onpress_in_renderhighlights(item)} style={styles.each_highlight_style}>
             <Image source={item.img} style={styles.each_img_in_highlight_style} />
           </TouchableOpacity> : null
       )
 
     })
   }
-  storiespress() {
-    return this.state.arr.map((item, index) => {
+  const onpress_in_renderhighlights = (obj) => {
+    let arr = [...arr_for_each_story]
+    arr.push(obj)
+    setarr_for_each_story(arr_for_each_story => arr)
+    setstories_modal_visible(stories_modal_visible => true)
+
+
+    /*
+        arr_for_each_story.push(obj)
+        setstories_modal_visible(stories_modal_visible => true)*/
+
+  }
+  const storiespress = () => {
+    return arr_for_each_story.map((item, index) => {
       return (
 
         <ImageBackground source={item.story} style={{ width: '100%', height: "100%" }} resizeMode="cover" >
 
-          <TouchableOpacity onPress={() => { this.setState({ stories_modal_visible: false }), this.state.arr.pop() }}
+          <TouchableOpacity onPress={onpress_in_storiespress}
             style={styles.exit_buttom_in_story_style}>
             <Feather name="x" size={RFValue(ICONS.lIcon)} color={COLORS.black} />
           </TouchableOpacity>
@@ -190,13 +188,21 @@ export class HomeScreen extends Component {
       )
 
     })
+  }
 
+  const onpress_in_storiespress = () => {
+    /*setstories_modal_visible(stories_modal_visible => false)
+    arr_for_each_story.pop()*/
 
+    let arr = [...arr_for_each_story]
+    setstories_modal_visible(stories_modal_visible => false)
+    arr.pop()
+    setarr_for_each_story(arr_for_each_story => arr)
 
   }
 
-  renderposts() {
-    return this.state.posts.map((item, index) => {
+  const renderposts = () => {
+    return posts.map((item, index) => {
       return (
         <View style={styles.view_for_each_post_style}>
 
@@ -221,19 +227,19 @@ export class HomeScreen extends Component {
           </View>
           <View style={styles.view_for_icons_in_post_style}>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
-              <TouchableOpacity onPress={() => { this.favouritepress(item, index) }} >
+              <TouchableOpacity onPress={() => favouritepress(item, index)} >
                 {item.favourite == false ? <AntDesign name="hearto" color={COLORS.gray} size={RFValue(ICONS.mIcon)} /> : <AntDesign name="heart" color={COLORS.primary} size={RFValue(ICONS.mIcon)} />}
               </TouchableOpacity>
               <Text style={styles.text_near_each_icon_style}>{item.likes_number > 0 ? item.likes_number : ""}</Text>
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
-              <TouchableOpacity onPress={() => { this.commentpress(item, index) }} >
+              <TouchableOpacity onPress={() => commentpress(item, index)} >
                 <Fontisto name="comment" color={COLORS.gray} size={RFValue(ICONS.mIcon)} />
               </TouchableOpacity>
               <Text style={styles.text_near_each_icon_style}>{item.comment_number > 0 ? item.comment_number : ""}</Text>
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
-              <TouchableOpacity onPress={() => { this.savedpress(item, index) }}>
+              <TouchableOpacity onPress={() => savedpress(item, index)}>
                 <FontAwesome name="bookmark" color={item.saved == true ? COLORS.primary : COLORS.gray} size={RFValue(ICONS.mIcon)} />
               </TouchableOpacity>
             </View>
@@ -258,60 +264,52 @@ export class HomeScreen extends Component {
       )
     })
   }
-  render() {
-    return (
 
-      <View style={styles.main_view_style}>
-        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
+  return (
+
+    <View style={styles.main_view_style}>
+      <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
 
 
-        <View style={styles.header}>
+      <View style={styles.header}>
 
-          <View style={{ paddingLeft: RFValue(25) }}></View>
-          <View >
-            <Text style={styles.titleStyle}>الصفحة الرئيسية</Text>
-          </View>
-          <View >
-            <TouchableOpacity onPress={() => { this.notificationpress() }} >
-              <EvilIcons name="bell" color={COLORS.gray} size={RFValue(ICONS.xlIcon)} />
-            </TouchableOpacity>
+        <View style={{ paddingLeft: RFValue(25) }}></View>
+        <View >
+          <Text style={styles.titleStyle}>الصفحة الرئيسية</Text>
+        </View>
+        <View >
+          <TouchableOpacity onPress={notificationpress} >
+            <EvilIcons name="bell" color={COLORS.gray} size={RFValue(ICONS.xlIcon)} />
+          </TouchableOpacity>
+        </View>
+      </View>
+      <ScrollView>
+        <View >
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <View style={styles.highlight_view_style}>
+              {renderhighlights()}
+            </View>
+          </ScrollView>
+          <View>
+            {renderposts()}
           </View>
         </View>
-        <ScrollView>
-          <View >
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-              <View style={styles.highlight_view_style}>
+      </ScrollView>
+      <Dialog.Container visible={dialog_visible}>
+        <Dialog.Description>
+          يجب ان تقوم بتسجيل الدخول اولا.
+        </Dialog.Description>
+        <Dialog.Button label="انهاء" style={{ color: COLORS.primary }} onPress={() => setdialog_visible(dialog_visible => false)} />
+      </Dialog.Container>
+      <Modal visible={stories_modal_visible}>
+        {storiespress()}
 
+      </Modal>
 
-                {this.renderhighlights()}
-
-              </View>
-            </ScrollView>
-
-            <View>
-              {this.renderposts()}
-            </View>
-
-          </View>
-        </ScrollView>
-        <Dialog.Container visible={this.state.dialog_visible}>
-          <Dialog.Description>
-            يجب ان تقوم بتسجيل الدخول اولا.
-          </Dialog.Description>
-          <Dialog.Button label="انهاء" style={{ color: COLORS.primary }} onPress={() => { this.setState({ dialog_visible: false }) }} />
-        </Dialog.Container>
-        <Modal visible={this.state.stories_modal_visible}>
-          {this.storiespress()}
-
-        </Modal>
-
-
-      </View>
-
-
-    );
-  }
+    </View>
+  );
 }
+
 const styles = StyleSheet.create({
   main_view_style: {
     width: '100%'

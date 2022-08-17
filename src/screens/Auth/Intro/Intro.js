@@ -1,74 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, StatusBar } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { RFValue } from 'react-native-responsive-fontsize';
 import AppIntroSlider from 'react-native-app-intro-slider';
-const { width, height } = Dimensions.get("screen")
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import {
-    COLORS,
-    ICONS,
-    FONTS,
-    
+import { COLORS, ICONS, FONTS, } from '../../../constants';
 
-} from '../../../constants';
+function Intro({navigation}) {
+    const [screens, setscreens] = useState(
+        [{
+            id: 1,
+            image: require('../../../assets/Images/moment-r.png'),
+            text: "اهلا ومرحبا بك"
+        }, {
+            id: 2,
+            image: require('../../../assets/Images/inttro1-r.png'),
+            text: 'لدينا العديد من المصورين'
 
-const screens = [{
-    id: 1,
-    image: require('../../../assets/Images/moment-r.png'),
-    text: "اهلا ومرحبا بك"
-}, {
-    id: 2,
-    image: require('../../../assets/Images/inttro1-r.png'),
-    text: 'لدينا العديد من المصورين'
+        }, {
+            id: 3,
+            image: require('../../../assets/Images/pse-r.png'),
+            text: 'يمكنك اختيار مصورك المفضل'
 
-}, {
-    id: 3,
-    image: require('../../../assets/Images/pse-r.png'),
-    text: 'يمكنك اختيار مصورك المفضل'
-
-},]
-
-export class Intro extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        }
-
-    }
-    render() {
-        function renderIntro({ item }) {
-            return (
-                <View style={styles.each_screen_container_style}>
-                    <StatusBar
-                        barStyle={'light-content'} backgroundColor={COLORS.primary}
-                    />
-                    <Image source={item.image} style={styles.each_img_style} />
-                    <Text style={styles.text_under_each_img_style}>{item.text}</Text>
-                </View>
-            )
-        }
+        },])
+    const renderIntro = ({ item }) => {
         return (
-            <AppIntroSlider renderItem={renderIntro}
-                data={screens}
-                activeDotStyle={styles.slider_active_dot_style}
-                renderNextButton={() => <View style={styles.view_for_next_style}><Text style={styles.next_button_style}>التالي</Text></View>}
-                renderDoneButton={() =>
-                    <TouchableOpacity style={styles.arrow_botton_style}
-                        onPress={() => {
-                            /*this.set_intro(1),
-                            this.props.navigation.navigate("StackList")*/
-                        }}
-                    >
-                        <AntDesign name="arrowleft" color={COLORS.background} size={RFValue(ICONS.xlIcon)} />
-                    </TouchableOpacity>}
-
-            />
-
+            <View style={styles.each_screen_container_style}>
+                <StatusBar
+                    barStyle={'light-content'} backgroundColor={COLORS.primary}
+                />
+                <Image source={item.image} style={styles.each_img_style} />
+                <Text style={styles.text_under_each_img_style}>{item.text}</Text>
+            </View>
         )
     }
+    return (
+        <AppIntroSlider renderItem={renderIntro}
+            data={screens}
+            activeDotStyle={styles.slider_active_dot_style}
+            renderNextButton={() => <View style={styles.view_for_next_style}><Text style={styles.next_button_style}>التالي</Text></View>}
+            renderDoneButton={() =>
+                <TouchableOpacity style={styles.arrow_botton_style}
+                    onPress={() => 
+                        //this.set_intro(1),
+                        navigation.navigate('Login')
+                    }
+                >
+                    <AntDesign name="arrowleft" color={COLORS.background} size={RFValue(ICONS.xlIcon)} />
+                </TouchableOpacity>}
+
+        />
+
+    )
+
 }
+
+
 const styles = StyleSheet.create({
     each_screen_container_style: {
         flex: 1,
@@ -82,18 +71,18 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     }, text_under_each_img_style: {
         color: COLORS.primary,
-        fontSize:RFValue(FONTS.h3) 
+        fontSize: RFValue(FONTS.h3)
     }, slider_active_dot_style: {
         backgroundColor: COLORS.primary,
         width: RFValue(25)
     }, view_for_next_style: {
-        marginTop: RFValue(15),
+         marginTop: RFValue(9),
 
     }, next_button_style: {
         color: COLORS.primary,
-         fontSize: RFValue(FONTS.h3)
+        fontSize: RFValue(FONTS.h3)
     }, arrow_botton_style: {
-        marginTop: RFValue(12),
+        //marginTop: RFValue(12),
         backgroundColor: COLORS.primary,
         borderRadius: RFValue(20),
         width: RFValue(40),

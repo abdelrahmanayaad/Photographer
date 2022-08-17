@@ -19,7 +19,7 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-export function ForgetPassword(props) {
+export function ForgetPassword({navigation}) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
@@ -42,7 +42,7 @@ export function ForgetPassword(props) {
     return reg.test(value.trim());
   };
 
-  generatCode = () => {
+  const generatCode = () => {
     let code = '';
     const numbers = '0123456789';
     for (let i = 0; i < 4; i++) {
@@ -52,15 +52,20 @@ export function ForgetPassword(props) {
     return code;
   };
 
-  sendCode = () => {
+  const sendCode = () => {
     const code = generatCode();
     alert(code);
+  };
+  const sendpress = () => {
+    handelPress(email);
   };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <TouchableOpacity style={styles.iconStyle}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.iconStyle}>
           <AntDesign
             name="arrowright"
             color={COLORS.gray}
@@ -97,9 +102,10 @@ export function ForgetPassword(props) {
             title="ارسل لي الان"
             bgcolor={COLORS.primary}
             onPress={() => {
-              handelPress(email);
+              // handelPress(email);
               // this.generatCode();
               // this.sendCode();
+              navigation.navigate('OTP');
             }}
           />
         </View>

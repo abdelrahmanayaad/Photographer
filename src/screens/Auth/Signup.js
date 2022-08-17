@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import {
   Text,
@@ -12,10 +12,10 @@ import {
   FlatList,
   Button,
   TextInput,
-  StatusBar
+  StatusBar,
 } from 'react-native';
-import { Input, GeneralButton } from '../../components';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {Input, GeneralButton} from '../../components';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -25,110 +25,105 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
 import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 
-const { width, height } = Dimensions.get('window');
-export default function Signup() {
-
-  const [name, setName] = useState("");
-  const [nameerorr, setNameerorr] = useState("")
-  const [Email, setEmail] = useState("");
-  const [Emailerorr, setEmailError] = useState("")
-  const [phone, setPhone] = useState("");
-  const [phoneerorr, setPhoneError] = useState("")
-  const [password, setPassword] = useState("");
-  const [passworderorr, setPassError] = useState("")
-  const [passwordconfirm, setConPass] = useState("");
-  const [passwordconfirmerorr, setConPassError] = useState("")
+const {width, height} = Dimensions.get('window');
+export default function Signup({navigation}) {
+  const [name, setName] = useState('');
+  const [nameerorr, setNameerorr] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Emailerorr, setEmailError] = useState('');
+  const [phone, setPhone] = useState('');
+  const [phoneerorr, setPhoneError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passworderorr, setPassError] = useState('');
+  const [passwordconfirm, setConPass] = useState('');
+  const [passwordconfirmerorr, setConPassError] = useState('');
   const [secured_pass, setSecured_pass] = useState(true);
-  const [secured_pass1, setSecured_pass1] = useState(true)
+  const [secured_pass1, setSecured_pass1] = useState(true);
   const [ShowComment, setShowComment] = useState(false);
-  const [animateModal, setAnimateModal] = useState(false)
+  const [animateModal, setAnimateModal] = useState(false);
   const [arr, setArr] = useState([
-    { name: "مستخدم", }
-    ,
-    { name: " مصور" }
-    ,
-    { name: "ميكب ارتست" }
+    {name: 'مستخدم'},
+    {name: ' مصور'},
+    {name: 'ميكب ارتست'},
   ]);
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState('');
 
-    // SendUser=()=> {
-    //   let data_to_send = {
-    //     name:  name,
-    //     email:  Email,
-    //     pass:  password,
-    //     type:  arr,
-    //     token:  token
-    //   }
-    //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
-    //     .then((res) => {
-    //       if (res.status == 200) {
-    //         if ( (res.data) == "successful") {
-    //           alert("done")
-    //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
-    //           alert("من فضلك تأكد من صحة البيانات")
-    //         } else if (res.data == "email is already exist") {
-    //           alert("هذا البريد موجود بالفعل")
-    //         }
-    //       } else {
-    //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-    //       }
-    //       setName( "" )
-    //       setPassword("")
-    //       setPhoneError( "" )
-    //       setEmail("")
-    //       setConPass("")
-    //     })
-    // }
-
-  // componentDidMount(){
-  //   messaging()
-  //   .getToken()
-  //   .then(token => {
-  //       // alert(token)
-  //       setToken(token)
-
-  //   });
-
-
-  // return messaging().onTokenRefresh(token => {
-  //   setToken(token)
-
-  // });
-
+  // SendUser=()=> {
+  //   let data_to_send = {
+  //     name:  name,
+  //     email:  Email,
+  //     pass:  password,
+  //     type:  arr,
+  //     token:  token
+  //   }
+  //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+  //     .then((res) => {
+  //       if (res.status == 200) {
+  //         if ( (res.data) == "successful") {
+  //           alert("done")
+  //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+  //           alert("من فضلك تأكد من صحة البيانات")
+  //         } else if (res.data == "email is already exist") {
+  //           alert("هذا البريد موجود بالفعل")
+  //         }
+  //       } else {
+  //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+  //       }
+  //       setName( "" )
+  //       setPassword("")
+  //       setPhoneError( "" )
+  //       setEmail("")
+  //       setConPass("")
+  //     })
   // }
-//   useEffect(() => {
-    
-//     messaging()
-//         .getToken()
-//         .then(token => {
-//             console.log(token)
-//             // setToken(token)
 
-//         });
+  // // componentDidMount(){
+  // //   messaging()
+  // //   .getToken()
+  // //   .then(token => {
+  // //       // alert(token)
+  // //       setToken(token)
 
+  // //   });
 
-//     return messaging().onTokenRefresh(token => {
-//         // setToken(token)
-//         console.log(token)
+  // // return messaging().onTokenRefresh(token => {
+  // //   setToken(token)
 
-//     });
+  // // });
 
-//     // const getToken = async () => {
-//     //   try {
-//     //     const token = await messaging().getToken();
-//     //     if (token) return console.log(token);
-//     //   } catch (error) {
-//     //     console.log(error);
-//     //   }
-//     // };
-//     // getToken()
+  // // }
+  //   useEffect(() => {
 
-// }, [])
+  //     messaging()
+  //         .getToken()
+  //         .then(token => {
+  //             console.log(token)
+  //             // setToken(token)
+
+  //         });
+
+  //     return messaging().onTokenRefresh(token => {
+  //         // setToken(token)
+  //         console.log(token)
+
+  //     });
+
+  //     // const getToken = async () => {
+  //     //   try {
+  //     //     const token = await messaging().getToken();
+  //     //     if (token) return console.log(token);
+  //     //   } catch (error) {
+  //     //     console.log(error);
+  //     //   }
+  //     // };
+  //     // getToken()
+
+  // }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -141,17 +136,15 @@ export default function Signup() {
   validatePhone = phone => {
     var pho = /^01[0125][0-9]{8}$/gm;
     return pho.test(phone);
-
   };
   validatePassword = password => {
-    var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/
+    var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
-
-  }
+  };
   validateName = name => {
-    const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{5,30}$/
+    const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{5,30}$/;
     return re.test(String(name).toLowerCase());
-  }
+  };
 
   signup = value => {
     let error = 0;
@@ -160,9 +153,7 @@ export default function Signup() {
     if (name.trim() == '') {
       error++;
       setNameerorr('لايجب ان يكون هذا الحقل فارغ');
-    }
-
-    else if (!validateName(name)) {
+    } else if (!validateName(name)) {
       error++;
       setNameerorr('أدخل اسم صالح ');
     } else {
@@ -198,10 +189,11 @@ export default function Signup() {
     } else if (password.length > 20) {
       error++;
       setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
-
     } else if (!validatePassword(password)) {
       error++;
-      setPassError('كلمه المرور يجب لا تقل عن 6 ارقام و حرف كبير و حرف صغير وعلامه مميزه');
+      setPassError(
+        'كلمه المرور يجب لا تقل عن 6 ارقام و حرف كبير و حرف صغير وعلامه مميزه',
+      );
     } else {
       setPassError('');
     }
@@ -216,50 +208,49 @@ export default function Signup() {
     } else if (passwordconfirm.trim().length < 6) {
       error++;
       setConPassError('ادخل اكثر من 6 احرف');
-    }
-    else {
+    } else {
       setConPassError('');
     }
-
 
     // if (error == 0) {
     //   alert("WELCOME")
     // }
-
-  }
+  };
   onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     return reg.test(value.trim());
   };
   onChangePassword = value => {
-    var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
+    var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     return pass.test(value.trim());
   };
   onChangephone = value => {
     var pho = /^01[0125][0-9]{8}$/gm;
     return pho.test(value.trim());
-  }
+  };
 
   onChangename = value => {
-    const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{4,30}$/
+    const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{4,30}$/;
     return re.test(value.trim());
-  }
+  };
   const secured_password = e => {
     let securedPass = secured_pass;
     securedPass = !securedPass;
-    setSecured_pass(securedPass)
+    setSecured_pass(securedPass);
   };
   const secured_Con_password = e => {
     let securedPass = secured_pass1;
     securedPass = !securedPass;
-    setSecured_pass1(securedPass)
-  }
+    setSecured_pass1(securedPass);
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <TouchableOpacity style={styles.iconStyle}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.iconStyle}>
           <AntDesign
             name="arrowright"
             color={COLORS.gray}
@@ -276,11 +267,10 @@ export default function Signup() {
             placeholder="الاسم"
             value={name}
             onChangeText={value => {
-              setName(value)
+              setName(value);
               if (onChangename(value)) {
                 setNameerorr('');
               }
-
             }}
           />
           <View style={styles.ErrorView}>
@@ -294,16 +284,11 @@ export default function Signup() {
             placeholder="البريد الالكتروني"
             value={Email}
             onChangeText={value => {
-              setEmail(value)
+              setEmail(value);
               if (onChangeEmail(value)) {
                 setEmailError('');
               }
-            }
-            }
-
-
-
-
+            }}
           />
           <View style={styles.ErrorView}>
             <Text style={styles.ErrorText}>{Emailerorr}</Text>
@@ -317,16 +302,15 @@ export default function Signup() {
             maxLength={10}
             value={password}
             onChangeText={value => {
-              setPassword(value)
+              setPassword(value);
               if (onChangePassword(value)) {
                 setPassError('');
               }
-
             }}
           />
           <TouchableOpacity
             onPress={() => {
-              secured_password()
+              secured_password();
             }}>
             <Entypo
               name={secured_pass ? 'eye-with-line' : 'eye'}
@@ -349,7 +333,6 @@ export default function Signup() {
               if (onChangePassword(value)) {
                 setConPassError('');
               }
-
             }}
           />
           <TouchableOpacity
@@ -376,7 +359,6 @@ export default function Signup() {
               if (onChangephone(value)) {
                 setPhoneError('');
               }
-
             }}
           />
           <View style={styles.ErrorView}>
@@ -395,10 +377,8 @@ export default function Signup() {
         <View style={styles.buttonViewStyle}>
           <GeneralButton
             onPress={() => {
-              setAnimateModal(true),
-                setShowComment(true)
-            }
-            }
+              setAnimateModal(true), setShowComment(true);
+            }}
             title="تحديد النوع"
             bgcolor={COLORS.primary}
           />
@@ -408,17 +388,18 @@ export default function Signup() {
           PressToanimate={animateModal}
           ContentModal={
             <View style={styles.containerContent}>
-              <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>حدد نوع المستخدم</Text>
+              <Text style={[styles.fontModal, {marginBottom: MARGIN.xsMargin}]}>
+                حدد نوع المستخدم
+              </Text>
 
               <FlatList
                 data={arr}
-                renderItem={({ item, index }) => (
+                renderItem={({item, index}) => (
                   <>
-
                     <TouchableOpacity
                       style={styles.buttonmodal}
                       onPress={() => {
-                        setShowComment(false)
+                        setShowComment(false);
                       }}>
                       <Text style={styles.fontModal}>{item.name}</Text>
 
@@ -427,32 +408,29 @@ export default function Signup() {
                         color={COLORS.gray}
                         size={ICONS.lIcon}
                       />
-
                     </TouchableOpacity>
                   </>
                 )}
-
               />
             </View>
           }
           HeaderStyle={styles.headerContent}
           ContentModalStyle={styles.Modal}
-
           onClose={() => {
-            setAnimateModal(true),
-              setShowComment(false)
+            setAnimateModal(true), setShowComment(false);
           }}
         />
 
         <View style={styles.ViewTitle1}>
           <Text style={styles.messageTitleStyle}>هل لديك حساب؟ </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
             <Text style={styles.messageTitleStyle1}>تسجيل دخول</Text>
           </TouchableOpacity>
         </View>
-
       </ScrollView>
-
     </View>
   );
 }
@@ -493,8 +471,7 @@ const styles = StyleSheet.create({
     marginTop: RFValue(MARGIN.xsMargin),
     textDecorationLine: 'underline',
   },
-  textInputViewStyle: {
-  },
+  textInputViewStyle: {},
   textInputpassword: {
     borderBottomWidth: RFValue(0.7),
     borderBottomColor: COLORS.gray,
@@ -525,35 +502,34 @@ const styles = StyleSheet.create({
   },
   fontModal: {
     fontSize: RFValue(FONTS.h5),
-    alignSelf: "center",
+    alignSelf: 'center',
     color: COLORS.black,
   },
   buttonmodal: {
     height: RFValue(height / 19),
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignSelf: "center",
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
     width: RFValue(width / 1.5),
     padding: PADDING.xsPadding,
     borderWidth: 1,
     borderRadius: 12,
     borderColor: COLORS.gray,
-    marginBottom: MARGIN.xsMargin
+    marginBottom: MARGIN.xsMargin,
   },
   containerContent: {
     height: RFValue(height),
-    marginTop: 30
+    marginTop: 30,
   },
   headerContent: {
-    height: 50
+    height: 50,
   },
   Modal: {
     backgroundColor: COLORS.background,
     height: RFValue(height / 2.5),
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    padding: PADDING.mdPadding
-
-  }
+    padding: PADDING.mdPadding,
+  },
 });

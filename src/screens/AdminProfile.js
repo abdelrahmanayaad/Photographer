@@ -22,7 +22,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import ActionSheet from 'react-native-actionsheet';
 import axios from 'axios';
 
-export class AdminProfile extends Component {
+export class AdminProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1028,5 +1028,4 @@ const styles = StyleSheet.create({
     marginVertical: RFValue(MARGIN.lgMargin),
   },
 });
-
 export default AdminProfile;

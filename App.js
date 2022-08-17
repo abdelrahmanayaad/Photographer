@@ -5,12 +5,15 @@ import GeneralButton from './src/components/GeneralButton';
 import Input from './src/components/Input';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {NavigationContainer} from '@react-navigation/native';
+import ProfileInfo from './src/screens/Intro/ProfileInfo';
+
+// import { ForgetPassword, Signup, SettingsScreen, Verification } from './src/screens';
 import {
   Signup,
   Login,
   ForgetPassword,
   ChangePassword,
-  Verification,
+  Otp,
   SettingsScreen,
   EditprofileScreen,
   SearchScreen,
@@ -24,11 +27,17 @@ import {
   AdminProfile,
   NewPassword,
 } from './src/screens';
+import AuthStack from './src/navigation/AuthStack';
+import HomeStack from './src/navigation/HomeStack';
 // import LoginWithG from './src/screens/Auth/LoginWithG';
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <AdminProfile />;
+    return (
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
+    );
   }
 }
 const styles = StyleSheet.create({});
