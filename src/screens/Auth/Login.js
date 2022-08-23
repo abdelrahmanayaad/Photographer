@@ -22,6 +22,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import LoginWithG from './LoginWithG';
+import axios from 'axios';
 import {HomeStack} from '../../navigation/HomeStack';
 import {HomeScreen} from '../HomeScreen';
 import {StackActions} from '@react-navigation/native';
@@ -32,6 +33,25 @@ function Login({navigation, route}) {
   const [user_password, set_password] = useState('');
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
+
+
+  const check_emailANDpass = () => {
+    let data_to_send = {
+      email: user_email,
+      pass: user_password,
+      token: ''
+    };
+    axios.post("https://generation3.000webhostapp.com/project/Training/Auth/user.php", data_to_send).then((res) => {
+      if (res.status == 200) {
+        console.log(res.data)
+      } else {
+        alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+
+  }
 
   const pass_secured = () => {
     let securedPass = secured_pass;
@@ -48,51 +68,35 @@ function Login({navigation, route}) {
   const validatePassword = password => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
-  };
-
-  const SIGN_IN = () => {
+  }
+  const check_email = () => {
     let email = user_email.trim();
-    let Password = user_password;
-    let email_error = '';
-    let password_error = '';
     if (email == '') {
-      email_error = 'يرجى ادخال البريد الالكتروني';
-    } else if (validateEmail(email) == false) {
-      email_error = 'تأكد من كتابة البريد الالكترونى بشكل صحيح';
-    } else if (email.length > 70) {
-      email_error = 'البريد الالكترونى يجب ألا يزيد عن 70 حرف ورقم';
-    } else if (email != 'marwa@gmail.com' && email != '') {
-      email_error = 'البريد الذي ادخلته غير موجود';
+      set_emailErr(error_email => 'يرجى ادخال البريد الالكتروني');
+    } else if (validateEmail(email) == false || email.length > 70) {
+      set_emailErr(error_email => 'البريد الالكترونى الذى ادخلته غير صحيح');
     } else {
       set_emailErr(error_email => '');
     }
-    if (Password == '') {
-      password_error = 'يجب ادخال كلمه مرور';
-    } else if (Password.length > 20) {
-      password_error = 'كلمه المرور يجب ألا تزيد عن 20 حرف و رقم';
-    } else if (!validatePassword(Password)) {
-      password_error =
-        'كلمه المرور يجب لا تقل عن 6 ارقام و حرف كبير و حرف صغير وعلامه مميزه ';
-    } else if (Password != 'Mm!123456') {
-      password_error = 'كلمة المرور التي ادخلتها غير صحيحة';
-    } else {
+  }
+  const check_pass = () => {
+    let password = user_password;
+    if (password == '') {
+      set_passErr(error_password => 'يجب ادخال كلمه مرور');
+    } else if (password.length > 20 || !validatePassword(password)) {
+      set_passErr(error_password => 'كلمة المرور غير صحيحة');
+    }else {
       set_passErr(error_password => '');
     }
-    if (email == 'marwa@gmail.com' && Password == 'Mm!123456') {
-      alert('تم التحقق من الايميل وكلمة المرور بنجاح .. مرحبا بك');
-    } else {
-      alert('يرجى التحقق من ادخال بياناتك بشكل صحيح');
-    }
-    set_emailErr(error_email => email_error);
-    set_passErr(error_password => password_error);
-  };
+
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
             <TouchableOpacity style={styles.iconStyle}>
               <AntDesign
                 name="arrowright"
@@ -116,6 +120,7 @@ function Login({navigation, route}) {
               onChangeText={value => {
                 set_email(user_email => value);
               }}
+              onEndEditing={() => check_email()}
             />
           </View>
           <Text style={styles.erorMsg}>{error_email}</Text>
@@ -124,11 +129,12 @@ function Login({navigation, route}) {
               style={styles.inputPass}
               placeholder="كلمة المرور"
               secureTextEntry={secured_pass}
-              maxLength={10}
+              // maxLength={10}
               value={user_password}
               onChangeText={value => {
                 set_password(user_password => value);
               }}
+              onEndEditing={() => check_pass()}
             />
             <TouchableOpacity
               onPress={() => {
@@ -152,8 +158,8 @@ function Login({navigation, route}) {
               title="تسجيل الدخول"
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
-              onPress={() => {
-                SIGN_IN();
+              onPress={() => {error_email==''&&error_password==''?
+                check_emailANDpass():null
               }}
             />
           </TouchableOpacity>

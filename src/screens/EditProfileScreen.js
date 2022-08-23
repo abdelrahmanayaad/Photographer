@@ -29,9 +29,7 @@ export class EditprofileScreen extends Component {
     super();
     this.state = {
       photo_uri: '',
-      email: 'marwa@gmail.com',
       name: 'Marwa Elsodany',
-      phone: '01205471932',
     }
   }
   componentDidMount() {
@@ -108,23 +106,6 @@ export class EditprofileScreen extends Component {
       }
     });
   }
-  validateEmail(email) {
-    var em =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return em.test(email);
-  }
-  email_error() {
-    let email = this.state.email.trim();
-    if (email == '') {
-      this.setState({ emailErr: 'يرجى ادخال البريد الالكتروني' });
-    } else if (this.validateEmail(email) == false) {
-      this.setState({ emailErr: 'تأكد من كتابة البريد الالكترونى بشكل صحيح' });
-    } else if (email.length > 70) {
-      this.setState({ emailErr: 'البريد الالكترونى يجب ألا يزيد عن 70 حرف ورقم' });
-    } else {
-      this.setState({ emailErr: '' });
-    }
-  }
   render() {
     return (
       <View style={{ padding: '4%' }}>
@@ -167,29 +148,11 @@ export class EditprofileScreen extends Component {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.inputView}>
-            <Input
-              placeholder="البريد الالكتروني"
-              keyboardType='email-address'
-              value={this.state.email}
-              onChangeText={(value) => { this.setState({ email: value }) }}
-              onBlur={() => { this.email_error() }}
-            />
-          </View>
-          <Text style={{ alignSelf: 'center', color: COLORS.error }}>{this.state.emailErr}</Text>
-          <View>
+          <View style={{marginVertical:RFValue(20)}}>
             <Input
               placeholder="الاسم"
               value={this.state.name}
               onChangeText={(value) => { this.setState({ name: value }) }}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Input
-              placeholder="رقم الهاتف"
-              keyboardType='phone-pad'
-              value={this.state.phone}
-              onChangeText={(value) => { this.setState({ phone: value }) }}
             />
           </View>
           <View style={styles.buttonView}>
