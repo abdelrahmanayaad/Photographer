@@ -59,6 +59,10 @@ function HomeScreen({navigation}) {
       id: 6,
       img: require('../assets/Images/photo.jpg'),
       story: '',
+    },{
+      id: 6,
+      img: require('../assets/Images/photo.jpg'),
+      story: require('../assets/Images/post.jpg'),
     },
   ]);
   const [posts, setposts] = useState([

@@ -143,13 +143,14 @@ export class AdminProfile extends React.Component {
   componentDidMount() {
     this.requestCameraPermission();
   }
-  getData = () => {
+  /*getData = () => {
     axios
       .get(
         'https://generation3.000webhostapp.com/project/Training/photographer_list.php',
       )
       .then(res => {
         if (res.status == 200) {
+          
           this.setState({photographers: res.data});
           // if (res.data == 'error') {
           //   alert('Try again later1');
@@ -162,14 +163,30 @@ export class AdminProfile extends React.Component {
           //   alert('Try again later2');
           // }
         } else {
-          alert('Try again later3');
+          alert('Try again later');
         }
         // console.log(JSON.stringify(res.data));
         // console.log(res.data);
       });
-  };
+  };*/
+  likes_back(){
+    let data_to_send = {
+      post_id: '15'
+    };
+    axios.post("https://generation3.000webhostapp.com/project/Training/select_likes.php", data_to_send).then((res) => {
+        if (res.status == 200) {
+            console.log(res.data)
+        } else {
+            alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+        }
+    }).catch((err) => {
+        console.log(err)
+    })
+
+}
   componentDidMount() {
-    this.getData();
+    //this.getData();
+    this.likes_back();
   }
   incrementNumLikes(idx) {
     let posts = this.state.posts;

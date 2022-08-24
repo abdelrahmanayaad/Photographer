@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -8,8 +8,8 @@ import {
   TextInput,
   StatusBar,
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -23,11 +23,25 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import LoginWithG from './LoginWithG';
 import axios from 'axios';
-import {HomeStack} from '../../navigation/HomeStack';
-import {HomeScreen} from '../HomeScreen';
-import {StackActions} from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
+import { HomeStack } from '../../navigation/HomeStack';
+import { HomeScreen } from '../HomeScreen';
+import { StackActions } from '@react-navigation/native';
 
-function Login({navigation, route}) {
+function Login({ navigation, route }) {
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        // alert(token)
+        set_userToken(userToken=>token)
+      });
+    return messaging().onTokenRefresh(token => {
+      // alert(token)
+      set_userToken(userToken=>token)
+    });
+  }, [])
+  const [userToken, set_userToken] = useState('')
   const [secured_pass, set_secured_pass] = useState(false);
   const [user_email, set_email] = useState('');
   const [user_password, set_password] = useState('');
@@ -38,7 +52,7 @@ function Login({navigation, route}) {
     let data_to_send = {
       email: user_email,
       pass: user_password,
-      token: '',
+      token: userToken,
     };
     axios
       .post(
@@ -117,7 +131,7 @@ function Login({navigation, route}) {
                 navigation.navigate('HomeStack');
               }}>
               <Text
-                style={{fontSize: FONTS.h4, fontWeight: 'bold', padding: 5}}>
+                style={{ fontSize: FONTS.h4, fontWeight: 'bold', padding: 5 }}>
                 تخطي
               </Text>
             </TouchableOpacity>
@@ -195,7 +209,7 @@ function Login({navigation, route}) {
         <Text>ليس لديك حساب ؟ </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text
-            style={{textDecorationLine: 'underline', color: COLORS.primary}}>
+            style={{ textDecorationLine: 'underline', color: COLORS.primary }}>
             انشاء حساب
           </Text>
         </TouchableOpacity>
