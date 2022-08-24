@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -8,8 +8,8 @@ import {
   TextInput,
   StatusBar,
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -23,35 +23,53 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import LoginWithG from './LoginWithG';
 import axios from 'axios';
-import {HomeStack} from '../../navigation/HomeStack';
-import {HomeScreen} from '../HomeScreen';
-import {StackActions} from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
+import { HomeStack } from '../../navigation/HomeStack';
+import { HomeScreen } from '../HomeScreen';
+import { StackActions } from '@react-navigation/native';
 
-function Login({navigation, route}) {
+function Login({ navigation, route }) {
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        // alert(token)
+        set_userToken(userToken=>token)
+      });
+    return messaging().onTokenRefresh(token => {
+      // alert(token)
+      set_userToken(userToken=>token)
+    });
+  }, [])
+  const [userToken, set_userToken] = useState('')
   const [secured_pass, set_secured_pass] = useState(false);
   const [user_email, set_email] = useState('');
   const [user_password, set_password] = useState('');
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
 
-
   const check_emailANDpass = () => {
     let data_to_send = {
       email: user_email,
       pass: user_password,
-      token: ''
+      token: userToken,
     };
-    axios.post("https://generation3.000webhostapp.com/project/Training/Auth/user.php", data_to_send).then((res) => {
-      if (res.status == 200) {
-        console.log(res.data)
-      } else {
-        alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-      }
-    }).catch((err) => {
-      console.log(err)
-    })
-
-  }
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/Auth/user.php',
+        data_to_send,
+      )
+      .then(res => {
+        if (res.status == 200) {
+          console.log(res.data);
+        } else {
+          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const pass_secured = () => {
     let securedPass = secured_pass;
@@ -68,7 +86,7 @@ function Login({navigation, route}) {
   const validatePassword = password => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
-  }
+  };
   const check_email = () => {
     let email = user_email.trim();
     if (email == '') {
@@ -78,25 +96,29 @@ function Login({navigation, route}) {
     } else {
       set_emailErr(error_email => '');
     }
-  }
+  };
   const check_pass = () => {
     let password = user_password;
     if (password == '') {
       set_passErr(error_password => 'يجب ادخال كلمه مرور');
     } else if (password.length > 20 || !validatePassword(password)) {
       set_passErr(error_password => 'كلمة المرور غير صحيحة');
-    }else {
+    } else {
       set_passErr(error_password => '');
     }
-
-  }
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
             <TouchableOpacity style={styles.iconStyle}>
               <AntDesign
                 name="arrowright"
@@ -104,8 +126,14 @@ function Login({navigation, route}) {
                 size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert('Home')}>
-              <Text>تخطي</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('HomeStack');
+              }}>
+              <Text
+                style={{ fontSize: FONTS.h4, fontWeight: 'bold', padding: 5 }}>
+                تخطي
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.ViewTitle}>
@@ -158,8 +186,11 @@ function Login({navigation, route}) {
               title="تسجيل الدخول"
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
-              onPress={() => {error_email==''&&error_password==''?
-                check_emailANDpass():null
+              onPress={() => {
+                navigation.navigate('HomeStack');
+                error_email == '' && error_password == ''
+                  ? check_emailANDpass()
+                  : null;
               }}
             />
           </TouchableOpacity>
@@ -178,7 +209,7 @@ function Login({navigation, route}) {
         <Text>ليس لديك حساب ؟ </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text
-            style={{textDecorationLine: 'underline', color: COLORS.primary}}>
+            style={{ textDecorationLine: 'underline', color: COLORS.primary }}>
             انشاء حساب
           </Text>
         </TouchableOpacity>

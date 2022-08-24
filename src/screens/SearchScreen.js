@@ -37,23 +37,23 @@ export default class SearchScreen extends React.Component {
       photoghrapher: [
         {
           name: 'الشاذلى',
-          image: require('../assets/Images/secur.png'),
+          image: require('../assets/Images/one.jpg'),
         },
         {
           name: 'عياد',
-          image: require('../assets/Images/images.png'),
+          image: require('../assets/Images/ten.jpg'),
         },
         {
           name: 'مروه',
-          image: require('../assets/Images/secur.png'),
+          image: require('../assets/Images/eight.jpg'),
         },
         {
           name: 'مطحنه',
-          image: require('../assets/Images/images.png'),
+          image: require('../assets/Images/two.jpg'),
         },
         {
           name: 'اسراء',
-          image: require('../assets/Images/images.png'),
+          image: require('../assets/Images/nine.png'),
         },
       ],
     };
@@ -62,7 +62,7 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {/* View Header */}
           <View style={styles.view}>
             <TouchableOpacity style={{}}>
@@ -103,7 +103,7 @@ export default class SearchScreen extends React.Component {
                   borderBottomWidth: 0,
                   fontSize: RFValue(FONTS.h5),
                   width: RFValue(200),
-                  height: RFValue(40),
+                  height: RFValue(60),
                 }}
                 textAlign="right"
                 autoCapitalize="none"

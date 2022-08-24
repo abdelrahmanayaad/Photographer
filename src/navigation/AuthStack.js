@@ -11,6 +11,7 @@ import {
   Signup,
 } from '../screens';
 import {Otp} from '../screens';
+import SplashScreen from '../screens/Auth/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,8 @@ function AuthStack() {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="Intro">
+      initialRouteName="Splash">
+      <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />

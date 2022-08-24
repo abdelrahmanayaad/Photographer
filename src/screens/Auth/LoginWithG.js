@@ -37,9 +37,10 @@ function LoginWithG() {
     };
     return (
         <View>
-            <TouchableOpacity style={styles.container} onPress={() => { setVisible(visible => true) }}>
-                <Text style={styles.titleStyle}>تسجيل الدخول بإستخدام</Text>
-                <AntDesign name='google' color="#fff" size={RFValue(ICONS.xlIcon)} />
+            <TouchableOpacity style={{alignSelf:'center'}} onPress={() => { setVisible(visible => true) }}>
+                {/* <Text style={styles.titleStyle}>تسجيل الدخول بإستخدام</Text> */}
+                {/* <AntDesign name='google' color="#fff" size={RFValue(ICONS.xlIcon)} /> */}
+                <Image source={require('../../assets/Images/google.png')} style={{width:RFValue(35),height:RFValue(35)}}/>
             </TouchableOpacity>
             <Dialog.Container visible={visible} headerStyle={{ alignItems: 'center' }}>
                 <Dialog.Title>تريد تسجيل الدخول كـ</Dialog.Title>

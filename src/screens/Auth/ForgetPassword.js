@@ -31,10 +31,11 @@ export function ForgetPassword({navigation}) {
       errors++;
     } else {
       setEmailError('');
+      navigation.navigate('OTP');
     }
-    if (errors == 0) {
-      alert('Change Pass');
-    }
+    // if (errors == 0) {
+    //   alert('Change Pass');
+    // }
   };
 
   const onChangeEmail = value => {
@@ -102,10 +103,9 @@ export function ForgetPassword({navigation}) {
             title="ارسل لي الان"
             bgcolor={COLORS.primary}
             onPress={() => {
-              // handelPress(email);
+              handelPress(email);
               // this.generatCode();
               // this.sendCode();
-              navigation.navigate('OTP');
             }}
           />
         </View>

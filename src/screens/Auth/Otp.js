@@ -53,12 +53,13 @@ export default class Otp extends React.Component {
             onPress={() => this.props.navigation.goBack()}
             style={[
               styles.iconStyle,
-              {alignSelf: 'flex-start', margin: RFValue(MARGIN.xsMargin)},
+              // {alignSelf: 'flex-start', margin: RFValue(MARGIN.xsMargin)},
+              {alignSelf: 'flex-start'},
             ]}>
             <AntDesign
               name="arrowright"
               color={COLORS.gray}
-              size={ICONS.xlIcon}
+              size={RFValue(ICONS.xlIcon)}
             />
           </TouchableOpacity>
           <Image
@@ -167,6 +168,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   container: {
-    margin: RFValue(MARGIN.smMargin),
+    margin: RFValue(MARGIN.xsMargin),
   },
 });

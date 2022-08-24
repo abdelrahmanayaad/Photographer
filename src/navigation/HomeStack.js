@@ -7,6 +7,7 @@ import {HomeScreen} from '../screens';
 import {SearchScreen} from '../screens';
 import {AdminProfile} from '../screens';
 import {COLORS} from '../constants';
+import {ProfileScreen} from '../screens';
 const Tab = createMaterialBottomTabNavigator();
 
 export default HomeStack = () => {
@@ -40,7 +41,7 @@ export default HomeStack = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={AdminProfile}
+        component={ProfileScreen}
         options={{
           tabBarColor: 'red',
           tabBarIcon: ({color}) => {

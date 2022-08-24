@@ -369,6 +369,7 @@ export default function Signup({navigation}) {
           <GeneralButton
             onPress={() => {
               signup();
+              navigation.navigate('HomeStack');
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}

@@ -84,7 +84,6 @@ function ProfileInfo() {
     const [whatsLink, set_whatsLink] = useState('')
     const [faceLink, set_faceLink] = useState('')
     const [instaLink, set_instaLink] = useState('')
-    const [webSite, set_webSite] = useState('https://tap.bio/@BingeCircle')
     const [address, set_address] = useState([])
     const about = () => {
         let data_to_send = {
@@ -337,13 +336,6 @@ function ProfileInfo() {
                         onPress={() => { Linking.openURL(instaLink) }}
                         style={styles.infoTxt}
                     >{instaLink}</Text>
-                </View> : null}
-                {webSite != '' ? <View style={styles.infoContainer}>
-                    <Fontisto name='world-o' size={RFValue(17)} />
-                    <Text
-                        style={styles.infoTxt}
-                        onPress={() => { Linking.openURL(webSite) }}
-                    >{webSite}</Text>
                 </View> : null}
                 {render_addresses()}
             </View>
