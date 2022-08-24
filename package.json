@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.10.0",
+    "@react-native-community/geolocation": "^2.1.0",
     "@react-native-firebase/app": "^15.3.0",
     "@react-native-firebase/messaging": "^15.3.0",
     "@react-native-google-signin/google-signin": "^8.0.0",
@@ -23,7 +24,9 @@
     "react-native-actionsheet": "^2.4.2",
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-dialog": "^9.2.2",
+    "react-native-element-dropdown": "^2.2.0",
     "react-native-image-picker": "^4.8.4",
+    "react-native-maps": "^1.2.0",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-paper": "^4.12.4",
     "react-native-raw-bottom-sheet": "^2.2.0",

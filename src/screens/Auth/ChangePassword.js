@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
-const { width, height } = Dimensions.get('screen');
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   COLORS,
@@ -16,6 +15,42 @@ import { MARGIN } from '../../constants/Constants';
 import Dialog from "react-native-dialog";
 import axios from 'axios'
 
+const change_password = (oldpassword, newpassword) => {
+  let data_to_send = {
+    user_id: '15',
+    new_pass: newpassword,
+    old_pass: oldpassword
+  };
+
+  axios.post("https://generation3.000webhostapp.com/project/Training/Auth/reset_password.php", data_to_send).then((res) => {
+    if (res.status == 200) {
+
+      // res.data => Success ==> added | Error ==> error | Empty ==> data_to_send is empty
+      console.log(res.data)
+      if (res.data == "successful") {
+        //this.setState({ color: '#0f0' })
+
+        // alert("user added");
+        alert("done")
+      } else if (res.data == 'user not found') {
+        //alert('data_to_send is empty')
+        //this.setState({ color: '#f00' })
+        alert("user not found")
+
+
+      } else {
+        alert(res.data)
+        // this.setState({ color: '#f00' })
+
+      }
+
+    } else {
+      alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+    }
+  }).catch((err) => {
+    console.log(err)
+  })
+}
 function ChangePassword() {
   const [check_old_pass, setcheck_old_pass] = useState("")
   const [text_check_old_pass, settext_check_old_pass] = useState("")
@@ -55,6 +90,7 @@ function ChangePassword() {
         //settext_check_old_pass(text_check_old_pass => "")
         // settext_check_old_pass_text_color(text_check_old_pass_text_color => "")
         setdialog_visible(dialog_visible => false)
+        return true;
 
       }
     }
@@ -80,6 +116,7 @@ function ChangePassword() {
         // console.log(" valid")
         setnew_password_msg(new_password_msg => "")
         setnew_password_msg_color(new_password_msg_color => "")
+        return true;
       }
     }
   }
@@ -96,6 +133,7 @@ function ChangePassword() {
 
         setconfirm_new_password_msg(confirm_new_password_msg => "")
         setconfirm_new_password_msg_color(confirm_new_password_msg_color => "")
+        return true;
       } else {
 
         setconfirm_new_password_msg(confirm_new_password_msg => 'كلمه المرور غير متطابقه')
@@ -117,17 +155,18 @@ function ChangePassword() {
       setconfirm_new_password_msg(confirm_new_password_msg => "يجب ادخال تاكيد كلمة المرور الجديدة")
       setconfirm_new_password_msg_color(confirm_new_password_msg_color => COLORS.error)
 
-    } if (new_pass != "" && confirm_new_password != "") {
+    }
+  }
+  const submit = () => {
 
-      setnew_password_msg(new_password_msg => "")
-      setnew_password_msg_color(new_password_msg_color => "")
-      setconfirm_new_password_msg(confirm_new_password_msg => "")
-      setconfirm_new_password_msg_color(confirm_new_password_msg_color => "")
-
+    if (old_pass_matches_endtyping() == true && new_password_check() == true && confirm_password() == true) {
+      change_password(check_old_pass, new_password)
+      //console.log("ok")
     }
   }
 
   const multipleFunctionOnpress = () => {
+    submit();
     changeButtomPress();
     old_pass_matches_endtyping();
   }
