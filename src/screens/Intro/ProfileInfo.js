@@ -92,12 +92,12 @@ function ProfileInfo() {
         };
         axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
             if (res.status == 200) {
-                console.log(res.data)
+                //console.log(res.data)
                 set_phoneNums(phoneNums=>res.data.Photogarpher_brand_phone_num)
                 set_faceLink(faceLink=>res.data.Photogarpher_face_link)
                 set_instaLink(instaLink=>res.data.Photogarpher_insta_link)
-                set_address(...address=>res.data.brand_addresses)
-                console.log(address)
+                set_address(address=>res.data.brand_addresses)
+                //console.log(address)
             } else {
                 alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
             }

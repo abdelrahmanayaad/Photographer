@@ -53,14 +53,14 @@ function Intro({ navigation }) {
     }
     const renderdone = () => {
         return (
-            <View style={styles.botton_style}
+            <TouchableOpacity style={styles.botton_style}
                 onPress={() =>
                     //this.set_intro(1),
                     navigation.navigate('Login')
                 }
             >
                 <Text style={styles.text_style}>تم</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
     return (
