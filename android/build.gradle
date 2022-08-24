@@ -11,7 +11,7 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 31
         targetSdkVersion = 31
-        playServicesVersion = "17.0.0" // or find latest version
+        playServicesVersion = "18.0.0" // or find latest version
         androidMapsUtilsVersion = "+0.5"
         supportLibVersion = "27.1.1"
         googlePlayServicesAuthVersion = "19.2.0"

@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, StatusBar, ScrollView, Dimensions } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { COLORS, ICONS, FONTS, } from '../../../constants';
+import { COLORS, ICONS, FONTS, PADDING, } from '../../../constants';
+const { width, height } = Dimensions.get('window');
 
-function Intro({navigation}) {
+
+function Intro({ navigation }) {
     const [screens, setscreens] = useState(
         [{
             id: 1,
@@ -28,11 +30,36 @@ function Intro({navigation}) {
     const renderIntro = ({ item }) => {
         return (
             <View style={styles.each_screen_container_style}>
+
                 <StatusBar
                     barStyle={'light-content'} backgroundColor={COLORS.primary}
                 />
-                <Image source={item.image} style={styles.each_img_style} />
-                <Text style={styles.text_under_each_img_style}>{item.text}</Text>
+                <View style={styles.each_img_style}>
+                    <Image source={item.image} style={{ width: '100%', height: '100%' }} resizeMode="contain" />
+                </View>
+                <View style={styles.view_for_text_under_img_style}>
+                    <Text style={styles.text_under_each_img_style}>{item.text}</Text>
+                </View>
+            </View>
+
+        )
+    }
+    const rendernextbuttom = () => {
+        return (
+            <View style={styles.botton_style}>
+                <Text style={styles.text_style}>التالي</Text>
+            </View>
+        )
+    }
+    const renderdone = () => {
+        return (
+            <View style={styles.botton_style}
+                onPress={() =>
+                    //this.set_intro(1),
+                    navigation.navigate('Login')
+                }
+            >
+                <Text style={styles.text_style}>تم</Text>
             </View>
         )
     }
@@ -40,16 +67,8 @@ function Intro({navigation}) {
         <AppIntroSlider renderItem={renderIntro}
             data={screens}
             activeDotStyle={styles.slider_active_dot_style}
-            renderNextButton={() => <View style={styles.view_for_next_style}><Text style={styles.next_button_style}>التالي</Text></View>}
-            renderDoneButton={() =>
-                <TouchableOpacity style={styles.arrow_botton_style}
-                    onPress={() => 
-                        //this.set_intro(1),
-                        navigation.navigate('Login')
-                    }
-                >
-                    <AntDesign name="arrowleft" color={COLORS.background} size={RFValue(ICONS.xlIcon)} />
-                </TouchableOpacity>}
+            renderNextButton={rendernextbuttom}
+            renderDoneButton={renderdone}
 
         />
 
@@ -63,32 +82,34 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.background,
         alignItems: 'center',
-        justifyContent: 'center'
 
     }, each_img_style: {
-        height: RFValue(250),
+        height: '50%',
         width: '95%',
-        resizeMode: 'contain'
+        marginBottom: RFValue(20)
     }, text_under_each_img_style: {
         color: COLORS.primary,
         fontSize: RFValue(FONTS.h3)
     }, slider_active_dot_style: {
         backgroundColor: COLORS.primary,
         width: RFValue(25)
-    }, view_for_next_style: {
-         marginTop: RFValue(9),
-
-    }, next_button_style: {
-        color: COLORS.primary,
-        fontSize: RFValue(FONTS.h3)
-    }, arrow_botton_style: {
-        //marginTop: RFValue(12),
+    }, botton_style: {
+        //marginTop: RFValue(10),
+        padding: RFValue(1),
         backgroundColor: COLORS.primary,
-        borderRadius: RFValue(20),
-        width: RFValue(40),
+        borderRadius: RFValue(15),
+        width: RFValue(70),
         height: RFValue(40),
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
+    },
+    text_style: {
+        color: COLORS.background,
+        fontSize: RFValue(20)
+    }, view_for_text_under_img_style: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 export default Intro;

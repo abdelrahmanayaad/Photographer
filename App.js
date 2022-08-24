@@ -25,15 +25,15 @@ import{
   Followering,
   AdminProfile,
   NewPassword,
+  GgIMap
 } from './src/screens';
 import Navigation from './src/navigation/Navigation';
 // import LoginWithG from './src/screens/Auth/LoginWithG';
 
-
 const { width, height } = Dimensions.get('window');
 export class App extends Component {
   render() {
-    return <ForgetPassword/>
+    return <PhotographerSettingScreen/>
 
   }
 }
