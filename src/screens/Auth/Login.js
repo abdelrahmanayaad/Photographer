@@ -164,16 +164,13 @@ function Login({navigation, route}) {
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassTxt}>هل نسيت كلمةالمرور؟</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('HomeStack');
-            }}
-            style={styles.buttonViewStyle}>
+          <TouchableOpacity style={styles.buttonViewStyle}>
             <GeneralButton
               title="تسجيل الدخول"
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
               onPress={() => {
+                navigation.navigate('HomeStack');
                 error_email == '' && error_password == ''
                   ? check_emailANDpass()
                   : null;
