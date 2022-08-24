@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h2,
     color: COLORS.black,
     fontWeight: 'bold',
-    marginLeft: '28%',
+    marginLeft: '30%',
   },
   profileDataViewStyle: {
     flexDirection: 'row',

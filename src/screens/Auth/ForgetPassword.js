@@ -84,6 +84,7 @@ export function ForgetPassword({navigation}) {
         </View>
         <View style={styles.textInputViewStyle}>
           <Input
+            selectionColor={COLORS.primary}
             onChangeText={value => {
               setEmail(value);
               if (onChangeEmail(value)) {
