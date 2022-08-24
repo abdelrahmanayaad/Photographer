@@ -15,9 +15,9 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 import axios from 'axios';
 
 function ProfileInfo() {
-    useEffect(()=>{
+    useEffect(() => {
         about();
-    },[])
+    }, [])
     const [reviews, setReviews] = useState([{
         id: 1,
         profile_img: '',
@@ -81,22 +81,24 @@ function ProfileInfo() {
         selected: false
     }])
     const [phoneNums, set_phoneNums] = useState([])
-    const [whatsLink, set_whatsLink] = useState('https://chat.whatsapp.com/H3j3YuRheL6FRUnnsqZcHC')
+    const [whatsLink, set_whatsLink] = useState('')
     const [faceLink, set_faceLink] = useState('')
     const [instaLink, set_instaLink] = useState('')
     const [webSite, set_webSite] = useState('https://tap.bio/@BingeCircle')
-    const [address, set_address] = useState([{}])
+    const [address, set_address] = useState([])
     const about = () => {
         let data_to_send = {
-            user_id:'15'
+            user_id: '15'
         };
         axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
             if (res.status == 200) {
                 console.log(res.data)
-                set_phoneNums(phoneNums=>res.data.Photogarpher_brand_phone_num)
-                set_faceLink(faceLink=>res.data.Photogarpher_face_link)
-                set_instaLink(instaLink=>res.data.Photogarpher_insta_link)
-                set_address(...address=>res.data.brand_addresses)
+                set_phoneNums(phoneNums => res.data.Photogarpher_brand_phone_num)
+                set_whatsLink(whatsLink=>res.data.Photogarpher_whats_link)
+                set_faceLink(faceLink => res.data.Photogarpher_face_link)
+                set_instaLink(instaLink => res.data.Photogarpher_insta_link)
+                // console.log(res.data.brand_addresses)
+                set_address(address => res.data.brand_addresses)
                 console.log(address)
             } else {
                 alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
@@ -166,9 +168,9 @@ function ProfileInfo() {
                 <View style={styles.infoContainer}>
                     <AntDesign name='enviromento' size={RFValue(17)} />
                     <Text selectable={true}
-                        onPress={() => { Linking.openURL(item.link) }}
+                        onPress={() => { Linking.openURL(item.address_link) }}
                         style={styles.infoTxt}
-                    >{item.discription}</Text>
+                    >{item.address_decription}</Text>
                 </View>
             )
         })
@@ -310,16 +312,6 @@ function ProfileInfo() {
         })
     }
 
-
-    // axios
-    //     .get(
-    //         'https://generation3.000webhostapp.com/project/Training/photographer_list.php'
-    //     )
-    //     .then(res => {
-    //         if (res.status == 200) {
-    //             console.log(res.data)
-    //         }
-    //     });
     return (
         <View style={styles.container}>
             <View style={{ marginRight: RFValue(20) }}>

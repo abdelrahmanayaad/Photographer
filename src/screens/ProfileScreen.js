@@ -59,8 +59,8 @@ export class ProfileScreen extends Component {
       saves: [],
       // owner: false,
       // user: true,
-      owner: false,
-      user: true,
+      owner: true,
+      user: false,
       follow: false,
     };
   }
