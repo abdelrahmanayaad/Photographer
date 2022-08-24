@@ -116,7 +116,10 @@ function Login({navigation, route}) {
               onPress={() => {
                 navigation.navigate('HomeStack');
               }}>
-              <Text>تخطي</Text>
+              <Text
+                style={{fontSize: FONTS.h4, fontWeight: 'bold', padding: 5}}>
+                تخطي
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.ViewTitle}>
