@@ -34,24 +34,28 @@ function Login({navigation, route}) {
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
 
-
   const check_emailANDpass = () => {
     let data_to_send = {
       email: user_email,
       pass: user_password,
-      token: ''
+      token: '',
     };
-    axios.post("https://generation3.000webhostapp.com/project/Training/Auth/user.php", data_to_send).then((res) => {
-      if (res.status == 200) {
-        console.log(res.data)
-      } else {
-        alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-      }
-    }).catch((err) => {
-      console.log(err)
-    })
-
-  }
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/Auth/user.php',
+        data_to_send,
+      )
+      .then(res => {
+        if (res.status == 200) {
+          console.log(res.data);
+        } else {
+          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const pass_secured = () => {
     let securedPass = secured_pass;
@@ -68,7 +72,7 @@ function Login({navigation, route}) {
   const validatePassword = password => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
-  }
+  };
   const check_email = () => {
     let email = user_email.trim();
     if (email == '') {
@@ -78,25 +82,29 @@ function Login({navigation, route}) {
     } else {
       set_emailErr(error_email => '');
     }
-  }
+  };
   const check_pass = () => {
     let password = user_password;
     if (password == '') {
       set_passErr(error_password => 'يجب ادخال كلمه مرور');
     } else if (password.length > 20 || !validatePassword(password)) {
       set_passErr(error_password => 'كلمة المرور غير صحيحة');
-    }else {
+    } else {
       set_passErr(error_password => '');
     }
-
-  }
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
             <TouchableOpacity style={styles.iconStyle}>
               <AntDesign
                 name="arrowright"
@@ -104,7 +112,10 @@ function Login({navigation, route}) {
                 size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => alert('Home')}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('HomeStack');
+              }}>
               <Text>تخطي</Text>
             </TouchableOpacity>
           </View>
@@ -153,13 +164,19 @@ function Login({navigation, route}) {
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text style={styles.forgetPassTxt}>هل نسيت كلمةالمرور؟</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonViewStyle}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('HomeStack');
+            }}
+            style={styles.buttonViewStyle}>
             <GeneralButton
               title="تسجيل الدخول"
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
-              onPress={() => {error_email==''&&error_password==''?
-                check_emailANDpass():null
+              onPress={() => {
+                error_email == '' && error_password == ''
+                  ? check_emailANDpass()
+                  : null;
               }}
             />
           </TouchableOpacity>

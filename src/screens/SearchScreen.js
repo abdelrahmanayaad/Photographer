@@ -103,7 +103,7 @@ export default class SearchScreen extends React.Component {
                   borderBottomWidth: 0,
                   fontSize: RFValue(FONTS.h5),
                   width: RFValue(200),
-                  height: RFValue(40),
+                  height: RFValue(60),
                 }}
                 textAlign="right"
                 autoCapitalize="none"
