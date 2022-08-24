@@ -53,77 +53,77 @@ export default function Signup({navigation}) {
   ]);
   const [token, setToken] = useState('');
 
-  // SendUser=()=> {
-  //   let data_to_send = {
-  //     name:  name,
-  //     email:  Email,
-  //     pass:  password,
-  //     type:  arr,
-  //     token:  token
-  //   }
-  //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
-  //     .then((res) => {
-  //       if (res.status == 200) {
-  //         if ( (res.data) == "successful") {
-  //           alert("done")
-  //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
-  //           alert("من فضلك تأكد من صحة البيانات")
-  //         } else if (res.data == "email is already exist") {
-  //           alert("هذا البريد موجود بالفعل")
-  //         }
-  //       } else {
-  //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-  //       }
-  //       setName( "" )
-  //       setPassword("")
-  //       setPhoneError( "" )
-  //       setEmail("")
-  //       setConPass("")
-  //     })
+  SendUser=()=> {
+    let data_to_send = {
+      name:  name,
+      email:  Email,
+      pass:  password,
+      type:  arr,
+      token:  token
+    }
+    axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+      .then((res) => {
+        if (res.status == 200) {
+          if ( (res.data) == "successful") {
+            alert("done")
+          } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+            alert("من فضلك تأكد من صحة البيانات")
+          } else if (res.data == "email is already exist") {
+            alert("هذا البريد موجود بالفعل")
+          }
+        } else {
+          alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+        }
+        setName( "" )
+        setPassword("")
+        setPhoneError( "" )
+        setEmail("")
+        setConPass("")
+      })
+  }
+
+  // componentDidMount(){
+  //   messaging()
+  //   .getToken()
+  //   .then(token => {
+  //       // alert(token)
+  //       setToken(token)
+
+  //   });
+
+  // return messaging().onTokenRefresh(token => {
+  //   setToken(token)
+
+  // });
+
   // }
+    useEffect(() => {
 
-  // // componentDidMount(){
-  // //   messaging()
-  // //   .getToken()
-  // //   .then(token => {
-  // //       // alert(token)
-  // //       setToken(token)
+      messaging()
+          .getToken()
+          .then(token => {
+              alert(token)
+              // setToken(token)
 
-  // //   });
+          });
 
-  // // return messaging().onTokenRefresh(token => {
-  // //   setToken(token)
+      return messaging().onTokenRefresh(token => {
+          // setToken(token)
+          alert(token)
 
-  // // });
+      });
 
-  // // }
-  //   useEffect(() => {
+      // const getToken = async () => {
+      //   try {
+      //     const token = await messaging().getToken();
+      //     if (token) return console.log(token);
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // };
+      // getToken()
 
-  //     messaging()
-  //         .getToken()
-  //         .then(token => {
-  //             console.log(token)
-  //             // setToken(token)
-
-  //         });
-
-  //     return messaging().onTokenRefresh(token => {
-  //         // setToken(token)
-  //         console.log(token)
-
-  //     });
-
-  //     // const getToken = async () => {
-  //     //   try {
-  //     //     const token = await messaging().getToken();
-  //     //     if (token) return console.log(token);
-  //     //   } catch (error) {
-  //     //     console.log(error);
-  //     //   }
-  //     // };
-  //     // getToken()
-
-  // }, [])
+  }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -369,6 +369,7 @@ export default function Signup({navigation}) {
           <GeneralButton
             onPress={() => {
               signup();
+              SendUser()
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}
