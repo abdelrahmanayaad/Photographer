@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
     GoogleSignin,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
 import { COLORS, ICONS, RADIUS, FONTS } from '../../constants';
-import { TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, Image, View } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { RFValue } from 'react-native-responsive-fontsize';
+import Dialog from "react-native-dialog";
 
 GoogleSignin.configure({
 
@@ -15,8 +16,8 @@ GoogleSignin.configure({
 
 })
 function LoginWithG() {
-
-
+    const [visible, setVisible] = useState(false);
+    const [type, setType] = useState('')
     const signIn = async () => {
         try {
             await GoogleSignin.hasPlayServices();
@@ -35,17 +36,32 @@ function LoginWithG() {
         }
     };
     return (
-        // <GoogleSigninButton
-        //     style={{ width: 192, height: 48}}
-        //     size={GoogleSigninButton.Size.Wide}
-        //     // color='#FF7A7A'
-        //     onPress={this.signIn}
-        //     // disabled={this.state.isSigninInProgress}
-        // />
-        <TouchableOpacity style={styles.container} onPress={signIn}>
-            <Text style={styles.titleStyle}>تسجيل الدخول بإستخدام</Text>
-            <AntDesign name='google' color="#fff" size={RFValue(ICONS.xlIcon)} />
-        </TouchableOpacity>
+        <View>
+            <TouchableOpacity style={{alignSelf:'center'}} onPress={() => { setVisible(visible => true) }}>
+                {/* <Text style={styles.titleStyle}>تسجيل الدخول بإستخدام</Text> */}
+                {/* <AntDesign name='google' color="#fff" size={RFValue(ICONS.xlIcon)} /> */}
+                <Image source={require('../../assets/Images/google.png')} style={{width:RFValue(35),height:RFValue(35)}}/>
+            </TouchableOpacity>
+            <Dialog.Container visible={visible} headerStyle={{ alignItems: 'center' }}>
+                <Dialog.Title>تريد تسجيل الدخول كـ</Dialog.Title>
+                <TouchableOpacity
+                    style={styles.chooseType}
+                    onPress={() => { setVisible(visible => false); signIn(); setType(type => 'مستخدم') }}>
+                    <Text>مستخدم</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.chooseType}
+                    onPress={() => { setVisible(visible => false); signIn(); setType(type => 'مصور') }}>
+                    <Text>مصور</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.chooseType}
+                    onPress={() => { setVisible(visible => false); signIn(); setType(type => 'ميكب ارتست') }}>
+                    <Text>ميكب ارتست</Text>
+                </TouchableOpacity>
+
+            </Dialog.Container>
+        </View>
     )
 }
 const styles = StyleSheet.create({
@@ -63,5 +79,15 @@ const styles = StyleSheet.create({
         fontSize: RFValue(FONTS.h5),
         fontWeight: 'bold',
     },
+    chooseType: {
+        width: '95%',
+        alignItems: 'center',
+        alignSelf: 'center',
+        paddingVertical: RFValue(5),
+        marginVertical: RFValue(5),
+        borderBottomWidth: RFValue(1),
+        borderRadius: RFValue(5),
+        borderBottomColor: COLORS.gray
+    }
 })
 export default LoginWithG;

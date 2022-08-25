@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
@@ -15,6 +15,9 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 import axios from 'axios';
 
 function ProfileInfo() {
+    useEffect(() => {
+        about();
+    }, [])
     const [reviews, setReviews] = useState([{
         id: 1,
         profile_img: '',
@@ -77,6 +80,33 @@ function ProfileInfo() {
         icon: 'staro',
         selected: false
     }])
+    const [phoneNums, set_phoneNums] = useState([])
+    const [whatsLink, set_whatsLink] = useState('')
+    const [faceLink, set_faceLink] = useState('')
+    const [instaLink, set_instaLink] = useState('')
+    const [address, set_address] = useState([])
+    const about = () => {
+        let data_to_send = {
+            user_id: '15'
+        };
+        axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
+            if (res.status == 200) {
+                // console.log(res.data)
+                set_phoneNums(phoneNums => res.data.Photogarpher_brand_phone_num)
+                set_whatsLink(whatsLink=>res.data.Photogarpher_whats_link)
+                set_faceLink(faceLink => res.data.Photogarpher_face_link)
+                set_instaLink(instaLink => res.data.Photogarpher_insta_link)
+                // console.log(res.data.brand_addresses)
+                set_address(address => res.data.brand_addresses)
+                // console.log(address)
+            } else {
+                alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+
+    }
     const addReview = () => {
         let my_id = id
         let my_img = profile_img
@@ -117,6 +147,32 @@ function ProfileInfo() {
             )
         })
 
+    }
+    const render_phoneNum = () => {
+        return phoneNums.map((item, index) => {
+            return (
+                <View style={styles.infoContainer}>
+                    <AntDesign name='phone' size={RFValue(17)} />
+                    <Text
+                        selectable={true}
+                        style={[styles.headerTxt, { color: COLORS.success, fontSize: RFValue(FONTS.h5) }]}
+                    >{item}</Text>
+                </View>
+            )
+        })
+    }
+    const render_addresses = () => {
+        return address.map((item, index) => {
+            return (
+                <View style={styles.infoContainer}>
+                    <AntDesign name='enviromento' size={RFValue(17)} />
+                    <Text selectable={true}
+                        onPress={() => { Linking.openURL(item.address_link) }}
+                        style={styles.infoTxt}
+                    >{item.address_decription}</Text>
+                </View>
+            )
+        })
     }
 
     const reviewsMap = () => {
@@ -255,62 +311,33 @@ function ProfileInfo() {
         })
     }
 
-
-    // axios
-    //     .get(
-    //         'https://generation3.000webhostapp.com/project/Training/photographer_list.php'
-    //     )
-    //     .then(res => {
-    //         if (res.status == 200) {
-    //             console.log(res.data)
-    //         }
-    //     });
     return (
         <View style={styles.container}>
-            <View>
+            <View style={{ marginRight: RFValue(20) }}>
                 <Text style={styles.headerTxt}>حـول </Text>
-                <View style={styles.infoContainer}>
-                    <AntDesign name='phone' size={RFValue(17)} />
-                    <Text
-                        selectable={true}
-                        style={[styles.headerTxt, { color: COLORS.success, fontSize: RFValue(FONTS.h5) }]}
-                    >01201234567</Text>
-                </View>
-                <View style={styles.infoContainer}>
+                {render_phoneNum()}
+                {whatsLink != '' ? <View style={styles.infoContainer}>
                     <Fontisto name='whatsapp' size={RFValue(17)} />
                     <Text
                         style={[styles.infoTxt, { textDecorationLine: 'none' }]}
-                        onPress={() => { Linking.openURL('https://chat.whatsapp.com/H3j3YuRheL6FRUnnsqZcHC') }}
+                        onPress={() => { Linking.openURL(whatsLink) }}
                     >إرسال رسالة</Text>
-                </View>
-                <View style={styles.infoContainer}>
+                </View> : null}
+                {faceLink != '' ? <View style={styles.infoContainer}>
                     <AntDesign name='facebook-square' size={RFValue(17)} />
                     <Text selectable={true}
-                        onPress={() => { Linking.openURL('https://www.facebook.com/campcoding/') }}
+                        onPress={() => { Linking.openURL(faceLink) }}
                         style={styles.infoTxt}
-                    >https://www.facebook.com/campcoding/</Text>
-                </View>
-                <View style={styles.infoContainer}>
+                    >{faceLink}</Text>
+                </View> : null}
+                {instaLink != '' ? <View style={styles.infoContainer}>
                     <AntDesign name='instagram' size={RFValue(17)} />
                     <Text selectable={true}
-                        onPress={() => { Linking.openURL('https://www.instagram.com/BingeCircle/?fs=e&s=cl') }}
+                        onPress={() => { Linking.openURL(instaLink) }}
                         style={styles.infoTxt}
-                    >@BingeCircle</Text>
-                </View>
-                <View style={styles.infoContainer}>
-                    <Fontisto name='world-o' size={RFValue(17)} />
-                    <Text
-                        style={styles.infoTxt}
-                        onPress={() => { Linking.openURL('https://tap.bio/@BingeCircle') }}
-                    >https://tap.bio/@BingeCircle</Text>
-                </View>
-                <View style={styles.infoContainer}>
-                    <AntDesign name='enviromento' size={RFValue(17)} />
-                    <Text selectable={true}
-                        onPress={() => { Linking.openURL('https://goo.gl/maps/9vN8a7CdsPNMy6CFA') }}
-                        style={styles.infoTxt}
-                    >https://goo.gl/maps/9vN8a7CdsPNMy6CFA</Text>
-                </View>
+                    >{instaLink}</Text>
+                </View> : null}
+                {render_addresses()}
             </View>
             <View style={{ height: RFValue(235) }}>
                 <Text style={styles.headerTxt}>الآراء </Text>

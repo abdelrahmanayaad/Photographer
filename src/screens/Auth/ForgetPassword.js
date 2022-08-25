@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import { Input, GeneralButton } from '../../components';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {Input, GeneralButton} from '../../components';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -19,11 +19,11 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-export function ForgetPassword({ navigation }) {
+export function ForgetPassword({navigation}) {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  const handelPress = (value) => {
+  const handelPress = value => {
     let errors = 0;
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(value.trim()) == false) {
@@ -31,10 +31,11 @@ export function ForgetPassword({ navigation }) {
       errors++;
     } else {
       setEmailError('');
+      navigation.navigate('OTP');
     }
-    if (errors == 0) {
-      alert('Change Pass');
-    }
+    // if (errors == 0) {
+    //   alert('Change Pass');
+    // }
   };
 
   const onChangeEmail = value => {
@@ -42,31 +43,30 @@ export function ForgetPassword({ navigation }) {
     return reg.test(value.trim());
   };
 
-  // generatCode = () => {
-  //   let code = '';
-  //   const numbers = '0123456789';
-  //   for (let i = 0; i < 4; i++) {
-  //     code += numbers[Math.floor(Math.random() * numbers.length)];
-  //   }
-  //   // alert(code);
-  //   return code;
-  // };
+  const generatCode = () => {
+    let code = '';
+    const numbers = '0123456789';
+    for (let i = 0; i < 4; i++) {
+      code += numbers[Math.floor(Math.random() * numbers.length)];
+    }
+    // alert(code);
+    return code;
+  };
 
-  // sendCode = () => {
-  //   const code = generatCode();
-  //   alert(code);
-  // };
+  const sendCode = () => {
+    const code = generatCode();
+    alert(code);
+  };
   const sendpress = () => {
-    //handelPress(email);
-    // navigation.navigate("Otp");
-
-
-  }
+    handelPress(email);
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <TouchableOpacity style={styles.iconStyle}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.iconStyle}>
           <AntDesign
             name="arrowright"
             color={COLORS.gray}
@@ -102,13 +102,11 @@ export function ForgetPassword({ navigation }) {
           <GeneralButton
             title="ارسل لي الان"
             bgcolor={COLORS.primary}
-            onPress={
-              () => {
-                handelPress(email);
-                // this.generatCode();
-                // this.sendCode();
-              }
-            }
+            onPress={() => {
+              handelPress(email);
+              // this.generatCode();
+              // this.sendCode();
+            }}
           />
         </View>
       </ScrollView>

@@ -21,8 +21,8 @@ export class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      postsPageOwner: true,
-      likesPage: false,
+      // postsPageOwner: true,
+      likesPage: true,
       savePage: false,
       postsPageUser: true,
       informationUserPage: false,
@@ -57,10 +57,11 @@ export class ProfileScreen extends Component {
       },
       likes: [],
       saves: [],
-      // owner: false,
-      // user: true,
+
       owner: false,
       user: true,
+      // owner: true,
+      // user: false,
       follow: false,
     };
   }
@@ -213,12 +214,14 @@ export class ProfileScreen extends Component {
   info() {
     return (
       <View
-        style={{
-          // alignItems: 'center',
-          // justifyContent: 'center',
-          // height: RFValue(300),
-        }}>
-        <ProfileInfo/>
+        style={
+          {
+            // alignItems: 'center',
+            // justifyContent: 'center',
+            // height: RFValue(300),
+          }
+        }>
+        <ProfileInfo />
       </View>
     );
   }
@@ -263,11 +266,9 @@ export class ProfileScreen extends Component {
                 <Text style={styles.emailStyle}>abdelrahmanayad74</Text>
               </View>
               <View style={styles.followingViewStyle}>
-                <Text style={styles.followingTextNumbersStyle}>120</Text>
                 <Text style={styles.followingTextNumbersStyle}>280</Text>
               </View>
               <View style={styles.followingViewStyle}>
-                <Text>المتابعون</Text>
                 <Text>يتابع</Text>
               </View>
             </View>
@@ -298,7 +299,7 @@ export class ProfileScreen extends Component {
           <View style={styles.iconsDeptViewStyle}>
             {this.state.owner ? (
               <>
-                <View style={styles.viewIconLine}>
+                {/* <View style={styles.viewIconLine}>
                   <TouchableOpacity
                     onPress={() => {
                       this.setState({
@@ -323,7 +324,7 @@ export class ProfileScreen extends Component {
                       },
                     ]}
                   />
-                </View>
+                </View> */}
                 <View style={styles.viewIconLine}>
                   <TouchableOpacity
                     onPress={() => {
@@ -437,9 +438,9 @@ export class ProfileScreen extends Component {
           <View>
             {this.state.owner
               ? this.state.postsPageOwner
-                ? this.posts()
-                : this.state.likesPage
-                ? this.likes()
+                ? // ? this.posts()
+                  // : this.state.likesPage
+                  this.likes()
                 : this.savesPost()
               : this.state.postsPageUser
               ? this.posts()
@@ -458,16 +459,17 @@ const styles = StyleSheet.create({
   headerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: MARGIN.xsMargin,
+    justifyContent: 'center',
+    marginBottom: MARGIN.smMargin,
   },
   textViewHeaderStyle: {
     width: '90%',
-    // alignItems: 'center',
   },
   textHeaderStyle: {
-    fontSize: FONTS.h3,
+    fontSize: FONTS.h2,
     color: COLORS.black,
     fontWeight: 'bold',
+    marginLeft: '28%',
   },
   profileDataViewStyle: {
     flexDirection: 'row',
@@ -481,9 +483,10 @@ const styles = StyleSheet.create({
     marginRight: RFValue(MARGIN.xsMargin),
   },
   followingViewStyle: {
-    width: '50%',
+    width: '25%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignSelf: 'center',
   },
   nameStyle: {
     fontSize: FONTS.h4,
