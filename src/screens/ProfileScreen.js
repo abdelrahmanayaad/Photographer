@@ -1,6 +1,6 @@
 //Tapview library -> switch
 // zoom in to picture
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -9,8 +9,8 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MARGIN, COLORS, ICONS, FONTS, RADIUS} from '../constants';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { MARGIN, COLORS, ICONS, FONTS, RADIUS } from '../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -69,13 +69,13 @@ export class ProfileScreen extends Component {
   putLike(idx) {
     let posts = this.state.posts;
     posts[idx].like = !this.state.posts[idx].like;
-    this.setState({posts: posts});
+    this.setState({ posts: posts });
   }
 
   putSave(idx) {
     let posts = this.state.posts;
     posts[idx].save = !this.state.posts[idx].save;
-    this.setState({posts: posts});
+    this.setState({ posts: posts });
   }
 
   posts() {
@@ -266,7 +266,7 @@ export class ProfileScreen extends Component {
             </View>
             <View>
               <Text style={styles.nameStyle}>عبدالرحمن عياد</Text>
-              <View style={{alignItems: 'flex-start'}}>
+              <View style={{ alignItems: 'flex-start' }}>
                 <Text style={styles.emailStyle}>abdelrahmanayad74</Text>
               </View>
               <View style={styles.followingViewStyle}>
@@ -280,7 +280,7 @@ export class ProfileScreen extends Component {
           {this.state.user ? (
             <TouchableOpacity
               onPress={() => {
-                this.setState({follow: !this.state.follow});
+                this.setState({ follow: !this.state.follow });
               }}
               style={[
                 styles.followButtonStyle,
@@ -336,7 +336,9 @@ export class ProfileScreen extends Component {
                         postsPageOwner: false,
                         likesPage: true,
                         savePage: false,
-                      });
+
+                      })
+
                     }}>
                     <AntDesign
                       name={this.state.likesPage ? 'heart' : 'hearto'}
@@ -443,12 +445,12 @@ export class ProfileScreen extends Component {
             {this.state.owner
               ? this.state.postsPageOwner
                 ? // ? this.posts()
-                  // : this.state.likesPage
-                  this.likes()
+                // : this.state.likesPage
+                this.likes()
                 : this.savesPost()
               : this.state.postsPageUser
-              ? this.posts()
-              : this.info()}
+                ? this.posts()
+                : this.info()}
           </View>
         </ScrollView>
       </View>
