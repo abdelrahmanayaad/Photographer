@@ -48,8 +48,8 @@ export class Comment extends Component {
         {
           name: "الشاذلى",
           image: require("../assets/Images/images.png"),
-          comment: "التقدير خسرنا كتير ",
-          replay: [{
+          comment_content: "التقدير خسرنا كتير ",
+          replays: [{
             replay_comment: "خلصانه",
             replay_name: "محمد",
             replay_image: require("../assets/Images/images.png"),
@@ -59,8 +59,8 @@ export class Comment extends Component {
         {
           name: "عياد",
           image: require("../assets/Images/images.png"),
-          comment: "لو انت مش فارق ....يبقى تفارق",
-          replay: [
+          comment_content: "لو انت مش فارق ....يبقى تفارق",
+          replays: [
 
           ],
 
@@ -68,16 +68,16 @@ export class Comment extends Component {
         {
           name: "مروه",
           image: require("../assets/Images/images.png"),
-          comment: "تلاشانى ؟ علشانك مش عشانى",
-          replay: [
+          comment_content: "تلاشانى ؟ علشانك مش عشانى",
+          replays: [
 
           ],
         },
         {
           name: "مطحنه",
           image: require("../assets/Images/images.png"),
-          comment: "الوشوش هتتقابل بس القلوب موعدكش",
-          replay: [
+          comment_content: "الوشوش هتتقابل بس القلوب موعدكش",
+          replays: [
 
           ],
 
@@ -86,8 +86,8 @@ export class Comment extends Component {
         {
           name: "اسراء",
           image: require("../assets/Images/images.png"),
-          comment: " الرزق ان يضع الله لك قبولا ف قلب كل من يراك",
-          replay: [
+          comment_content: " الرزق ان يضع الله لك قبولا ف قلب كل من يراك",
+          replays: [
 
           ],
 
@@ -105,18 +105,18 @@ export class Comment extends Component {
   get_comments() {
     let data_to_send = {
       user_id: 1,
-      post_id: 1
+      post_id: 2
     }
 
-    axios.post('', data_to_send).then(res => {
+    axios.post('https://generation3.000webhostapp.com/project/Training/Comments.php', data_to_send).then(res => {
       if (res.status == 200) {
         if (res.data == 'Not Valid Parametar Value') {
           console.log('not valid');
-        } else {
+        } else if (typeof (res.data) == "object") {
           console.log("success");
           console.log(res.data);
-          // this.setState({comments: res.data})
-        }
+          this.setState({ comments: res.data })
+        } else ("use not found")
       }
     }).catch(err => {
       console.log(err);
@@ -133,7 +133,7 @@ export class Comment extends Component {
   }
 
   componentDidMount() {
-    // this.get_comments()
+    this.get_comments()
   }
 
 
@@ -144,8 +144,8 @@ export class Comment extends Component {
     let obj = {
       image: require("../assets/Images/secur.png"),
       name: "الشاذلى",
-      comment: this.state.text,
-      replay: [],
+      comment_content: this.state.text,
+      replays: [],
 
     }
 
@@ -167,7 +167,7 @@ export class Comment extends Component {
       replay_image: require("../assets/Images/images.png"),
     }
 
-    comment.replay.push(reply);
+    comment.replays.push(reply);
 
     this.setState({
 
@@ -196,9 +196,9 @@ export class Comment extends Component {
         <View style={{
           flex: 1,
           backgroundColor: COLORS.background,
-          borderBottomLeftRadius: RFValue(40),
-          borderBottomRightRadius: RFValue(40),
-          paddingBottom: PADDING.lgPadding
+          borderBottomLeftRadius: RFValue(30),
+          borderBottomRightRadius: RFValue(30),
+          paddingBottom: 40
 
         }}>
 
@@ -206,17 +206,17 @@ export class Comment extends Component {
 
 
             {/* View Header */}
-            <View style={styles.view}>
+            <View
+            // style={styles.view}
+            >
 
-              <TouchableOpacity>
-                <AntDesign name="arrowright" color={COLORS.gray} size={ICONS.xlIcon} />
-              </TouchableOpacity>
 
-              <Text style={styles.titleStyle}>التعليقات</Text>
 
-              <TouchableOpacity>
-                <FontAwesome5 name="ellipsis-h" color={COLORS.gray} size={ICONS.lIcon} />
-              </TouchableOpacity>
+              <Text style={[styles.titleStyle, { alignSelf: "center" }]}>التعليقات</Text>
+
+              {/* <TouchableOpacity >
+                <AntDesign name="arrowleft" color={COLORS.gray} size={ICONS.xlIcon} />
+              </TouchableOpacity> */}
 
             </View>
 
@@ -254,12 +254,12 @@ export class Comment extends Component {
                       elevation: 2
                     }}>
                       <Text style={styles.titleStyle}>{comment.name}</Text>
-                      <Text style={styles.messageTitleStyle}>{comment.comment}</Text>
+                      <Text style={styles.messageTitleStyle}>{comment.comment_content}</Text>
                     </View>
-                    {comment.replay.map((replay, index) => (
+                    {comment.replays.map((replay, index) => (
                       <View style={{ flexDirection: "row" }}>
                         {
-                          comment.replay == "" ? null : <Image
+                          comment.replays == "" ? null : <Image
                             source={replay.replay_image}
                             style={{
                               width: RFValue(25),
@@ -271,7 +271,7 @@ export class Comment extends Component {
                             resizeMode="contain"
                             borderRadius={20}
                           />}
-                        {comment.replay == "" ? null :
+                        {comment.replays == "" ? null :
                           <View style={{
                             backgroundColor: "#fff",
                             minWidth: "40%",
@@ -441,7 +441,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-
     alignItems: "center",
     backgroundColor: COLORS.white,
     borderRadius: RADIUS.lgRadius,
