@@ -4,7 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
-
+// import SettingStack from './SettingStack';
+import { SettingsScreen } from '../screens';
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
@@ -14,6 +15,7 @@ function Navigation() {
       initialRouteName="Intro">
       <Stack.Screen name="AuthStack" component={AuthStack} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
+      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }
