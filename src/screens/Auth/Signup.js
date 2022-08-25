@@ -51,14 +51,16 @@ export default function Signup({navigation}) {
     {name: ' مصور'},
     {name: 'ميكب ارتست'},
   ]);
+  const [usertype, setusertype] = useState(arr[0]);
   const [token, setToken] = useState('');
 
   SendUser=()=> {
+    // alert(token)
     let data_to_send = {
       name:  name,
       email:  Email,
       pass:  password,
-      type:  arr,
+      type:  usertype,
       token:  token
     }
     axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
@@ -74,56 +76,30 @@ export default function Signup({navigation}) {
         } else {
           alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
         }
-        setName( "" )
-        setPassword("")
-        setPhoneError( "" )
-        setEmail("")
-        setConPass("")
+        // setName( "" )
+        // setPassword("")
+        // setPhoneError( "" )
+        // setEmail("")
+        // setConPass("")
       })
   }
 
-  // componentDidMount(){
-  //   messaging()
-  //   .getToken()
-  //   .then(token => {
-  //       // alert(token)
-  //       setToken(token)
-
-  //   });
-
-  // return messaging().onTokenRefresh(token => {
-  //   setToken(token)
-
-  // });
-
-  // }
+ 
     useEffect(() => {
-
       messaging()
           .getToken()
           .then(token => {
-              alert(token)
-              // setToken(token)
+              // console.log(token.length)
+              setToken(token)
 
           });
 
       return messaging().onTokenRefresh(token => {
-          // setToken(token)
-          alert(token)
+        setToken(token)
+          // console.log(token.length)
 
       });
-
-      // const getToken = async () => {
-      //   try {
-      //     const token = await messaging().getToken();
-      //     if (token) return console.log(token);
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // };
-      // getToken()
-
-  }, [])
+    }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -186,9 +162,6 @@ export default function Signup({navigation}) {
     if (password.trim() == '') {
       error++;
       setPassError('لايجب ان يكون هذا الحقل فارغ');
-    } else if (password.length > 20) {
-      error++;
-      setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
     } else if (!validatePassword(password)) {
       error++;
       setPassError(
@@ -212,9 +185,13 @@ export default function Signup({navigation}) {
       setConPassError('');
     }
 
-    // if (error == 0) {
-    //   alert("WELCOME")
-    // }
+    if (error == 0) {
+console.log("dn")      
+    }
+    else{
+      console.log("no")      
+
+    }
   };
   onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -369,7 +346,10 @@ export default function Signup({navigation}) {
           <GeneralButton
             onPress={() => {
               signup();
-              SendUser()
+              // nameerorr == '' && Emailerorr == '' && phoneerorr == ''&&passworderorr== '' &&passwordconfirmerorr== '' 
+                   SendUser()
+                  // : null;
+              // navigation.navigate('HomeStack');
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}
@@ -401,6 +381,7 @@ export default function Signup({navigation}) {
                       style={styles.buttonmodal}
                       onPress={() => {
                         setShowComment(false);
+                        setusertype(item.name)
                       }}>
                       <Text style={styles.fontModal}>{item.name}</Text>
 
