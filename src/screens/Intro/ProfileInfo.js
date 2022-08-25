@@ -6,6 +6,7 @@ import {
     StyleSheet,
     ScrollView,
     Linking,
+    ActivityIndicator
 } from 'react-native';
 import { MARGIN, COLORS, ICONS, FONTS, RADIUS, PADDING } from '../../constants';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -85,6 +86,7 @@ function ProfileInfo() {
     const [faceLink, set_faceLink] = useState('')
     const [instaLink, set_instaLink] = useState('')
     const [address, set_address] = useState([])
+    const [isLoading, setLoading] = useState(true)
     const about = () => {
         let data_to_send = {
             user_id: '15'
@@ -92,8 +94,9 @@ function ProfileInfo() {
         axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
             if (res.status == 200) {
                 // console.log(res.data)
+                setLoading(true)
                 set_phoneNums(phoneNums => res.data.Photogarpher_brand_phone_num)
-                set_whatsLink(whatsLink=>res.data.Photogarpher_whats_link)
+                set_whatsLink(whatsLink => res.data.Photogarpher_whats_link)
                 set_faceLink(faceLink => res.data.Photogarpher_face_link)
                 set_instaLink(instaLink => res.data.Photogarpher_insta_link)
                 // console.log(res.data.brand_addresses)
@@ -102,6 +105,7 @@ function ProfileInfo() {
             } else {
                 alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
             }
+            setLoading(false)
         }).catch((err) => {
             console.log(err)
         })
@@ -127,6 +131,7 @@ function ProfileInfo() {
         let arr = [...reviews]
         arr.push(obj)
         setReviews(reviews => arr)
+        setRate(rate=>0)
     }
     const rating_fun = (index) => {
         let arr = [...stars]
@@ -303,7 +308,9 @@ function ProfileInfo() {
                                         </View>
                     }
                     <View style={{ height: RFValue(80), justifyContent: 'center' }}>
-                        <Text style={{ fontSize: RFValue(15), color: "#313131" }}>{item.opinion}</Text>
+                        <ScrollView>
+                            <Text style={{ fontSize: RFValue(15), color: "#313131" }}>{item.opinion}</Text>
+                        </ScrollView>
                     </View>
                 </View>
 
@@ -313,45 +320,52 @@ function ProfileInfo() {
 
     return (
         <View style={styles.container}>
-            <View style={{ marginRight: RFValue(20) }}>
-                <Text style={styles.headerTxt}>حـول </Text>
-                {render_phoneNum()}
-                {whatsLink != '' ? <View style={styles.infoContainer}>
-                    <Fontisto name='whatsapp' size={RFValue(17)} />
-                    <Text
-                        style={[styles.infoTxt, { textDecorationLine: 'none' }]}
-                        onPress={() => { Linking.openURL(whatsLink) }}
-                    >إرسال رسالة</Text>
-                </View> : null}
-                {faceLink != '' ? <View style={styles.infoContainer}>
-                    <AntDesign name='facebook-square' size={RFValue(17)} />
-                    <Text selectable={true}
-                        onPress={() => { Linking.openURL(faceLink) }}
-                        style={styles.infoTxt}
-                    >{faceLink}</Text>
-                </View> : null}
-                {instaLink != '' ? <View style={styles.infoContainer}>
-                    <AntDesign name='instagram' size={RFValue(17)} />
-                    <Text selectable={true}
-                        onPress={() => { Linking.openURL(instaLink) }}
-                        style={styles.infoTxt}
-                    >{instaLink}</Text>
-                </View> : null}
-                {render_addresses()}
-            </View>
+            {isLoading ? <ActivityIndicator size={40} color={COLORS.primary} /> : (
+                <View style={{ marginRight: RFValue(20) }}>
+                    <Text style={styles.headerTxt}>حـول </Text>
+                    {render_phoneNum()}
+                    {whatsLink != '' ? <View style={styles.infoContainer}>
+                        <Fontisto name='whatsapp' size={RFValue(17)} />
+                        <Text
+                            style={[styles.infoTxt, { textDecorationLine: 'none' }]}
+                            onPress={() => { Linking.openURL(whatsLink) }}
+                        >إرسال رسالة</Text>
+                    </View> : null}
+                    {faceLink != '' ? <View style={styles.infoContainer}>
+                        <AntDesign name='facebook-square' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL(faceLink) }}
+                            style={styles.infoTxt}
+                        >فيس بوك</Text>
+                    </View> : null}
+                    {instaLink != '' ? <View style={styles.infoContainer}>
+                        <AntDesign name='instagram' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL(instaLink) }}
+                            style={styles.infoTxt}
+                        >انستجرام</Text>
+                    </View> : null}
+                    {render_addresses()}
+                </View>
+            )}
             <View style={{ height: RFValue(235) }}>
                 <Text style={styles.headerTxt}>الآراء </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <TouchableOpacity
-                        style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center' }]}
+                        style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center', borderColor: '#eee' }]}
                         onPress={() => { setVisible(visible => true) }}>
                         <Text style={{ fontSize: RFValue(30), fontWeight: 'bold' }}>+</Text>
                     </TouchableOpacity>
-                    <Dialog.Container visible={visible}>
+                    <Dialog.Container visible={visible} >
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }} >
                             {render_rating()}
                         </View>
-                        <Dialog.Input placeholder='ادخل رأيك عنا' style={{ marginTop: 10 }} value={opinion} onChangeText={(value) => { setOpenion(opinion => value) }} />
+                        <Dialog.Input
+                            placeholder='ادخل رأيك عنا'
+                            style={{ marginTop: 10, width: RFValue(250) }}
+                            // multiline={true}
+                            value={opinion}
+                            onChangeText={(value) => { setOpenion(opinion => value) }} />
                         <Dialog.Button label="تم" onPress={() => { addReview(), setVisible(visible => false), rating_fun(0), setOpenion(opinion => '') }} />
                     </Dialog.Container>
                     {reviewsMap()}
@@ -368,7 +382,8 @@ const styles = StyleSheet.create({
         padding: RFValue(10),
         width: RFValue(165),
         height: RFValue(170),
-        backgroundColor: COLORS.primary,
+        borderWidth: RFValue(1.5),
+        borderColor: COLORS.primary,
         borderRadius: RADIUS.smRadius
     },
     container: {
