@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import {
   Text,
@@ -14,8 +14,8 @@ import {
   TextInput,
   StatusBar,
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -25,13 +25,13 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
 import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 
-const {width, height} = Dimensions.get('window');
-export default function Signup({navigation}) {
+const { width, height } = Dimensions.get('window');
+export default function Signup({ navigation }) {
   const [name, setName] = useState('');
   const [nameerorr, setNameerorr] = useState('');
   const [Email, setEmail] = useState('');
@@ -47,26 +47,26 @@ export default function Signup({navigation}) {
   const [ShowComment, setShowComment] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
   const [arr, setArr] = useState([
-    {name: 'مستخدم'},
-    {name: ' مصور'},
-    {name: 'ميكب ارتست'},
+    { name: 'مستخدم' },
+    { name: ' مصور' },
+    { name: 'ميكب ارتست' },
   ]);
   const [usertype, setusertype] = useState(arr[0]);
   const [token, setToken] = useState('');
 
-  SendUser=()=> {
+  SendUser = () => {
     // alert(token)
     let data_to_send = {
-      name:  name,
-      email:  Email,
-      pass:  password,
-      type:  usertype,
-      token:  token
+      name: name,
+      email: Email,
+      pass: password,
+      type: usertype,
+      token: token
     }
     axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
       .then((res) => {
         if (res.status == 200) {
-          if ( (res.data) == "successful") {
+          if ((res.data) == "successful") {
             alert("done")
           } else if (res.data == "Not Valid Values" || res.data == "error happen") {
             alert("من فضلك تأكد من صحة البيانات")
@@ -76,30 +76,30 @@ export default function Signup({navigation}) {
         } else {
           alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
         }
-        // setName( "" )
-        // setPassword("")
-        // setPhoneError( "" )
-        // setEmail("")
-        // setConPass("")
+        setName("")
+        setPassword("")
+        setPhone("")
+        setEmail("")
+        setConPass("")
       })
   }
 
- 
-    useEffect(() => {
-      messaging()
-          .getToken()
-          .then(token => {
-              // console.log(token.length)
-              setToken(token)
 
-          });
-
-      return messaging().onTokenRefresh(token => {
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        // console.log(token.length)
         setToken(token)
-          // console.log(token.length)
 
       });
-    }, [])
+
+    return messaging().onTokenRefresh(token => {
+      setToken(token)
+      // console.log(token.length)
+
+    });
+  }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -186,10 +186,12 @@ export default function Signup({navigation}) {
     }
 
     if (error == 0) {
-console.log("dn")      
+      console.log("dn")
+      SendUser()
+
     }
-    else{
-      console.log("no")      
+    else {
+      console.log("no")
 
     }
   };
@@ -346,10 +348,7 @@ console.log("dn")
           <GeneralButton
             onPress={() => {
               signup();
-              // nameerorr == '' && Emailerorr == '' && phoneerorr == ''&&passworderorr== '' &&passwordconfirmerorr== '' 
-                   SendUser()
-                  // : null;
-              // navigation.navigate('HomeStack');
+              navigation.navigate('HomeStack');
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}
@@ -369,13 +368,13 @@ console.log("dn")
           PressToanimate={animateModal}
           ContentModal={
             <View style={styles.containerContent}>
-              <Text style={[styles.fontModal, {marginBottom: MARGIN.xsMargin}]}>
+              <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>
                 حدد نوع المستخدم
               </Text>
 
               <FlatList
                 data={arr}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <>
                     <TouchableOpacity
                       style={styles.buttonmodal}
