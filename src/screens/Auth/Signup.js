@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import {
   Text,
@@ -14,8 +14,8 @@ import {
   TextInput,
   StatusBar,
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -25,13 +25,13 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
 import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 
-const {width, height} = Dimensions.get('window');
-export default function Signup({navigation}) {
+const { width, height } = Dimensions.get('window');
+export default function Signup({ navigation }) {
   const [name, setName] = useState('');
   const [nameerorr, setNameerorr] = useState('');
   const [Email, setEmail] = useState('');
@@ -47,83 +47,59 @@ export default function Signup({navigation}) {
   const [ShowComment, setShowComment] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
   const [arr, setArr] = useState([
-    {name: 'مستخدم'},
-    {name: ' مصور'},
-    {name: 'ميكب ارتست'},
+    { name: 'مستخدم' },
+    { name: ' مصور' },
+    { name: 'ميكب ارتست' },
   ]);
+  const [usertype, setusertype] = useState(arr[0]);
   const [token, setToken] = useState('');
 
-  // SendUser=()=> {
-  //   let data_to_send = {
-  //     name:  name,
-  //     email:  Email,
-  //     pass:  password,
-  //     type:  arr,
-  //     token:  token
-  //   }
-  //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
-  //     .then((res) => {
-  //       if (res.status == 200) {
-  //         if ( (res.data) == "successful") {
-  //           alert("done")
-  //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
-  //           alert("من فضلك تأكد من صحة البيانات")
-  //         } else if (res.data == "email is already exist") {
-  //           alert("هذا البريد موجود بالفعل")
-  //         }
-  //       } else {
-  //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-  //       }
-  //       setName( "" )
-  //       setPassword("")
-  //       setPhoneError( "" )
-  //       setEmail("")
-  //       setConPass("")
-  //     })
-  // }
+  SendUser = () => {
+    // alert(token)
+    let data_to_send = {
+      name: name,
+      email: Email,
+      pass: password,
+      type: usertype,
+      token: token
+    }
+    axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+      .then((res) => {
+        if (res.status == 200) {
+          if ((res.data) == "successful") {
+            alert("done")
+          } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+            alert("من فضلك تأكد من صحة البيانات")
+          } else if (res.data == "email is already exist") {
+            alert("هذا البريد موجود بالفعل")
+          }
+        } else {
+          alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+        }
+        setName("")
+        setPassword("")
+        setPhone("")
+        setEmail("")
+        setConPass("")
+      })
+  }
 
-  // // componentDidMount(){
-  // //   messaging()
-  // //   .getToken()
-  // //   .then(token => {
-  // //       // alert(token)
-  // //       setToken(token)
 
-  // //   });
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        // console.log(token.length)
+        setToken(token)
 
-  // // return messaging().onTokenRefresh(token => {
-  // //   setToken(token)
+      });
 
-  // // });
+    return messaging().onTokenRefresh(token => {
+      setToken(token)
+      // console.log(token.length)
 
-  // // }
-  //   useEffect(() => {
-
-  //     messaging()
-  //         .getToken()
-  //         .then(token => {
-  //             console.log(token)
-  //             // setToken(token)
-
-  //         });
-
-  //     return messaging().onTokenRefresh(token => {
-  //         // setToken(token)
-  //         console.log(token)
-
-  //     });
-
-  //     // const getToken = async () => {
-  //     //   try {
-  //     //     const token = await messaging().getToken();
-  //     //     if (token) return console.log(token);
-  //     //   } catch (error) {
-  //     //     console.log(error);
-  //     //   }
-  //     // };
-  //     // getToken()
-
-  // }, [])
+    });
+  }, [])
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -186,9 +162,6 @@ export default function Signup({navigation}) {
     if (password.trim() == '') {
       error++;
       setPassError('لايجب ان يكون هذا الحقل فارغ');
-    } else if (password.length > 20) {
-      error++;
-      setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
     } else if (!validatePassword(password)) {
       error++;
       setPassError(
@@ -212,9 +185,15 @@ export default function Signup({navigation}) {
       setConPassError('');
     }
 
-    // if (error == 0) {
-    //   alert("WELCOME")
-    // }
+    if (error == 0) {
+      console.log("dn")
+      SendUser()
+
+    }
+    else {
+      console.log("no")
+
+    }
   };
   onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -389,18 +368,19 @@ export default function Signup({navigation}) {
           PressToanimate={animateModal}
           ContentModal={
             <View style={styles.containerContent}>
-              <Text style={[styles.fontModal, {marginBottom: MARGIN.xsMargin}]}>
+              <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>
                 حدد نوع المستخدم
               </Text>
 
               <FlatList
                 data={arr}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <>
                     <TouchableOpacity
                       style={styles.buttonmodal}
                       onPress={() => {
                         setShowComment(false);
+                        setusertype(item.name)
                       }}>
                       <Text style={styles.fontModal}>{item.name}</Text>
 
