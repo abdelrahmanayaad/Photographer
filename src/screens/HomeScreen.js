@@ -159,7 +159,7 @@ function HomeScreen({navigation}) {
       ) : null;
     });
   };
-  const onpress_in_renderhighlights = obj => {
+  const onpress_in_renderhighlights = (obj) => {
     let arr = [...arr_for_each_story];
     arr.push(obj);
     setarr_for_each_story(arr_for_each_story => arr);
@@ -181,8 +181,8 @@ function HomeScreen({navigation}) {
             style={styles.exit_buttom_in_story_style}>
             <Feather
               name="x"
-              size={RFValue(ICONS.lIcon)}
-              color={COLORS.black}
+              size={RFValue(ICONS.xlIcon)}
+              color={COLORS.white}
             />
           </TouchableOpacity>
         </ImageBackground>
@@ -448,11 +448,11 @@ const styles = StyleSheet.create({
   exit_buttom_in_story_style: {
     width: RFValue(50),
     height: RFValue(50),
-    backgroundColor: '#eee',
-    margin: RFValue(MARGIN.xsMargin),
+    //backgroundColor: '#eee',
+   // margin: RFValue(MARGIN.xsMargin),
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: RFValue(20),
+    //borderRadius: RFValue(20),
     // elevation: 2,
   },
   nameunderpost: {

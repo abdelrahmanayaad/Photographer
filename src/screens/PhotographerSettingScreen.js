@@ -1,5 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, Text, View, StyleSheet, TouchableOpacity, Image, ScrollView, PermissionsAndroid, YellowBox, StatusBar, FlatList, Modal, AsyncStorage } from 'react-native';
+import {
+    Dimensions,
+    Text,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    ScrollView,
+    PermissionsAndroid,
+    YellowBox,
+    StatusBar,
+    FlatList,
+    Modal,
+    AsyncStorage,
+    ActivityIndicator
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -28,7 +43,7 @@ const LONGITUDE_DELTA = 0.0421;
 
 
 function PhotographerSettingScreen() {
-
+    const [isLoading, setLoading] = useState(true)
     const [photo_uri, setphoto_uri] = useState("")
     const [photo_data, setphoto_data] = useState("")
     const [name, setname] = useState("Esraa Elgiz")
@@ -122,44 +137,46 @@ function PhotographerSettingScreen() {
     }
 
     ///
-    const delete_address=(addressid)=>{
-        let data_to_send={
-            address_id:addressid
+    const delete_address = (addressid) => {
+        let data_to_send = {
+            address_id: addressid
         };
-        axios.post("https://generation3.000webhostapp.com/project/Training/delete_address.php",data_to_send).then((res)=>{
-            if(res.status==200){
+        axios.post("https://generation3.000webhostapp.com/project/Training/delete_address.php", data_to_send).then((res) => {
+            if (res.status == 200) {
                 //console.log(res.data)
                 alert(res.data)
-               
-            }else{
+
+            } else {
                 alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
             }
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
         })
 
     }
-    const get_photographer_data=()=>{
-        let data_to_send={
-            user_id:"15"
+    const get_photographer_data = () => {
+        let data_to_send = {
+            user_id: "15"
         };
-        axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php",data_to_send).then((res)=>{
-            if(res.status==200){
+        axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
+            if (res.status == 200) {
                 //console.log(res.data.Photogarpher_brand_phone_num)
                 //console.log(res.data)
-                setphoto_uri(photo_uri=>res.data.Photogarpher_brand_img)
-                setphoto_data(photo_data=>res.data.Photogarpher_brand_img)
-                setbrandname(brandname=>res.data.Photogarpher_brand_name)
-               setdetails(details=>res.data.Photogarpher_details)
-              setfacelink(facelink=>res.data.Photogarpher_face_link)
-              setinstalink(instalink=>res.data.Photogarpher_insta_link)
-              setwhatsapplink(whatsapplink=>res.data.Photogarpher_whats_link)
-                setphonenumbersarr(phonenumbersarr=>res.data.Photogarpher_brand_phone_num)
-                setadditionaladdressesarr(additionaladdressesarr=>res.data.brand_addresses)
-            }else{
+                setLoading(isLoading => true)
+                setphoto_uri(photo_uri => res.data.Photogarpher_brand_img)
+                setphoto_data(photo_data => res.data.Photogarpher_brand_img)
+                setbrandname(brandname => res.data.Photogarpher_brand_name)
+                setdetails(details => res.data.Photogarpher_details)
+                setfacelink(facelink => res.data.Photogarpher_face_link)
+                setinstalink(instalink => res.data.Photogarpher_insta_link)
+                setwhatsapplink(whatsapplink => res.data.Photogarpher_whats_link)
+                setphonenumbersarr(phonenumbersarr => res.data.Photogarpher_brand_phone_num)
+                setadditionaladdressesarr(additionaladdressesarr => res.data.brand_addresses)
+            } else {
                 alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
             }
-        }).catch((err)=>{
+            setLoading(isLoading => false)
+        }).catch((err) => {
             console.log(err)
         })
     }
@@ -233,7 +250,7 @@ function PhotographerSettingScreen() {
                         <Text style={{ color: COLORS.black, fontSize: RFValue(FONTS.h5) }}>{item.address_decription}</Text>
                     </View>
                     <TouchableOpacity style={{ width: '10%', padding: RFValue(1) }}
-                        onPress={() => {deleteaddress(index);delete_address(item.address_id)}}>
+                        onPress={() => { deleteaddress(index); delete_address(item.address_id) }}>
                         <Feather name="x" size={RFValue(ICONS.lIcon)} color={COLORS.black} />
                     </TouchableOpacity>
 
@@ -442,163 +459,168 @@ function PhotographerSettingScreen() {
                     </View>
                     <View></View>
                 </View>
-                <View style={styles.photoContainer}>
-                    <View style={styles.photo}>
-                        {photo_uri == '' ?
-                            (<Entypo name='user' size={RFValue(50)} color='#4b4b4b' />) :
-                            (<Image
-                                source={{ uri: photo_uri }}
-                                style={styles.selectedPhoto}
-                                resizeMode='contain'
-                            />)}
-                    </View>
+                {isLoading ? <ActivityIndicator size={RFValue(40)} color={COLORS.primary} /> : (
+                    <View>
 
-                    <TouchableOpacity
-                        style={styles.editView}
-                        onPress={() => setShowComment(ShowComment => true)}>
-                        <Entypo name='edit' size={RFValue(ICONS.smIcon)} color='#fff' style={styles.editIcon} />
-                        <ScrollView>
-                            <SwipeUpDownModal
-                                modalVisible={ShowComment}
-                                ContentModal={
-                                    <View style={styles.containerContent}>
+                        <View style={styles.photoContainer}>
+                            <View style={styles.photo}>
+                                {photo_uri == '' ?
+                                    (<Entypo name='user' size={RFValue(50)} color='#4b4b4b' />) :
+                                    (<Image
+                                        source={{ uri: photo_uri }}
+                                        style={styles.selectedPhoto}
+                                        resizeMode='contain'
+                                    />)}
+                            </View>
 
-                                        <FlatList
-                                            data={arr}
-                                            renderItem={({ item, index }) => (
-                                                <>
+                            <TouchableOpacity
+                                style={styles.editView}
+                                onPress={() => setShowComment(ShowComment => true)}>
+                                <Entypo name='edit' size={RFValue(ICONS.smIcon)} color='#fff' style={styles.editIcon} />
+                                <ScrollView>
+                                    <SwipeUpDownModal
+                                        modalVisible={ShowComment}
+                                        ContentModal={
+                                            <View style={styles.containerContent}>
 
-                                                    <TouchableOpacity
-                                                        style={styles.buttonmodal}
-                                                        onPress={() => {
-                                                            if (index == 0) {
-                                                                launchCamera(), setShowComment(false)
-                                                            } else if (index == 1) {
-                                                                selectFromGallery(), setShowComment(false)
-                                                            } else if (index == 2) {
-                                                                setphoto_uri(photo_uri => ""), setShowComment(false), setphoto_data(photo_data => "")
-                                                            } else if (index == 3) {
-                                                                setShowComment(false)
-                                                            }
+                                                <FlatList
+                                                    data={arr}
+                                                    renderItem={({ item, index }) => (
+                                                        <>
 
-                                                        }}>
-                                                        <Text style={styles.fontModal}>{item.name}</Text>
+                                                            <TouchableOpacity
+                                                                style={styles.buttonmodal}
+                                                                onPress={() => {
+                                                                    if (index == 0) {
+                                                                        launchCamera(), setShowComment(false)
+                                                                    } else if (index == 1) {
+                                                                        selectFromGallery(), setShowComment(false)
+                                                                    } else if (index == 2) {
+                                                                        setphoto_uri(photo_uri => ""), setShowComment(false), setphoto_data(photo_data => "")
+                                                                    } else if (index == 3) {
+                                                                        setShowComment(false)
+                                                                    }
 
-                                                        <AntDesign
-                                                            name="arrowleft"
-                                                            color={COLORS.gray}
-                                                            size={RFValue(ICONS.lIcon)}
-                                                        />
+                                                                }}>
+                                                                <Text style={styles.fontModal}>{item.name}</Text>
 
-                                                    </TouchableOpacity>
-                                                </>
-                                            )}
+                                                                <AntDesign
+                                                                    name="arrowleft"
+                                                                    color={COLORS.gray}
+                                                                    size={RFValue(ICONS.lIcon)}
+                                                                />
 
-                                        />
-                                    </View>
-                                }
-                                ContentModalStyle={styles.Modal}
+                                                            </TouchableOpacity>
+                                                        </>
+                                                    )}
+
+                                                />
+                                            </View>
+                                        }
+                                        ContentModalStyle={styles.Modal}
 
 
 
-                                onClose={() => {
-                                    setShowComment(ShowComment => false)
-                                }}
+                                        onClose={() => {
+                                            setShowComment(ShowComment => false)
+                                        }}
+                                    />
+                                </ScrollView>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View>
+                            <Input
+                                placeholder="الاسم"
+                                value={name}
+                                onChangeText={value => setname(name => value)}
                             />
-                        </ScrollView>
-                    </TouchableOpacity>
-                </View>
+                            <Text style={styles.error_text_style}>{name_error}</Text>
 
-                <View>
-                    <Input
-                        placeholder="الاسم"
-                        value={name}
-                        onChangeText={value => setname(name => value)}
-                    />
-                    <Text style={styles.error_text_style}>{name_error}</Text>
+                        </View>
+                        <View>
+                            <Input
+                                placeholder="اسم العلامه التجاريه"
+                                value={brandname}
+                                onChangeText={value => setbrandname(brandname => value)}
+                            />
+                            <Text style={styles.error_text_style}>{brand_name_error}</Text>
 
-                </View>
-                <View>
-                    <Input
-                        placeholder="اسم العلامه التجاريه"
-                        value={brandname}
-                        onChangeText={value => setbrandname(brandname => value)}
-                    />
-                    <Text style={styles.error_text_style}>{brand_name_error}</Text>
+                        </View>
 
-                </View>
+                        <View>
+                            <Input
+                                placeholder="التفاصيل"
+                                value={details}
+                                onChangeText={value => setdetails(details => value)}
+                            />
+                            <Text></Text>
 
-                <View>
-                    <Input
-                        placeholder="التفاصيل"
-                        value={details}
-                        onChangeText={value => setdetails(details => value)}
-                    />
-                    <Text></Text>
+                        </View>
 
-                </View>
-
-                <View>
-                    <Input
-                        placeholder="رابط الفيسبوك"
-                        value={facelink}
-                        onChangeText={value => setfacelink(facelink => value)}
-                    />
-                    <Text></Text>
+                        <View>
+                            <Input
+                                placeholder="رابط الفيسبوك"
+                                value={facelink}
+                                onChangeText={value => setfacelink(facelink => value)}
+                            />
+                            <Text></Text>
 
 
-                </View>
-                <View>
-                    <Input
-                        placeholder="رابط الانستجرام"
-                        value={instalink}
-                        onChangeText={value => setinstalink(instalink => value)}
-                    />
-                    <Text></Text>
+                        </View>
+                        <View>
+                            <Input
+                                placeholder="رابط الانستجرام"
+                                value={instalink}
+                                onChangeText={value => setinstalink(instalink => value)}
+                            />
+                            <Text></Text>
 
-                </View>
-                <View>
-                    <Input
-                        placeholder="رابط الواتس اب"
-                        value={whatsapplink}
-                        onChangeText={value => setwhatsapplink(whatsapplink => value)}
-                    />
-                    <Text></Text>
+                        </View>
+                        <View>
+                            <Input
+                                placeholder="رابط الواتس اب"
+                                value={whatsapplink}
+                                onChangeText={value => setwhatsapplink(whatsapplink => value)}
+                            />
+                            <Text></Text>
 
 
-                </View>
+                        </View>
 
-                <View>
-                    {renderphonenumbers()}
-                </View>
-                <View style={styles.buttonView}>
-                    <GeneralButton
-                        onPress={() => setphonenumbersaddmodelvisible(phonenumersaddmodelvisible => true)}
-                        title="اضافه رقم هاتف "
-                        bgcolor={COLORS.primary}
-                        activeOpacity={0.7} />
-                    <Text style={styles.error_text_style}>{phone_under_bottom_error}</Text>
-                </View>
+                        <View>
+                            {renderphonenumbers()}
+                        </View>
+                        <View style={styles.buttonView}>
+                            <GeneralButton
+                                onPress={() => setphonenumbersaddmodelvisible(phonenumersaddmodelvisible => true)}
+                                title="اضافه رقم هاتف "
+                                bgcolor={COLORS.primary}
+                                activeOpacity={0.7} />
+                            <Text style={styles.error_text_style}>{phone_under_bottom_error}</Text>
+                        </View>
 
-                <View>
-                    {render_additional_addresses()}
-                </View>
-                <View style={styles.buttonView}>
-                    <GeneralButton
-                        onPress={() => setadditional_address_modal_visible(additional_address_modal_visible => true)}
-                        title="اضافه عنوان"
-                        bgcolor={COLORS.primary}
-                        activeOpacity={0.7} />
-                    <Text style={styles.error_text_style}>{address_under_bottom_error}</Text>
-                </View>
+                        <View>
+                            {render_additional_addresses()}
+                        </View>
+                        <View style={styles.buttonView}>
+                            <GeneralButton
+                                onPress={() => setadditional_address_modal_visible(additional_address_modal_visible => true)}
+                                title="اضافه عنوان"
+                                bgcolor={COLORS.primary}
+                                activeOpacity={0.7} />
+                            <Text style={styles.error_text_style}>{address_under_bottom_error}</Text>
+                        </View>
 
-                <View style={styles.buttonView}>
-                    <GeneralButton
-                        onPress={changebuttompress}
-                        title="حفظ التغييرات"
-                        bgcolor={COLORS.primary}
-                        activeOpacity={0.7} />
-                </View>
+                        <View style={styles.buttonView}>
+                            <GeneralButton
+                                onPress={changebuttompress}
+                                title="حفظ التغييرات"
+                                bgcolor={COLORS.primary}
+                                activeOpacity={0.7} />
+                        </View>
+                    </View>
+                )}
 
             </ScrollView>
             <Modal visible={phonenumersaddmodelvisible}>
