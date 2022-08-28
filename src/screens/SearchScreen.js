@@ -12,9 +12,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { Component } from 'react';
-import { Input, GeneralButton } from '../components';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {Component} from 'react';
+import {Input, GeneralButton} from '../components';
+import {RFValue} from 'react-native-responsive-fontsize';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import OTPInput from 'react-native-otp-inputs';
 
@@ -88,7 +88,7 @@ export default class SearchScreen extends React.Component {
           {/* View search */}
           <View style={styles.view_search}>
             <View style={styles.view}>
-              <TouchableOpacity style={{ paddingRight: PADDING.xsPadding }}>
+              <TouchableOpacity style={{paddingRight: PADDING.xsPadding}}>
                 <FontAwesome5
                   name="search"
                   color={COLORS.gray}
@@ -108,7 +108,7 @@ export default class SearchScreen extends React.Component {
                 placeholder="ابحث"
                 value={this.state.search}
                 onChangeText={value => {
-                  this.setState({ search: value });
+                  this.setState({search: value});
                 }}
               />
             </View>
@@ -120,7 +120,6 @@ export default class SearchScreen extends React.Component {
                 size={ICONS.mIcon}
               />
             </TouchableOpacity> */}
-
           </View>
 
           {/* map */}
@@ -129,17 +128,22 @@ export default class SearchScreen extends React.Component {
               .toLowerCase()
               .includes(this.state.search.toLowerCase()) ? (
               <TouchableOpacity style={styles.container_profile}>
-                <View style={{ alignItems: 'center' }}>
-                  <Image
-                    source={photoghrapher.image}
-                    style={{
-                      width: RFValue(50),
-                      height: RFValue(50),
-                      backgroundColor: '#ccc',
-                    }}
-                    resizeMode="contain"
-                    borderRadius={35}
-                  />
+                <View style={{alignItems: 'center'}}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.props.navigation.navigate('PhotographerProfile');
+                    }}>
+                    <Image
+                      source={photoghrapher.image}
+                      style={{
+                        width: RFValue(50),
+                        height: RFValue(50),
+                        backgroundColor: '#ccc',
+                      }}
+                      resizeMode="contain"
+                      borderRadius={35}
+                    />
+                  </TouchableOpacity>
                 </View>
                 <View
                   style={{
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: PADDING.mdPadding,
     height: RFValue(40),
     width: '100%',
-    elevation: 5
+    elevation: 5,
   },
   container_profile: {
     flexDirection: 'row',

@@ -4,8 +4,10 @@ import {COLORS} from '../../constants';
 import Intro from './Intro/Intro';
 function SplashScreen({navigation}) {
   useEffect(() => {
+    let login = 0;
     setTimeout(() => {
-      navigation.navigate('Intro');
+      if (login == 1) navigation.navigate('HomeStack');
+      else navigation.navigate('Intro');
     }, 3000);
   }, []);
 

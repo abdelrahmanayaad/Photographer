@@ -493,7 +493,11 @@ function PhotographerSettingScreen() {
                 barStyle={'light-content'} backgroundColor={COLORS.primary} />
             <ScrollView>
                 <View style={styles.headerView}>
-                    <TouchableOpacity >
+                    <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('AdminProfile');
+                    }}
+                     >
                         <AntDesign
                             name="arrowright"
                             color={COLORS.gray}

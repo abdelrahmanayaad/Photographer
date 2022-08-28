@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   StatusBar,
+  BackHandler,
 } from 'react-native';
 import { Input, GeneralButton } from '../../components';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -30,24 +31,32 @@ import { StackActions } from '@react-navigation/native';
 
 function Login({ navigation, route }) {
   useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
     messaging()
       .getToken()
       .then(token => {
         // alert(token)
-        set_userToken(userToken => token)
+        set_userToken(userToken => token);
       });
     return messaging().onTokenRefresh(token => {
       // alert(token)
-      set_userToken(userToken => token)
+      set_userToken(userToken => token);
     });
-  }, [])
-  const [userToken, set_userToken] = useState('')
+  }, []);
+  const [userToken, set_userToken] = useState('');
   const [secured_pass, set_secured_pass] = useState(false);
   const [user_email, set_email] = useState('');
   const [user_password, set_password] = useState('');
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
-  const [userFound, set_userFound] = useState(false)
+  const [userFound, set_userFound] = useState(false);
   const check_emailANDpass = () => {
     let data_to_send = {
       email: user_email,
@@ -61,10 +70,9 @@ function Login({ navigation, route }) {
       )
       .then(res => {
         if (res.status == 200) {
-          if (res.data=="user not found"){
-            console.log(res.data);
+          if (res.data == "user not found") {
             set_userFound(false)
-          }else{
+          } else {
             console.log(res.data);
             set_userFound(true);
           }
@@ -187,7 +195,6 @@ function Login({ navigation, route }) {
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
               onPress={() => {
-
                 error_email == '' && error_password == ''
                   ? check_emailANDpass()
                   : null;
@@ -209,10 +216,23 @@ function Login({ navigation, route }) {
           justifyContent: 'center',
           marginTop: RFValue(MARGIN.mdMargin),
         }}>
-        <Text>ليس لديك حساب ؟ </Text>
+        <Text
+          style={{
+            fontSize: RFValue(FONTS.h5),
+            color: COLORS.gray,
+            marginTop: RFValue(MARGIN.xsMargin),
+          }}>
+          ليس لديك حساب ؟{' '}
+        </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text
-            style={{ textDecorationLine: 'underline', color: COLORS.primary }}>
+            style={{
+              fontSize: RFValue(FONTS.h5),
+              color: COLORS.gray,
+              marginTop: RFValue(MARGIN.xsMargin),
+              textDecorationLine: 'underline',
+              color: COLORS.primary,
+            }}>
             انشاء حساب
           </Text>
         </TouchableOpacity>
