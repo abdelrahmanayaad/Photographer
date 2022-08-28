@@ -61,10 +61,9 @@ function Login({ navigation, route }) {
       )
       .then(res => {
         if (res.status == 200) {
-          if (res.data=="user not found"){
-            console.log(res.data);
+          if (res.data == "user not found") {
             set_userFound(false)
-          }else{
+          } else {
             console.log(res.data);
             set_userFound(true);
           }
