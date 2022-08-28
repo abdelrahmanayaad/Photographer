@@ -391,17 +391,19 @@ function HomeScreen({navigation}) {
       <Modal visible={notification_model_visible}>
         <View style={styles.modal_container_style}>
           <View style={styles.headerView_notification_modal}>
-            <TouchableOpacity onPress={() => set_notification_model_visible(notification_model_visible => false)}>
+          <View style={{width:RFValue(35)}}></View>
+          
+            <View >
+              <Text style={styles.headerTxt}>الاشعارات</Text>
+            </View>
+            <TouchableOpacity
+            onPress={() => set_notification_model_visible(notification_model_visible => false)}>
               <AntDesign
-                name="arrowright"
+                name="arrowleft"
                 color={COLORS.gray}
                 size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
-            <View>
-              <Text style={styles.headerTxt}>الاشعارات</Text>
-            </View>
-            <View></View>
           </View>
           <View style={{ alignItems: 'center', justifyContent: 'center', height: '95%' }}>
             <Text style={{ color: COLORS.black, fontSize: RFValue(FONTS.h4) }}>لا توجد اشعارات</Text>
@@ -550,7 +552,7 @@ const styles = StyleSheet.create({
     fontWeight: '100',
   },
   headerView_notification_modal: {
-    width: '94%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

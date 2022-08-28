@@ -43,7 +43,7 @@ const LONGITUDE_DELTA = 0.0421;
 
 
 
-function PhotographerSettingScreen() {
+function PhotographerSettingScreen({navigation}) {
     const [isLoading, setLoading] = useState(true)
     const [photo_uri, setphoto_uri] = useState("")
     const [photo_data, setphoto_data] = useState("")
@@ -168,7 +168,7 @@ function PhotographerSettingScreen() {
         axios.post("https://generation3.000webhostapp.com/project/Training/delete_address.php", data_to_send).then((res) => {
             if (res.status == 200) {
                 //console.log(res.data)
-                alert(res.data)
+               // alert(res.data)
 
             } else {
                 alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
@@ -227,11 +227,11 @@ function PhotographerSettingScreen() {
                     //this.setState({ color: '#0f0' })
 
                     // alert("user added");
-                    alert("done")
+                    //alert("done")
                 } else if (res.data == 'user not found') {
                     //alert('data_to_send is empty')
                     //this.setState({ color: '#f00' })
-                    alert("user not found")
+                    //alert("user not found")
 
 
                 } else {
@@ -420,6 +420,7 @@ function PhotographerSettingScreen() {
 
             send_photographer_data()
             //navigation
+            navigation.navigate('AdminProfile');
             //console.log(phonenumbersarr)
             // console.log(additionaladdressesarr)
         }
