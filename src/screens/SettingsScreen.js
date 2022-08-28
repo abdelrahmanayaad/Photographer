@@ -38,18 +38,6 @@ export default function SettingsScreen({navigation}) {
       icon_name: 'arrowleft',
     },
     {
-      name: 'احصل علي المساعده',
-      icon_name: 'arrowleft',
-    },
-    {
-      name: 'الابلاغ عن مشكله',
-      icon_name: 'arrowleft',
-    },
-    {
-      name: 'تعليمات الاستخدام',
-      icon_name: 'arrowleft',
-    },
-    {
       name: 'تسجيل الخروج',
       icon_name: 'logout',
     },
