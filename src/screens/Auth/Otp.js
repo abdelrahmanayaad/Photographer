@@ -28,7 +28,7 @@ export default class Otp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      otp: '',
+      otp: '1234',
     };
   }
   handleOTPChange = otp => {
@@ -129,7 +129,16 @@ export default class Otp extends React.Component {
                 alignItems: 'center',
               },
             ]}>
-            <GeneralButton title="ارسل لي الان" bgcolor={COLORS.primary} />
+            <GeneralButton
+              onPress={() => {
+                if (this.state.otp == '1234')
+                  this.props.navigation.navigate('NewPassword');
+                // alert(this.state.otp);
+                else alert('Wrong Code');
+              }}
+              title="ارسل لي الان"
+              bgcolor={COLORS.primary}
+            />
           </View>
         </ScrollView>
       </View>

@@ -18,6 +18,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { RFValue } from 'react-native-responsive-fontsize';
+import RNFetchBlob from 'react-native-fetch-blob'
 import Feather from 'react-native-vector-icons/Feather'
 import {
     PADDING,
@@ -89,6 +90,29 @@ function PhotographerSettingScreen() {
         longitudeDelta: LONGITUDE_DELTA,
     })
     //
+
+    function upload_img(photo_data) {
+        RNFetchBlob.fetch('POST', 'https://generation3.000webhostapp.com/project/Training/upload.php', {
+            Authorization: "Bearer access-token",
+            otherHeader: "foo",
+            'Content-Type': 'multipart/form-data',
+        }, [
+            // element with property `filename` will be transformed into `file` in form data
+
+            // custom content type
+
+            { name: 'image', filename: 'image.png', type: 'image/png', data: photo_data },
+
+            { name: 'user_id', data: '15' },
+        ]).then((resp) => {
+            // ...
+            console.log(JSON.stringify(resp.data))
+        }).catch((err) => {
+            // ...
+            console.log(err)
+        })
+    }
+
     //map functions
     async function SaveLoction(latitude, longitude) {
         await AsyncStorage.setItem("latitude", latitude + "")
@@ -163,8 +187,8 @@ function PhotographerSettingScreen() {
                 //console.log(res.data.Photogarpher_brand_phone_num)
                 //console.log(res.data)
                 setLoading(isLoading => true)
-                setphoto_uri(photo_uri => res.data.Photogarpher_brand_img)
-                setphoto_data(photo_data => res.data.Photogarpher_brand_img)
+                //setphoto_uri(photo_uri => res.data.Photogarpher_brand_img)
+                //setphoto_data(photo_data => res.data.Photogarpher_brand_img)
                 setbrandname(brandname => res.data.Photogarpher_brand_name)
                 setdetails(details => res.data.Photogarpher_details)
                 setfacelink(facelink => res.data.Photogarpher_face_link)
@@ -186,7 +210,7 @@ function PhotographerSettingScreen() {
             brand_name: brandname,
             user_details: details,
             brand_phone_num: phonenumbersarr,
-            brand_img: photo_data,
+            //brand_img: photo_data,
             face_link: facelink,
             insta_link: instalink,
             whats_link: whatsapplink,
@@ -339,6 +363,7 @@ function PhotographerSettingScreen() {
 
                 setphoto_data(photo_data => res.assets[0])
                 setphoto_uri(photo_uri => res.assets[0].uri)
+                upload_img( res.assets[0].base64)
             }
         });
     }
@@ -360,9 +385,9 @@ function PhotographerSettingScreen() {
                 console.log('User tapped custom button: ', res.customButton);
                 alert(res.customButton);
             } else {
-
                 setphoto_data(photo_data => res.assets[0])
                 setphoto_uri(photo_uri => res.assets[0].uri)
+                upload_img( res.assets[0].base64)
             }
         });
     }
@@ -468,7 +493,11 @@ function PhotographerSettingScreen() {
                 barStyle={'light-content'} backgroundColor={COLORS.primary} />
             <ScrollView>
                 <View style={styles.headerView}>
-                    <TouchableOpacity >
+                    <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('AdminProfile');
+                    }}
+                     >
                         <AntDesign
                             name="arrowright"
                             color={COLORS.gray}
@@ -517,7 +546,10 @@ function PhotographerSettingScreen() {
                                                                     } else if (index == 1) {
                                                                         selectFromGallery(), setShowComment(false)
                                                                     } else if (index == 2) {
-                                                                        setphoto_uri(photo_uri => ""), setShowComment(false), setphoto_data(photo_data => "")
+                                                                        setphoto_uri(photo_uri => ""),
+                                                                            setShowComment(false),
+                                                                            setphoto_data(photo_data => "")
+                                                                           // upload_img(photo_uri)
                                                                     } else if (index == 3) {
                                                                         setShowComment(false)
                                                                     }

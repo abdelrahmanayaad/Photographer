@@ -18,9 +18,43 @@ import {
   ICONS,
   FONTS,
 } from '../../constants';
+import axios from 'axios';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 export function ForgetPassword({navigation}) {
-  const [email, setEmail] = useState('');
+  useEffect(() => {
+    getData();
+  }, []);
+
+  function getData() {
+    let data_to_send = {
+      to_email: email,
+      user_type: userType,
+      OTP: 1234,
+    };
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/Auth/ForgetPass/SendOTPToEmail.php',
+        data_to_send,
+      )
+      .then(res => {
+        if (res.status == 200) {
+          console.log(res.data);
+          if (res.data == 'successful') {
+            console.log('successful');
+          } else if (res.data == 'user not found') {
+            console.log('user not found');
+          } else {
+            console.log('Error Happen');
+            console.log(res.data);
+          }
+        } else {
+          console.log('Can not connect to server');
+        }
+      });
+  }
+
+  const [email, setEmail] = useState('abdelrahmanayad74@gmail.com');
+  const [userType, setUserType] = useState('مصور');
   const [emailError, setEmailError] = useState('');
 
   const handelPress = value => {
@@ -64,15 +98,21 @@ export function ForgetPassword({navigation}) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.iconStyle}>
-          <AntDesign
-            name="arrowright"
-            color={COLORS.gray}
-            size={RFValue(ICONS.xlIcon)}
-          />
-        </TouchableOpacity>
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'flex-end',
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.iconStyle}>
+            <AntDesign
+              name="arrowleft"
+              color={COLORS.gray}
+              size={RFValue(ICONS.xlIcon)}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.ViewTitle}>
           <Text style={styles.titleStyle}>هل نسيت كلمة المرور ؟</Text>
         </View>
@@ -84,6 +124,7 @@ export function ForgetPassword({navigation}) {
         </View>
         <View style={styles.textInputViewStyle}>
           <Input
+            selectionColor={COLORS.primary}
             onChangeText={value => {
               setEmail(value);
               if (onChangeEmail(value)) {
@@ -121,7 +162,7 @@ const styles = StyleSheet.create({
     width: RFValue(IconsView.IconWidth),
     height: RFValue(IconsView.IconHeight),
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     marginBottom: RFValue(MARGIN.xsMargin),
   },
   titleStyle: {

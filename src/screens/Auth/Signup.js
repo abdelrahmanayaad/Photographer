@@ -56,8 +56,7 @@ export default function Signup({ navigation }) {
   const [usertype, setusertype] = useState(arr[0]);
   const [token, setToken] = useState('');
 
-  SendUser = () => {
-    // alert(token)
+  const SendUser = () => {
     let data_to_send = {
       name: name,
       email: Email,
@@ -65,13 +64,14 @@ export default function Signup({ navigation }) {
       type: usertype,
       token: token
     }
+
     axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
       .then((res) => {
-        if (res.status == 200) {     
-             console.log(res.data)
+        if (res.status == 200) {
           if ((res.data) == "successful") {
-            console.log("don")
-            alert("done")
+            // console.log("don")
+            navigation.navigate('HomeStack')
+            // alert("done")
           } else if (res.data == "Not Valid Values" || res.data == "error happen") {
             alert("من فضلك تأكد من صحة البيانات")
           } else if (res.data == "email is already exist") {
@@ -79,13 +79,12 @@ export default function Signup({ navigation }) {
           }
         } else {
           alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-          console.log("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
         }
-        // setName("")
-        // setPassword("")
-        // setPhone("")
-        // setEmail("")
-        // setConPass("")
+        setName("")
+        setPassword("")
+        setPhone("")
+        setEmail("")
+        setConPass("")
       })
   }
 
@@ -94,19 +93,18 @@ export default function Signup({ navigation }) {
     messaging()
       .getToken()
       .then(token => {
-        // console.log(token.length)
+        // alert(token);
         setToken(token)
-
       });
 
     return messaging().onTokenRefresh(token => {
       setToken(token)
-      // console.log(token.length)
-
+      // alert(token);
     });
-  }, [])
+  }, []);
 
-  validateEmail = email => {
+
+  const validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
     if (reg.test(email) === false) {
       return false;
@@ -114,20 +112,20 @@ export default function Signup({ navigation }) {
       return true;
     }
   };
-  validatePhone = phone => {
+  const validatePhone = phone => {
     var pho = /^01[0125][0-9]{8}$/gm;
     return pho.test(phone);
   };
-  validatePassword = password => {
+  const validatePassword = password => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
   };
-  validateName = name => {
+  const validateName = name => {
     const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{5,30}$/;
     return re.test(String(name).toLowerCase());
   };
 
-  signup = value => {
+  const signup = value => {
     let error = 0;
     //name
 
@@ -167,6 +165,9 @@ export default function Signup({ navigation }) {
     if (password.trim() == '') {
       error++;
       setPassError('لايجب ان يكون هذا الحقل فارغ');
+    } else if (password.length > 20) {
+      error++;
+      setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
     } else if (!validatePassword(password)) {
       error++;
       setPassError(
@@ -196,23 +197,22 @@ export default function Signup({ navigation }) {
     }
     else {
       console.log(error)
-
     }
-  };
-  onChangeEmail = value => {
+  }
+  const onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     return reg.test(value.trim());
   };
-  onChangePassword = value => {
+  const onChangePassword = value => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     return pass.test(value.trim());
   };
-  onChangephone = value => {
+  const onChangephone = value => {
     var pho = /^01[0125][0-9]{8}$/gm;
     return pho.test(value.trim());
   };
 
-  onChangename = value => {
+  const onChangename = value => {
     const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{4,30}$/;
     return re.test(value.trim());
   };
@@ -352,10 +352,6 @@ export default function Signup({ navigation }) {
           <GeneralButton
             onPress={() => {
               signup();
-              nameerorr == '' && Emailerorr == '' && phoneerorr == "" && passwordconfirmerorr==""&& passworderorr==""
-                  ? navigation.navigate('HomeStack')
-                  : null;
-
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}
@@ -372,14 +368,22 @@ export default function Signup({ navigation }) {
             bgcolor={COLORS.primary}
           />
         </View>
-        {/* <SwipeUpDownModal
-          modalVisible={ShowComment}
-          PressToanimate={animateModal}
-          ContentModal={
-            <View style={styles.containerContent}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+
+          visible={model_alert}
+          onRequestClose={() => {
+            setmodel_alert(false);
+          }}>
+          <View
+            style={styles.viewModal}>
+            <View
+              style={styles.viewModalText}>
               <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>
                 حدد نوع المستخدم
               </Text>
+
 
               <FlatList
                 data={arr}
@@ -390,6 +394,7 @@ export default function Signup({ navigation }) {
                       onPress={() => {
                         setShowComment(false);
                         setusertype(item.name)
+                        setmodel_alert(false)
                       }}>
                       <Text style={styles.fontModal}>{item.name}</Text>
 
@@ -403,63 +408,6 @@ export default function Signup({ navigation }) {
                 )}
               />
             </View>
-          }
-          HeaderStyle={styles.headerContent}
-          ContentModalStyle={styles.Modal}
-          onClose={() => {
-            setAnimateModal(true), setShowComment(false);
-          }}
-        /> */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-
-          visible={model_alert}
-          onRequestClose={() => {
-            setmodel_alert(false);
-          }}>
-          <View
-            style={styles.viewModal}>
-            <View
-              style={{
-                alignSelf: 'center',
-                justifyContent: 'center',
-                width: '80%',
-                height:RFValue(height/3),
-                backgroundColor: COLORS.white,
-                borderRadius: 20,
-                elevation: 5,
-                paddingVertical: 10,
-                marginBottom: 10,
-              }}>
-                <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>
-                  حدد نوع المستخدم
-                </Text>
-
-
-                <FlatList
-                  data={arr}
-                  renderItem={({ item, index }) => (
-                    <>
-                      <TouchableOpacity
-                        style={styles.buttonmodal}
-                        onPress={() => {
-                          setShowComment(false);
-                          setusertype(item.name)
-                          setmodel_alert(false)
-                        }}>
-                        <Text style={styles.fontModal}>{item.name}</Text>
-
-                        <AntDesign
-                          name="arrowleft"
-                          color={COLORS.gray}
-                          size={ICONS.lIcon}
-                        />
-                      </TouchableOpacity>
-                    </>
-                  )}
-                />
-              </View>
           </View>
         </Modal>
 
@@ -565,18 +513,15 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
     marginBottom: MARGIN.xsMargin,
   },
-  // containerContent: {
-  //   height: RFValue(height),
-  //   marginTop: 30,
-  // },
-  // headerContent: {
-  //   height: 50,
-  // },
-  // Modal: {
-  //   backgroundColor: COLORS.background,
-  //   height: RFValue(height / 2.5),
-  //   borderTopLeftRadius: 30,
-  //   borderTopRightRadius: 30,
-  //   padding: PADDING.mdPadding,
-  // },
+  viewModalText: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: RFValue(width / 1.2),
+    height: RFValue(height / 3),
+    backgroundColor: COLORS.white,
+    borderRadius: 20,
+    elevation: 5,
+    paddingVertical: PADDING.smPadding,
+    marginBottom: MARGIN.xsMargin,
+  }
 });

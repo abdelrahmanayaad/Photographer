@@ -169,21 +169,26 @@ export class AdminProfile extends React.Component {
         // console.log(res.data);
       });
   };*/
-  likes_back(){
+  likes_back() {
     let data_to_send = {
-      post_id: '15'
+      post_id: '15',
     };
-    axios.post("https://generation3.000webhostapp.com/project/Training/select_likes.php", data_to_send).then((res) => {
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/select_likes.php',
+        data_to_send,
+      )
+      .then(res => {
         if (res.status == 200) {
-            console.log(res.data)
+          console.log(res.data);
         } else {
-            alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
         }
-    }).catch((err) => {
-        console.log(err)
-    })
-
-}
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   componentDidMount() {
     //this.getData();
     this.likes_back();
@@ -376,7 +381,10 @@ export class AdminProfile extends React.Component {
               color={COLORS.gray}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('PhotographerSettingScreen');
+            }}>
             <AntDesign
               name="setting"
               size={RFValue(ICONS.xlIcon)}
@@ -540,7 +548,10 @@ export class AdminProfile extends React.Component {
                           </Text>
                         </View>
                         <View style={styles.commentIconViewStyle}>
-                          <TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              // this.props.navigation.navigate('Comment');
+                            }}>
                             <Fontisto
                               name="comment"
                               color={COLORS.gray}
@@ -945,12 +956,12 @@ const styles = StyleSheet.create({
   buttonModelExit: {
     width: 50,
     height: 50,
-    backgroundColor: '#eee',
+    // backgroundColor: '#eee',
     margin: MARGIN.xsMargin,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    elevation: 2,
+    // borderRadius: 20,
+    // elevation: 2,
   },
   postModalContainer: {
     margin: RFValue(MARGIN.xsMargin),
