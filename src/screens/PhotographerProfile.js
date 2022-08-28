@@ -271,12 +271,17 @@ export class PhotographerProfile extends Component {
               <View style={{alignItems: 'flex-start'}}>
                 <Text style={styles.emailStyle}>abdelrahmanayad74</Text>
               </View>
-              <View style={styles.followingViewStyle}>
-                <Text style={styles.followingTextNumbersStyle}>280</Text>
-              </View>
-              <View style={styles.followingViewStyle}>
-                <Text>يتابع</Text>
-              </View>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate('Followers');
+                }}>
+                <View style={styles.followingViewStyle}>
+                  <Text style={styles.followingTextNumbersStyle}>280</Text>
+                </View>
+                <View style={styles.followingViewStyle}>
+                  <Text>متابع</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
           {this.state.user ? (
