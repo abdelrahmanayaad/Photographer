@@ -39,7 +39,6 @@ export class App extends Component {
     return (
 
 
-  //<PhotographerSettingScreen/>
       <NavigationContainer>
         <Navigation />
       </NavigationContainer>
