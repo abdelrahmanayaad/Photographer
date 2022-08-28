@@ -17,7 +17,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProfileInfo from './Intro/ProfileInfo';
 
-export class ProfileScreen extends Component {
+export class PhotographerProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,10 +58,10 @@ export class ProfileScreen extends Component {
       likes: [],
       saves: [],
 
-      // owner: false,
-      // user: true,
-      owner: true,
-      user: false,
+      owner: false,
+      user: true,
+      // owner: true,
+      // user: false,
       follow: false,
     };
   }
@@ -236,7 +236,7 @@ export class ProfileScreen extends Component {
           {this.state.owner ? (
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('SettingsScreen');
+                // this.props.navigation.navigate('SettingsScreen');
               }}>
               <AntDesign
                 name="setting"
@@ -245,7 +245,10 @@ export class ProfileScreen extends Component {
               />
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('HomeScreen');
+              }}>
               <AntDesign
                 name="arrowleft"
                 color={COLORS.gray}
@@ -557,4 +560,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default PhotographerProfile;

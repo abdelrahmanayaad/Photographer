@@ -8,14 +8,20 @@ import {SearchScreen} from '../screens';
 import {AdminProfile} from '../screens';
 import {COLORS} from '../constants';
 import {ProfileScreen} from '../screens';
+import CommentStack from './CommentStack';
+import SettingStack from './SettingStack';
+import SearchStack from './SearchStack';
 const Tab = createMaterialBottomTabNavigator();
 
 export default HomeStack = () => {
   return (
-    <Tab.Navigator barStyle={{backgroundColor: COLORS.primary}}>
+    <Tab.Navigator
+      inactiveColor="#000"
+      activeColor="#fff"
+      barStyle={{backgroundColor: COLORS.primary}}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={CommentStack}
         options={{
           tabBarIcon: ({color}) => {
             return (
@@ -28,7 +34,7 @@ export default HomeStack = () => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={SearchStack}
         options={{
           tabBarIcon: ({color}) => {
             return (
@@ -41,7 +47,7 @@ export default HomeStack = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={SettingStack}
         options={{
           tabBarColor: 'red',
           tabBarIcon: ({color}) => {
