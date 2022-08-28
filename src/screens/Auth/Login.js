@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -9,8 +9,8 @@ import {
   StatusBar,
   BackHandler,
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -25,11 +25,11 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import LoginWithG from './LoginWithG';
 import axios from 'axios';
 import messaging from '@react-native-firebase/messaging';
-import {HomeStack} from '../../navigation/HomeStack';
-import {HomeScreen} from '../HomeScreen';
-import {StackActions} from '@react-navigation/native';
+import { HomeStack } from '../../navigation/HomeStack';
+import { HomeScreen } from '../HomeScreen';
+import { StackActions } from '@react-navigation/native';
 
-function Login({navigation, route}) {
+function Login({ navigation, route }) {
   useEffect(() => {
     const backAction = () => {
       BackHandler.exitApp();
@@ -39,19 +39,12 @@ function Login({navigation, route}) {
       'hardwareBackPress',
       backAction,
     );
-  }, []);
-  useEffect(() => {
     messaging()
       .getToken()
       .then(token => {
         // alert(token)
         set_userToken(userToken => token);
       });
-    return messaging().onTokenRefresh(token => {
-      // alert(token)
-      set_userToken(userToken => token);
-      set_userToken(userToken => token);
-    });
     return messaging().onTokenRefresh(token => {
       // alert(token)
       set_userToken(userToken => token);
@@ -77,9 +70,8 @@ function Login({navigation, route}) {
       )
       .then(res => {
         if (res.status == 200) {
-          if (res.data == 'user not found') {
-            console.log(res.data);
-            set_userFound(false);
+          if (res.data == "user not found") {
+            set_userFound(false)
           } else {
             console.log(res.data);
             set_userFound(true);
@@ -147,7 +139,7 @@ function Login({navigation, route}) {
                 navigation.navigate('HomeStack');
               }}>
               <Text
-                style={{fontSize: FONTS.h4, fontWeight: 'bold', padding: 5}}>
+                style={{ fontSize: FONTS.h4, fontWeight: 'bold', padding: 5 }}>
                 تخطي
               </Text>
             </TouchableOpacity>
