@@ -67,7 +67,9 @@ export default function Signup({ navigation }) {
     }
     axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status == 200) {     
+             console.log(res.data)
+
           if ((res.data) == "successful") {
             console.log("don")
             navigation.navigate('HomeStack');

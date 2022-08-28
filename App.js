@@ -26,6 +26,7 @@ import {
   Followering,
   AdminProfile,
   NewPassword,
+
 } from './src/screens';
 import AuthStack from './src/navigation/AuthStack';
 import HomeStack from './src/navigation/HomeStack';
@@ -42,7 +43,6 @@ export class App extends Component {
       <NavigationContainer>
         <Navigation />
       </NavigationContainer>
-
 
     );
   }

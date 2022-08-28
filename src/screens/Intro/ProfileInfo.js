@@ -131,7 +131,7 @@ function ProfileInfo() {
         let arr = [...reviews]
         arr.push(obj)
         setReviews(reviews => arr)
-        setRate(rate=>0)
+        setRate(rate => 0)
     }
     const rating_fun = (index) => {
         let arr = [...stars]
@@ -184,43 +184,26 @@ function ProfileInfo() {
         return reviews.map((item, index) => {
             return (
                 <View style={styles.review_container}>
-                    <View style={styles.photoAndName}>
-                        <View style={styles.photoView}>
-                            {/* <Image
-                      resizeMode="contain"
-                      source={require('../assets/Images/profileImage.jpg')}
-                      style={styles.imageStyle}
-                    /> */}
-                        </View>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ fontSize: RFValue(12), fontWeight: 'bold', color: '#313131' }}>{item.name}</Text>
-                            <View style={{ alignItems: 'flex-start' }}>
-                                <Text style={{ fontSize: RFValue(10) }}>{item.email}</Text>
+                    <View style={styles.photo_name_rate}>
+                        <View style={{flexDirection:'row'}}>
+                            <View style={styles.photoView}>
+                                {/* <Image
+                                resizeMode="contain"
+                                source={require('../assets/Images/profileImage.jpg')}
+                                style={styles.imageStyle}
+                                /> */}
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text style={{ fontSize: RFValue(12), fontWeight: 'bold', color: '#313131' }}>{item.name}</Text>
+                                <View style={{ alignItems: 'flex-start' }}>
+                                    <Text style={{ fontSize: RFValue(10) }}>{item.email}</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    {item.rate == 0 ?
-                        <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                        </View> :
-                        item.rate == 1 ?
-                            <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                        {item.rate == 0 ?
+                            <View style={styles.stars}>
                                 <View >
-                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                    <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                 </View>
                                 <View >
                                     <AntDesign name='staro' size={RFValue(18)} color='#313131' />
@@ -235,13 +218,13 @@ function ProfileInfo() {
                                     <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                 </View>
                             </View> :
-                            item.rate == 2 ?
-                                <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                            item.rate == 1 ?
+                                <View style={styles.stars}>
                                     <View >
                                         <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                     </View>
                                     <View >
-                                        <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                        <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                     </View>
                                     <View >
                                         <AntDesign name='staro' size={RFValue(18)} color='#313131' />
@@ -253,8 +236,8 @@ function ProfileInfo() {
                                         <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                     </View>
                                 </View> :
-                                item.rate == 3 ?
-                                    <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                                item.rate == 2 ?
+                                    <View style={styles.stars}>
                                         <View >
                                             <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                         </View>
@@ -262,7 +245,7 @@ function ProfileInfo() {
                                             <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                         </View>
                                         <View >
-                                            <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                            <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                         </View>
                                         <View >
                                             <AntDesign name='staro' size={RFValue(18)} color='#313131' />
@@ -271,11 +254,8 @@ function ProfileInfo() {
                                             <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                         </View>
                                     </View> :
-                                    item.rate == 4 ?
-                                        <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
+                                    item.rate == 3 ?
+                                        <View style={styles.stars}>
                                             <View >
                                                 <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                             </View>
@@ -288,27 +268,48 @@ function ProfileInfo() {
                                             <View >
                                                 <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                             </View>
+                                            <View >
+                                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
+                                            </View>
                                         </View> :
-                                        <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                        item.rate == 4 ?
+                                            <View style={styles.stars}>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='staro' size={RFValue(18)} color='#313131' />
+                                                </View>
+                                            </View> :
+                                            <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
                                             </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                        </View>
-                    }
+                        }</View>
                     <View style={{ height: RFValue(80), justifyContent: 'center' }}>
-                        <ScrollView>
+                        <ScrollView showsVerticalScrollIndicator={false}>
                             <Text style={{ fontSize: RFValue(15), color: "#313131" }}>{item.opinion}</Text>
                         </ScrollView>
                     </View>
@@ -379,20 +380,23 @@ const styles = StyleSheet.create({
     review_container: {
         alignItems: 'center',
         marginHorizontal: RFValue(5),
-        padding: RFValue(10),
-        width: RFValue(165),
+        padding: RFValue(20),
+        width: RFValue(270),
         height: RFValue(170),
-        borderWidth: RFValue(1.5),
+        // borderWidth: RFValue(1),
+        backgroundColor: '#fff',
         borderColor: COLORS.primary,
-        borderRadius: RADIUS.smRadius
+        borderRadius: RADIUS.smRadius,
+        elevation: 3
     },
     container: {
         flex: 1,
     },
-    photoAndName: {
+    photo_name_rate: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'flex-start',
+        justifyContent:'space-between'
+        // justifyContent: 'flex-start',
     },
     photoView: {
         width: RFValue(40),
@@ -417,6 +421,14 @@ const styles = StyleSheet.create({
         color: '#71a8fb',
         padding: RFValue(PADDING.xsPadding),
         fontSize: RFValue(FONTS.h5)
+    },
+    stars: {
+        flexDirection: 'row',
+        paddingVertical: RFValue(PADDING.xsPadding),
+        alignItems: 'center',
+        // backgroundColor:'#0f0',
+        // width: RFValue(125),
+        // justifyContent: 'center'
     }
 
 })
