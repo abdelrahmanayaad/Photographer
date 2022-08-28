@@ -8,8 +8,10 @@ import {
   Modal,
   StatusBar,
   ImageBackground,
+  BackHandler,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('screen');
@@ -24,6 +26,16 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Comment from './Comment';
 
 function HomeScreen({navigation}) {
+  useEffect(()=>{
+    const backAction = ()=>{
+      BackHandler.exitApp()
+      return true
+    }
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    )
+  },[])
   const [highlights, sethighlights] = useState([
     {
       id: 0,

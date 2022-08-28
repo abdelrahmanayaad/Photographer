@@ -47,7 +47,7 @@ function Login({ navigation, route }) {
   const [user_password, set_password] = useState('');
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
-
+  const [userFound, set_userFound] = useState(false)
   const check_emailANDpass = () => {
     let data_to_send = {
       email: user_email,
@@ -61,7 +61,13 @@ function Login({ navigation, route }) {
       )
       .then(res => {
         if (res.status == 200) {
-          console.log(res.data);
+          if (res.data=="user not found"){
+            console.log(res.data);
+            set_userFound(false)
+          }else{
+            console.log(res.data);
+            set_userFound(true);
+          }
         } else {
           alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
         }
@@ -185,7 +191,7 @@ function Login({ navigation, route }) {
                 error_email == '' && error_password == ''
                   ? check_emailANDpass()
                   : null;
-                error_email == '' && error_password == ''
+                error_email == '' && error_password == '' && userFound == true
                   ? navigation.navigate('HomeStack')
                   : null;
               }}
