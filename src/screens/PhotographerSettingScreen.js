@@ -300,6 +300,26 @@ function PhotographerSettingScreen() {
             console.warn(err);
         }
     };
+    const requestLocationPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                {
+                    title: "Location Permission",
+                    message: "Add Address Need To Access Location",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                });
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("You can use the location")
+            } else {
+                console.log("location permission denied")
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+    };
     const selectFromGallery = () => {
         let options = {
             storageOptions: {
@@ -374,6 +394,7 @@ function PhotographerSettingScreen() {
         } if (name != "" && brandname != "" && phonenumbersarr.length != 0 && additionaladdressesarr.length != 0) {
 
             send_photographer_data()
+            //navigation
             //console.log(phonenumbersarr)
             // console.log(additionaladdressesarr)
         }
@@ -605,7 +626,9 @@ function PhotographerSettingScreen() {
                         </View>
                         <View style={styles.buttonView}>
                             <GeneralButton
-                                onPress={() => setadditional_address_modal_visible(additional_address_modal_visible => true)}
+                                onPress={() => {
+                                    setadditional_address_modal_visible(additional_address_modal_visible => true); requestLocationPermission();
+                                }}
                                 title="اضافه عنوان"
                                 bgcolor={COLORS.primary}
                                 activeOpacity={0.7} />
