@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {ProfileScreen} from '../screens';
 import {SettingsScreen} from '../screens';
-
+import {Following} from '../screens/Following';
 const Stack = createNativeStackNavigator();
 
 function SettingStack() {
@@ -15,6 +15,7 @@ function SettingStack() {
       initialRouteName="ProfileScreen">
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen name="Following" component={Following} />
     </Stack.Navigator>
   );
 }
