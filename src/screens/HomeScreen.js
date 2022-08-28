@@ -8,14 +8,16 @@ import {
   Modal,
   StatusBar,
   ImageBackground,
+  BackHandler,
+  Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('screen');
-import {COLORS, FONTS, ICONS, PADDING, RADIUS} from '../constants';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MARGIN} from '../constants';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('screen');
+import { COLORS, FONTS, ICONS, PADDING, RADIUS } from '../constants';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { MARGIN } from '../constants';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -24,108 +26,121 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Comment from './Comment';
 import InstaStory from 'react-native-insta-story';
 
-const story_data = [
-  {
+
+
+function HomeScreen({ navigation }) {
+
+  useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp()
+      return true
+    }
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    )
+  }, [])
+
+  const story_data = [
+    {
       user_id: 1,
       user_image: 'https://pbs.twimg.com/profile_images/1222140802475773952/61OmyINj.jpg',
       user_name: "Esraa Elgiz",
       stories: [
-          {
-              story_id: 1,
-              story_image: "https://image.freepik.com/free-vector/universe-mobile-wallpaper-with-planets_79603-600.jpg",
-              swipeText:'Custom swipe text for this story',
-          },
-          {
-              story_id: 2,
-              story_image: "https://image.freepik.com/free-vector/mobile-wallpaper-with-fluid-shapes_79603-601.jpg",
-          }]
-  },
-  {
+        {
+          story_id: 1,
+          story_image: "https://image.freepik.com/free-vector/universe-mobile-wallpaper-with-planets_79603-600.jpg",
+          swipeText: 'Custom swipe text for this story',
+        },
+        {
+          story_id: 2,
+          story_image: "https://image.freepik.com/free-vector/mobile-wallpaper-with-fluid-shapes_79603-601.jpg",
+        }]
+    },
+    {
       user_id: 2,
       user_image: 'https://i.pinimg.com/564x/83/be/04/83be04afa30772527761d865c9a849d9.jpg',
       user_name: "Marwa Elsodany",
       stories: [
-          {
-              story_id: 1,
-              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
-          },
-          {
-              story_id: 2,
-              story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
-          }]
-  },{
-    user_id: 3,
-    user_image: 'https://i.pinimg.com/736x/96/8f/42/968f429bdbe0ed5bb5e8efba3ab00921.jpg',
-    user_name: "Ayad",
-    stories: [
         {
-            story_id: 1,
-            story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
+          story_id: 1,
+          story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
         },
         {
-            story_id: 2,
-            story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
+          story_id: 2,
+          story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
         }]
-},
-{
-  user_id: 4,
-  user_image: 'https://i.pinimg.com/564x/a7/97/48/a797484a09046d5df1491e4e2dc9a386.jpg',
-  user_name: "Mathana",
-  stories: [
-      {
+    }, {
+      user_id: 3,
+      user_image: 'https://i.pinimg.com/736x/96/8f/42/968f429bdbe0ed5bb5e8efba3ab00921.jpg',
+      user_name: "Ayad",
+      stories: [
+        {
           story_id: 1,
           story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
-      },
-      {
+        },
+        {
           story_id: 2,
           story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
-      }]
-},
-{
-  user_id: 5,
-  user_image: 'https://i.pinimg.com/564x/ee/2e/be/ee2ebe8fa461496be850516191dcb08b.jpg',
-  user_name: "Elshazly",
-  stories: [
-      {
+        }]
+    },
+    {
+      user_id: 4,
+      user_image: 'https://i.pinimg.com/564x/a7/97/48/a797484a09046d5df1491e4e2dc9a386.jpg',
+      user_name: "Mathana",
+      stories: [
+        {
           story_id: 1,
           story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
-      },
-      {
+        },
+        {
           story_id: 2,
           story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
-      }]
-},
-{
-  user_id: 6,
-  user_image: 'https://i.pinimg.com/564x/c5/2a/ce/c52aced90abb1be8df290ea19a820a03.jpg',
-  user_name: "Ayad",
-  stories: [
-      {
+        }]
+    },
+    {
+      user_id: 5,
+      user_image: 'https://i.pinimg.com/564x/ee/2e/be/ee2ebe8fa461496be850516191dcb08b.jpg',
+      user_name: "Elshazly",
+      stories: [
+        {
           story_id: 1,
           story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
-      },
-      {
+        },
+        {
           story_id: 2,
           story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
-      }]
-},{
-  user_id: 7,
-  user_image: 'https://i.pinimg.com/564x/e7/33/70/e73370a7fd094fc8f1939592e88cc312.jpg',
-  user_name: "Esraa",
-  stories: [
-      {
+        }]
+    },
+    {
+      user_id: 6,
+      user_image: 'https://i.pinimg.com/564x/c5/2a/ce/c52aced90abb1be8df290ea19a820a03.jpg',
+      user_name: "Ayad",
+      stories: [
+        {
           story_id: 1,
           story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
-      },
-      {
+        },
+        {
           story_id: 2,
           story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
-      }]
-}
-];
+        }]
+    }, {
+      user_id: 7,
+      user_image: 'https://i.pinimg.com/564x/e7/33/70/e73370a7fd094fc8f1939592e88cc312.jpg',
+      user_name: "Esraa",
+      stories: [
+        {
+          story_id: 1,
+          story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjORKvjcbMRGYPR3QIs3MofoWkD4wHzRd_eg&usqp=CAU",
+        },
+        {
+          story_id: 2,
+          story_image: "https://files.oyebesmartest.com/uploads/preview/vivo-u20-mobile-wallpaper-full-hd-(1)qm6qyz9v60.jpg",
+        }]
+    }
+  ];
 
-function HomeScreen({navigation}) {
- 
   const [posts, setposts] = useState([
     {
       id: 1,
@@ -208,7 +223,7 @@ function HomeScreen({navigation}) {
   };
 
 
-  
+
 
 
 
@@ -266,7 +281,7 @@ function HomeScreen({navigation}) {
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
               {/* <TouchableOpacity onPress={() => commentpress(item, index)}>  */}
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity onPress={() => { }}>
                 <Fontisto
                   name="comment"
                   color={COLORS.gray}
@@ -288,9 +303,9 @@ function HomeScreen({navigation}) {
             </View>
           </View>
           <View style={styles.captionView}>
-            <Text style={[styles.nameunderpost, {fontSize: RFValue(12)}]}>
+            <Text style={[styles.nameunderpost, { fontSize: RFValue(12) }]}>
               {item.name}{' '}
-              <Text style={[styles.textCaptionStyle, {fontSize: RFValue(12)}]}>
+              <Text style={[styles.textCaptionStyle, { fontSize: RFValue(12) }]}>
                 {item.discribtion}
               </Text>
             </Text>
@@ -305,7 +320,7 @@ function HomeScreen({navigation}) {
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
 
       <View style={styles.header}>
-        <View style={{paddingLeft: RFValue(25)}}></View>
+        <View style={{ paddingLeft: RFValue(25) }}></View>
         <View>
           <Text style={styles.titleStyle}>الصفحة الرئيسية</Text>
         </View>
@@ -321,16 +336,16 @@ function HomeScreen({navigation}) {
       </View>
       <ScrollView>
         <View>
-            <View style={styles.highlight_view_style}>
-              {
+          <View style={styles.highlight_view_style}>
+            {
               <InstaStory data={story_data}
-              avatarSize={RFValue(50)}
-              duration={10}
-              unPressedBorderColor={COLORS.primary}
-              
+                avatarSize={RFValue(50)}
+                duration={10}
+                unPressedBorderColor={COLORS.primary}
+
               />
-              }
-            </View>
+            }
+          </View>
           <View>{renderposts()}</View>
         </View>
       </ScrollView>
@@ -338,7 +353,7 @@ function HomeScreen({navigation}) {
         <Dialog.Description>يجب ان تقوم بتسجيل الدخول اولا.</Dialog.Description>
         <Dialog.Button
           label="انهاء"
-          style={{color: COLORS.primary}}
+          style={{ color: COLORS.primary }}
           onPress={() => setdialog_visible(dialog_visible => false)}
         />
       </Dialog.Container>
@@ -465,7 +480,7 @@ const styles = StyleSheet.create({
     width: RFValue(50),
     height: RFValue(50),
     //backgroundColor: '#eee',
-   // margin: RFValue(MARGIN.xsMargin),
+    // margin: RFValue(MARGIN.xsMargin),
     justifyContent: 'center',
     alignItems: 'center',
     //borderRadius: RFValue(20),
