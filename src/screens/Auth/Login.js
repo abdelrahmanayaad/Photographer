@@ -34,19 +34,16 @@ function Login({navigation, route}) {
       .getToken()
       .then(token => {
         // alert(token)
-<<<<<<< HEAD
         set_userToken(userToken => token);
       });
     return messaging().onTokenRefresh(token => {
       // alert(token)
       set_userToken(userToken => token);
-=======
-        set_userToken(userToken => token)
-      });
+      set_userToken(userToken => token);
+    });
     return messaging().onTokenRefresh(token => {
       // alert(token)
-      set_userToken(userToken => token)
->>>>>>> 3b5e2de3905ec9832c8c1660c03b69e9dbc8f94b
+      set_userToken(userToken => token);
     });
   }, []);
   const [userToken, set_userToken] = useState('');
@@ -55,7 +52,7 @@ function Login({navigation, route}) {
   const [user_password, set_password] = useState('');
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
-  const [userFound, set_userFound] = useState(false)
+  const [userFound, set_userFound] = useState(false);
   const check_emailANDpass = () => {
     let data_to_send = {
       email: user_email,
@@ -69,10 +66,10 @@ function Login({navigation, route}) {
       )
       .then(res => {
         if (res.status == 200) {
-          if (res.data=="user not found"){
+          if (res.data == 'user not found') {
             console.log(res.data);
-            set_userFound(false)
-          }else{
+            set_userFound(false);
+          } else {
             console.log(res.data);
             set_userFound(true);
           }
@@ -195,7 +192,6 @@ function Login({navigation, route}) {
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
               onPress={() => {
-
                 error_email == '' && error_password == ''
                   ? check_emailANDpass()
                   : null;

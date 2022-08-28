@@ -20,8 +20,9 @@ import {
 } from '../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Navigation from '../navigation/Navigation';
 const {width, height} = Dimensions.get('window');
-export default function SettingsScreen() {
+export default function SettingsScreen({navigation}) {
   const [settings, setSettings] = useState([
     {
       name: 'تعديل الملف الشخصى',
@@ -53,7 +54,7 @@ export default function SettingsScreen() {
     },
   ]);
 
-  renderserring = () => {
+  function renderserring() {
     return settings.map((item, index) => {
       return (
         <View style={styles.each_view_in_map_style}>
@@ -78,24 +79,26 @@ export default function SettingsScreen() {
         </View>
       );
     });
-  };
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
 
       <View style={styles.headerView}>
-        <TouchableOpacity>
+        <View>
+          <Text style={styles.headerTxt}>الاعدادات</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('ProfileScreen');
+          }}>
           <AntDesign
-            name="arrowright"
+            name="arrowleft"
             color={COLORS.gray}
             size={RFValue(ICONS.xlIcon)}
           />
         </TouchableOpacity>
-        <View>
-          <Text style={styles.headerTxt}>الاعدادات</Text>
-        </View>
-        <View></View>
       </View>
       <ScrollView>
         <View>{renderserring()}</View>
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
     padding: RFValue(PADDING.xsPadding),
   },
   headerView: {
-    width: '92%',
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -118,6 +121,7 @@ const styles = StyleSheet.create({
     marginTop: RFValue(10),
   },
   headerTxt: {
+    marginLeft: '45%',
     color: COLORS.black,
     fontSize: RFValue(FONTS.h3),
     fontWeight: 'bold',

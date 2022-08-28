@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
-import {Comment} from '../screens';
+import {Comment, SettingsScreen} from '../screens';
 import AdminProfile from '../screens';
 import ProfileScreen from '../screens';
 const Stack = createNativeStackNavigator();
@@ -16,8 +16,6 @@ function Navigation() {
       initialRouteName="Intro">
       <Stack.Screen name="AuthStack" component={AuthStack} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
-      <Stack.Screen name="Comment" component={Comment} />
-      {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
     </Stack.Navigator>
   );
 }

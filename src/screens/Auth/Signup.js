@@ -134,42 +134,42 @@ export default function Signup({navigation}) {
     // };
     // getToken()
   }, []);
-  SendUser = () => {
-    // alert(token)
-    let data_to_send = {
-      name: name,
-      email: Email,
-      pass: password,
-      type: usertype,
-      token: token,
-    };
-    axios
-      .post(
-        'https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php',
-        data_to_send,
-      )
-      .then(res => {
-        if (res.status == 200) {
-          if (res.data == 'successful') {
-            alert('done');
-          } else if (
-            res.data == 'Not Valid Values' ||
-            res.data == 'error happen'
-          ) {
-            alert('من فضلك تأكد من صحة البيانات');
-          } else if (res.data == 'email is already exist') {
-            alert('هذا البريد موجود بالفعل');
-          }
-        } else {
-          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
-        }
-        setName('');
-        setPassword('');
-        setPhone('');
-        setEmail('');
-        setConPass('');
-      });
-  };
+  // SendUser = () => {
+  //   // alert(token)
+  //   let data_to_send = {
+  //     name: name,
+  //     email: Email,
+  //     pass: password,
+  //     type: usertype,
+  //     token: token,
+  //   };
+  //   axios
+  //     .post(
+  //       'https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php',
+  //       data_to_send,
+  //     )
+  //     .then(res => {
+  //       if (res.status == 200) {
+  //         if (res.data == 'successful') {
+  //           alert('done');
+  //         } else if (
+  //           res.data == 'Not Valid Values' ||
+  //           res.data == 'error happen'
+  //         ) {
+  //           alert('من فضلك تأكد من صحة البيانات');
+  //         } else if (res.data == 'email is already exist') {
+  //           alert('هذا البريد موجود بالفعل');
+  //         }
+  //       } else {
+  //         alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+  //       }
+  //       setName('');
+  //       setPassword('');
+  //       setPhone('');
+  //       setEmail('');
+  //       setConPass('');
+  //     });
+  // };
 
   useEffect(() => {
     messaging()
@@ -185,7 +185,7 @@ export default function Signup({navigation}) {
     });
   }, []);
 
-  validateEmail = email => {
+  const validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
     if (reg.test(email) === false) {
       return false;
@@ -193,20 +193,20 @@ export default function Signup({navigation}) {
       return true;
     }
   };
-  validatePhone = phone => {
+  const validatePhone = phone => {
     var pho = /^01[0125][0-9]{8}$/gm;
     return pho.test(phone);
   };
-  validatePassword = password => {
+  const validatePassword = password => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
   };
-  validateName = name => {
+  const validateName = name => {
     const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{5,30}$/;
     return re.test(String(name).toLowerCase());
   };
 
-  signup = value => {
+  const signup = value => {
     let error = 0;
     //name
 
@@ -280,20 +280,20 @@ export default function Signup({navigation}) {
       console.log('no');
     }
   };
-  onChangeEmail = value => {
+  const onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     return reg.test(value.trim());
   };
-  onChangePassword = value => {
+  const onChangePassword = value => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     return pass.test(value.trim());
   };
-  onChangephone = value => {
+  const onChangephone = value => {
     var pho = /^01[0125][0-9]{8}$/gm;
     return pho.test(value.trim());
   };
 
-  onChangename = value => {
+  const onChangename = value => {
     const re = /^([a-zA-Z0-9\s_\u0600-\u06FF]).{4,30}$/;
     return re.test(value.trim());
   };

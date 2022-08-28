@@ -98,15 +98,21 @@ export function ForgetPassword({navigation}) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.iconStyle}>
-          <AntDesign
-            name="arrowright"
-            color={COLORS.gray}
-            size={RFValue(ICONS.xlIcon)}
-          />
-        </TouchableOpacity>
+        <View
+          style={{
+            width: '100%',
+            alignItems: 'flex-end',
+          }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.iconStyle}>
+            <AntDesign
+              name="arrowleft"
+              color={COLORS.gray}
+              size={RFValue(ICONS.xlIcon)}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={styles.ViewTitle}>
           <Text style={styles.titleStyle}>هل نسيت كلمة المرور ؟</Text>
         </View>
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
     width: RFValue(IconsView.IconWidth),
     height: RFValue(IconsView.IconHeight),
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     marginBottom: RFValue(MARGIN.xsMargin),
   },
   titleStyle: {

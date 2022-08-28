@@ -381,7 +381,10 @@ export class AdminProfile extends React.Component {
               color={COLORS.gray}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('PhotographerSettingScreen');
+            }}>
             <AntDesign
               name="setting"
               size={RFValue(ICONS.xlIcon)}
@@ -953,12 +956,12 @@ const styles = StyleSheet.create({
   buttonModelExit: {
     width: 50,
     height: 50,
-    backgroundColor: '#eee',
+    // backgroundColor: '#eee',
     margin: MARGIN.xsMargin,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    elevation: 2,
+    // borderRadius: 20,
+    // elevation: 2,
   },
   postModalContainer: {
     margin: RFValue(MARGIN.xsMargin),
