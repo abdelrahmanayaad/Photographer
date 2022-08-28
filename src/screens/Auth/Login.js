@@ -34,11 +34,19 @@ function Login({navigation, route}) {
       .getToken()
       .then(token => {
         // alert(token)
+<<<<<<< HEAD
         set_userToken(userToken => token);
       });
     return messaging().onTokenRefresh(token => {
       // alert(token)
       set_userToken(userToken => token);
+=======
+        set_userToken(userToken => token)
+      });
+    return messaging().onTokenRefresh(token => {
+      // alert(token)
+      set_userToken(userToken => token)
+>>>>>>> 3b5e2de3905ec9832c8c1660c03b69e9dbc8f94b
     });
   }, []);
   const [userToken, set_userToken] = useState('');
@@ -47,7 +55,7 @@ function Login({navigation, route}) {
   const [user_password, set_password] = useState('');
   const [error_email, set_emailErr] = useState('');
   const [error_password, set_passErr] = useState('');
-
+  const [userFound, set_userFound] = useState(false)
   const check_emailANDpass = () => {
     let data_to_send = {
       email: user_email,
@@ -61,7 +69,13 @@ function Login({navigation, route}) {
       )
       .then(res => {
         if (res.status == 200) {
-          console.log(res.data);
+          if (res.data=="user not found"){
+            console.log(res.data);
+            set_userFound(false)
+          }else{
+            console.log(res.data);
+            set_userFound(true);
+          }
         } else {
           alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
         }
@@ -119,13 +133,7 @@ function Login({navigation, route}) {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <TouchableOpacity style={styles.iconStyle}>
-              <AntDesign
-                name="arrowright"
-                color={COLORS.gray}
-                size={RFValue(ICONS.xlIcon)}
-              />
-            </TouchableOpacity>
+            <View></View>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('HomeStack');
@@ -187,9 +195,12 @@ function Login({navigation, route}) {
               bgcolor={COLORS.primary}
               activeOpacity={0.7}
               onPress={() => {
-                navigation.navigate('HomeStack');
+
                 error_email == '' && error_password == ''
                   ? check_emailANDpass()
+                  : null;
+                error_email == '' && error_password == '' && userFound == true
+                  ? navigation.navigate('HomeStack')
                   : null;
               }}
             />
@@ -261,7 +272,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputPass: {
-    width: '80%',
+    width: '93%',
     height: RFValue(60),
     color: COLORS.black,
     fontSize: RFValue(FONTS.h5),

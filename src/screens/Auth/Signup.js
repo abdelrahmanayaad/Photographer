@@ -51,6 +51,7 @@ export default function Signup({navigation}) {
     {name: ' مصور'},
     {name: 'ميكب ارتست'},
   ]);
+  const [usertype, setusertype] = useState(arr[0]);
   const [token, setToken] = useState('');
 
   const SendUser = () => {
@@ -132,6 +133,56 @@ export default function Signup({navigation}) {
     //   }
     // };
     // getToken()
+  }, []);
+  SendUser = () => {
+    // alert(token)
+    let data_to_send = {
+      name: name,
+      email: Email,
+      pass: password,
+      type: usertype,
+      token: token,
+    };
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php',
+        data_to_send,
+      )
+      .then(res => {
+        if (res.status == 200) {
+          if (res.data == 'successful') {
+            alert('done');
+          } else if (
+            res.data == 'Not Valid Values' ||
+            res.data == 'error happen'
+          ) {
+            alert('من فضلك تأكد من صحة البيانات');
+          } else if (res.data == 'email is already exist') {
+            alert('هذا البريد موجود بالفعل');
+          }
+        } else {
+          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+        }
+        setName('');
+        setPassword('');
+        setPhone('');
+        setEmail('');
+        setConPass('');
+      });
+  };
+
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        // console.log(token.length)
+        setToken(token);
+      });
+
+    return messaging().onTokenRefresh(token => {
+      setToken(token);
+      // console.log(token.length)
+    });
   }, []);
 
   validateEmail = email => {
@@ -223,6 +274,10 @@ export default function Signup({navigation}) {
 
     if (error == 0) {
       // SendUser();
+      console.log('dn');
+      SendUser();
+    } else {
+      console.log('no');
     }
   };
   onChangeEmail = value => {
@@ -411,6 +466,7 @@ export default function Signup({navigation}) {
                       style={styles.buttonmodal}
                       onPress={() => {
                         setShowComment(false);
+                        setusertype(item.name);
                       }}>
                       <Text style={styles.fontModal}>{item.name}</Text>
 

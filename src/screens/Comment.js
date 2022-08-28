@@ -28,6 +28,7 @@ import {
   RADIUS,
 } from '../constants';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import axios from 'axios';
 
 export class Comment extends Component {
   constructor(props) {
@@ -35,46 +36,58 @@ export class Comment extends Component {
     this.state = {
       text: "",
       visible: true,
-      replay_comment: "",
-      replay_name: "محمد",
-      replay_image: require("../assets/Images/images.png"),
-      current_index: "",
+      current_replay: {
+        replay_comment: "",
+        replay_name: "",
+        replay_image: "",
+      },
+      current_comment: "",
 
       comments: [
 
         {
           name: "الشاذلى",
           image: require("../assets/Images/images.png"),
-          comment: "التقدير خسرنا كتير ",
-          replay: []
+          comment_content: "التقدير خسرنا كتير ",
+          replays: [{
+            replay_comment: "خلصانه",
+            replay_name: "محمد",
+            replay_image: require("../assets/Images/images.png"),
+          }]
 
         },
         {
           name: "عياد",
           image: require("../assets/Images/images.png"),
-          comment: "لو انت مش فارق ....يبقى تفارق",
-          replay: [],
+          comment_content: "لو انت مش فارق ....يبقى تفارق",
+          replays: [
+
+          ],
 
         },
         {
           name: "مروه",
           image: require("../assets/Images/images.png"),
-          comment: "تلاشانى ؟ علشانك مش عشانى",
-          replay: [],
+          comment_content: "تلاشانى ؟ علشانك مش عشانى",
+          replays: [
+
+          ],
         },
         {
           name: "مطحنه",
           image: require("../assets/Images/images.png"),
-          comment: "الوشوش هتتقابل بس القلوب موعدكش",
-          replay: [],
+          comment_content: "الوشوش هتتقابل بس القلوب موعدكش",
+          replays: [
+
+          ],
 
         }
         ,
         {
           name: "اسراء",
           image: require("../assets/Images/images.png"),
-          comment: " الرزق ان يضع الله لك قبولا ف قلب كل من يراك",
-          replay: [
+          comment_content: " الرزق ان يضع الله لك قبولا ف قلب كل من يراك",
+          replays: [
 
           ],
 
@@ -84,10 +97,44 @@ export class Comment extends Component {
 
       ],
 
+      replay_comment: ''
 
     };
   }
 
+  get_comments() {
+    let data_to_send = {
+      user_id: 1,
+      post_id: 2
+    }
+
+    axios.post('https://generation3.000webhostapp.com/project/Training/Comments.php', data_to_send).then(res => {
+      if (res.status == 200) {
+        if (res.data == 'Not Valid Parametar Value') {
+          console.log('not valid');
+        } else if (typeof (res.data) == "object") {
+          console.log("success");
+          console.log(res.data);
+          this.setState({ comments: res.data })
+        } else ("use not found")
+      }
+    }).catch(err => {
+      console.log(err);
+    })
+
+    // axios.get('').then(res => {
+    //   if (res.status == 200) {
+    //     // .....
+    //   }
+    // }).catch(err => {
+    //   console.log(err);
+    // })
+
+  }
+
+  componentDidMount() {
+    this.get_comments()
+  }
 
 
 
@@ -97,8 +144,8 @@ export class Comment extends Component {
     let obj = {
       image: require("../assets/Images/secur.png"),
       name: "الشاذلى",
-      comment: this.state.text,
-      replay: [],
+      comment_content: this.state.text,
+      replays: [],
 
     }
 
@@ -112,23 +159,26 @@ export class Comment extends Component {
     })
 
   }
-  Add_Replay(index) {
-    let items = this.state.comments
-    let comm = this.state.replay_comment
-    let name = this.state.replay_name
-    let item = items[index]
+  Add_Replay(text) {
+    let comment = this.state.current_comment;
+    const reply = {
+      replay_comment: text.trim(),
+      replay_name: "محمد",
+      replay_image: require("../assets/Images/images.png"),
+    }
 
-    item.replay.push(comm + "\n")
+    comment.replays.push(reply);
 
     this.setState({
 
-      comments: items,
-      replay_comment: ""
-
+      replay_comment: "",
+      comments: this.state.comments
 
 
     })
   }
+
+
 
 
   render() {
@@ -146,9 +196,9 @@ export class Comment extends Component {
         <View style={{
           flex: 1,
           backgroundColor: COLORS.background,
-          borderBottomLeftRadius: RFValue(40),
-          borderBottomRightRadius: RFValue(40),
-          paddingBottom: PADDING.lgPadding
+          borderBottomLeftRadius: RFValue(30),
+          borderBottomRightRadius: RFValue(30),
+          paddingBottom: 40
 
         }}>
 
@@ -156,17 +206,17 @@ export class Comment extends Component {
 
 
             {/* View Header */}
-            <View style={styles.view}>
+            <View
+            // style={styles.view}
+            >
 
-              <TouchableOpacity>
-                <AntDesign name="arrowright" color={COLORS.gray} size={ICONS.xlIcon} />
-              </TouchableOpacity>
 
-              <Text style={styles.titleStyle}>التعليقات</Text>
 
-              <TouchableOpacity>
-                <FontAwesome5 name="ellipsis-h" color={COLORS.gray} size={ICONS.lIcon} />
-              </TouchableOpacity>
+              <Text style={[styles.titleStyle, { alignSelf: "center" }]}>التعليقات</Text>
+
+              {/* <TouchableOpacity >
+                <AntDesign name="arrowleft" color={COLORS.gray} size={ICONS.xlIcon} />
+              </TouchableOpacity> */}
 
             </View>
 
@@ -204,46 +254,49 @@ export class Comment extends Component {
                       elevation: 2
                     }}>
                       <Text style={styles.titleStyle}>{comment.name}</Text>
-                      <Text style={styles.messageTitleStyle}>{comment.comment}</Text>
+                      <Text style={styles.messageTitleStyle}>{comment.comment_content}</Text>
                     </View>
-                    <View style={{ flexDirection: "row" }}>
-                      {
-                        comment.replay == "" ? null : <Image
-                          source={this.state.replay_image}
-                          style={{
-                            width: RFValue(25),
-                            height: RFValue(25),
+                    {comment.replays.map((replay, index) => (
+                      <View style={{ flexDirection: "row" }}>
+                        {
+                          comment.replays == "" ? null : <Image
+                            source={replay.replay_image}
+                            style={{
+                              width: RFValue(25),
+                              height: RFValue(25),
+                              marginTop: MARGIN.xsMargin,
+                              marginRight: MARGIN.xsMargin,
+
+                            }}
+                            resizeMode="contain"
+                            borderRadius={20}
+                          />}
+                        {comment.replays == "" ? null :
+                          <View style={{
+                            backgroundColor: "#fff",
+                            minWidth: "40%",
+                            minHeight: RFValue(40),
+                            borderRadius: RADIUS.smRadius,
+                            paddingHorizontal: PADDING.xsPadding,
                             marginTop: MARGIN.xsMargin,
-                            marginRight: MARGIN.xsMargin,
+                            elevation: 2
+                          }}>
+                            <Text style={[styles.titleStyle, { alignItems: "flex-end" }]}>{replay.replay_name}</Text>
+                            <Text style={{
+                              marginLeft: RFValue(20),
+                              fontSize: RFValue(15),
+                              color: COLORS.black
+                            }}>{replay.replay_comment}</Text>
 
-                          }}
-                          resizeMode="contain"
-                          borderRadius={20}
-                        />}
-                      {comment.replay == "" ? null :
-                        <View style={{
-                          backgroundColor: "#fff",
-                          minWidth: "40%",
-                          minHeight: RFValue(40),
-                          borderRadius: RADIUS.smRadius,
-                          paddingHorizontal: PADDING.xsPadding,
-                          marginTop: MARGIN.xsMargin,
-                          elevation: 2
-                        }}>
-                          <Text style={[styles.titleStyle, { alignItems: "flex-end" }]}>{this.state.replay_name}</Text>
-                          <Text style={{
-                            marginLeft: RFValue(20),
-                            fontSize: RFValue(15),
-                            color: COLORS.black
-                          }}>{comment.replay}</Text>
+                          </View>}
 
-                        </View>}
+                      </View>
+                    ))}
 
-                    </View>
                     <TouchableOpacity
                       onPress={() => {
                         this.setState({
-                          current_index: index
+                          current_comment: comment
                         })
                         this.RBSheet.open()
                       }}
@@ -314,7 +367,7 @@ export class Comment extends Component {
               <TouchableOpacity style={styles.smallButtom}
                 disabled={this.state.replay_comment == "" ? true : false}
                 onPress={() => {
-                  this.Add_Replay(this.state.current_index)
+                  this.Add_Replay(this.state.replay_comment)
                   this.RBSheet.close()
                 }}
               >
@@ -388,7 +441,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-
     alignItems: "center",
     backgroundColor: COLORS.white,
     borderRadius: RADIUS.lgRadius,

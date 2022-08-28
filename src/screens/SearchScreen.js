@@ -12,9 +12,9 @@ import {
   ImageBackground,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Component} from 'react';
-import {Input, GeneralButton} from '../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Component } from 'react';
+import { Input, GeneralButton } from '../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import OTPInput from 'react-native-otp-inputs';
 
@@ -64,10 +64,10 @@ export default class SearchScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* View Header */}
-          <View style={styles.view}>
+          {/* <View style={styles.view}>
             <TouchableOpacity style={{}}>
               <AntDesign
-                name="arrowright"
+                name="arrowleft"
                 color={COLORS.gray}
                 size={ICONS.xlIcon}
               />
@@ -82,15 +82,13 @@ export default class SearchScreen extends React.Component {
               }}>
               <Text style={styles.titleStyle}>البحث</Text>
             </View>
-            {/* <TouchableOpacity>
-              <FontAwesome5 name="ellipsis-h" color={COLORS.gray} size={ICONS.lIcon} />
-            </TouchableOpacity> */}
-          </View>
+
+          </View> */}
 
           {/* View search */}
           <View style={styles.view_search}>
             <View style={styles.view}>
-              <TouchableOpacity style={{paddingRight: PADDING.xsPadding}}>
+              <TouchableOpacity style={{ paddingRight: PADDING.xsPadding }}>
                 <FontAwesome5
                   name="search"
                   color={COLORS.gray}
@@ -103,25 +101,26 @@ export default class SearchScreen extends React.Component {
                   borderBottomWidth: 0,
                   fontSize: RFValue(FONTS.h5),
                   width: RFValue(200),
-                  height: RFValue(60),
+                  height: RFValue(80),
                 }}
                 textAlign="right"
                 autoCapitalize="none"
                 placeholder="ابحث"
                 value={this.state.search}
                 onChangeText={value => {
-                  this.setState({search: value});
+                  this.setState({ search: value });
                 }}
               />
             </View>
 
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <FontAwesome5
                 name="microphone"
                 color={COLORS.gray}
                 size={ICONS.mIcon}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
           </View>
 
           {/* map */}
@@ -130,7 +129,7 @@ export default class SearchScreen extends React.Component {
               .toLowerCase()
               .includes(this.state.search.toLowerCase()) ? (
               <TouchableOpacity style={styles.container_profile}>
-                <View style={{alignItems: 'center'}}>
+                <View style={{ alignItems: 'center' }}>
                   <Image
                     source={photoghrapher.image}
                     style={{
@@ -175,12 +174,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: MARGIN.mdMargin,
-    backgroundColor: '#ccc',
+    backgroundColor: '#ddd',
     borderRadius: RADIUS.mdRadius,
     paddingHorizontal: PADDING.mdPadding,
-    height: RFValue(30),
+    height: RFValue(40),
     width: '100%',
+    elevation: 5
   },
   container_profile: {
     flexDirection: 'row',

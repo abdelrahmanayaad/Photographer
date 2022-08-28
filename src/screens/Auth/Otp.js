@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import components from '../../components';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import OTPInput from 'react-native-otp-inputs';
 
@@ -32,17 +32,17 @@ export default class Otp extends React.Component {
     };
   }
   handleOTPChange = otp => {
-    this.setState({otp});
+    this.setState({ otp });
   };
 
   handleOTPChange = otp => {
-    this.setState({otp});
+    this.setState({ otp });
   };
   clearOTP = () => {
-    this.setState({otp: undefined});
+    this.setState({ otp: undefined });
   };
   autoFill = () => {
-    this.setState({otp: '221198'});
+    this.setState({ otp: '221198' });
   };
 
   render() {
@@ -53,13 +53,12 @@ export default class Otp extends React.Component {
             onPress={() => this.props.navigation.goBack()}
             style={[
               styles.iconStyle,
-              // {alignSelf: 'flex-start', margin: RFValue(MARGIN.xsMargin)},
-              {alignSelf: 'flex-start'},
+              { alignSelf: "flex-end" },
             ]}>
             <AntDesign
-              name="arrowright"
+              name="arrowleft"
               color={COLORS.gray}
-              size={RFValue(ICONS.xlIcon)}
+              size={ICONS.xlIcon}
             />
           </TouchableOpacity>
           <Image
@@ -80,6 +79,9 @@ export default class Otp extends React.Component {
               الرجاء إدخال الرمز المرسل إلي رقم الهاتف
             </Text>
             <OTPInput
+
+
+              isRTL={true}
               value={this.state.otp}
               onChange={this.handleOTPChange}
               tintColor="#FB6C6A"
@@ -93,6 +95,7 @@ export default class Otp extends React.Component {
               padding="1%"
               textAlign={'center'}
               fontSize={25}
+
               marginTop={MARGIN.lgMargin}
               inputContainerStyles={{
                 paddingHorizontal: 10,

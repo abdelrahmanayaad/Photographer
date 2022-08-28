@@ -6,6 +6,7 @@ import {
     StyleSheet,
     ScrollView,
     Linking,
+    ActivityIndicator
 } from 'react-native';
 import { MARGIN, COLORS, ICONS, FONTS, RADIUS, PADDING } from '../../constants';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -85,6 +86,7 @@ function ProfileInfo() {
     const [faceLink, set_faceLink] = useState('')
     const [instaLink, set_instaLink] = useState('')
     const [address, set_address] = useState([])
+    const [isLoading, setLoading] = useState(true)
     const about = () => {
         let data_to_send = {
             user_id: '15'
@@ -92,8 +94,9 @@ function ProfileInfo() {
         axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
             if (res.status == 200) {
                 // console.log(res.data)
+                setLoading(true)
                 set_phoneNums(phoneNums => res.data.Photogarpher_brand_phone_num)
-                set_whatsLink(whatsLink=>res.data.Photogarpher_whats_link)
+                set_whatsLink(whatsLink => res.data.Photogarpher_whats_link)
                 set_faceLink(faceLink => res.data.Photogarpher_face_link)
                 set_instaLink(instaLink => res.data.Photogarpher_insta_link)
                 // console.log(res.data.brand_addresses)
@@ -102,6 +105,7 @@ function ProfileInfo() {
             } else {
                 alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
             }
+            setLoading(false)
         }).catch((err) => {
             console.log(err)
         })
@@ -127,6 +131,7 @@ function ProfileInfo() {
         let arr = [...reviews]
         arr.push(obj)
         setReviews(reviews => arr)
+        setRate(rate => 0)
     }
     const rating_fun = (index) => {
         let arr = [...stars]
@@ -179,43 +184,26 @@ function ProfileInfo() {
         return reviews.map((item, index) => {
             return (
                 <View style={styles.review_container}>
-                    <View style={styles.photoAndName}>
-                        <View style={styles.photoView}>
-                            {/* <Image
-                      resizeMode="contain"
-                      source={require('../assets/Images/profileImage.jpg')}
-                      style={styles.imageStyle}
-                    /> */}
-                        </View>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ fontSize: RFValue(12), fontWeight: 'bold', color: '#313131' }}>{item.name}</Text>
-                            <View style={{ alignItems: 'flex-start' }}>
-                                <Text style={{ fontSize: RFValue(10) }}>{item.email}</Text>
+                    <View style={styles.photo_name_rate}>
+                        <View style={{flexDirection:'row'}}>
+                            <View style={styles.photoView}>
+                                {/* <Image
+                                resizeMode="contain"
+                                source={require('../assets/Images/profileImage.jpg')}
+                                style={styles.imageStyle}
+                                /> */}
+                            </View>
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text style={{ fontSize: RFValue(12), fontWeight: 'bold', color: '#313131' }}>{item.name}</Text>
+                                <View style={{ alignItems: 'flex-start' }}>
+                                    <Text style={{ fontSize: RFValue(10) }}>{item.email}</Text>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                    {item.rate == 0 ?
-                        <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                            <View >
-                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
-                            </View>
-                        </View> :
-                        item.rate == 1 ?
-                            <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                        {item.rate == 0 ?
+                            <View style={styles.stars}>
                                 <View >
-                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                    <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                 </View>
                                 <View >
                                     <AntDesign name='staro' size={RFValue(18)} color='#313131' />
@@ -230,13 +218,13 @@ function ProfileInfo() {
                                     <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                 </View>
                             </View> :
-                            item.rate == 2 ?
-                                <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                            item.rate == 1 ?
+                                <View style={styles.stars}>
                                     <View >
                                         <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                     </View>
                                     <View >
-                                        <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                        <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                     </View>
                                     <View >
                                         <AntDesign name='staro' size={RFValue(18)} color='#313131' />
@@ -248,8 +236,8 @@ function ProfileInfo() {
                                         <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                     </View>
                                 </View> :
-                                item.rate == 3 ?
-                                    <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                                item.rate == 2 ?
+                                    <View style={styles.stars}>
                                         <View >
                                             <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                         </View>
@@ -257,7 +245,7 @@ function ProfileInfo() {
                                             <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                         </View>
                                         <View >
-                                            <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                            <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                         </View>
                                         <View >
                                             <AntDesign name='staro' size={RFValue(18)} color='#313131' />
@@ -266,11 +254,8 @@ function ProfileInfo() {
                                             <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                         </View>
                                     </View> :
-                                    item.rate == 4 ?
-                                        <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
+                                    item.rate == 3 ?
+                                        <View style={styles.stars}>
                                             <View >
                                                 <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
                                             </View>
@@ -283,27 +268,50 @@ function ProfileInfo() {
                                             <View >
                                                 <AntDesign name='staro' size={RFValue(18)} color='#313131' />
                                             </View>
+                                            <View >
+                                                <AntDesign name='staro' size={RFValue(18)} color='#313131' />
+                                            </View>
                                         </View> :
-                                        <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                        item.rate == 4 ?
+                                            <View style={styles.stars}>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='staro' size={RFValue(18)} color='#313131' />
+                                                </View>
+                                            </View> :
+                                            <View style={{ flexDirection: 'row', paddingVertical: RFValue(PADDING.xsPadding) }}>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
+                                                <View >
+                                                    <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
+                                                </View>
                                             </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                            <View >
-                                                <AntDesign name='star' size={RFValue(18)} color='#FDCC0D' />
-                                            </View>
-                                        </View>
-                    }
+                        }</View>
                     <View style={{ height: RFValue(80), justifyContent: 'center' }}>
-                        <Text style={{ fontSize: RFValue(15), color: "#313131" }}>{item.opinion}</Text>
+                        <ScrollView showsVerticalScrollIndicator={false}>
+                            <Text style={{ fontSize: RFValue(15), color: "#313131" }}>{item.opinion}</Text>
+                        </ScrollView>
                     </View>
                 </View>
 
@@ -313,45 +321,52 @@ function ProfileInfo() {
 
     return (
         <View style={styles.container}>
-            <View style={{ marginRight: RFValue(20) }}>
-                <Text style={styles.headerTxt}>حـول </Text>
-                {render_phoneNum()}
-                {whatsLink != '' ? <View style={styles.infoContainer}>
-                    <Fontisto name='whatsapp' size={RFValue(17)} />
-                    <Text
-                        style={[styles.infoTxt, { textDecorationLine: 'none' }]}
-                        onPress={() => { Linking.openURL(whatsLink) }}
-                    >إرسال رسالة</Text>
-                </View> : null}
-                {faceLink != '' ? <View style={styles.infoContainer}>
-                    <AntDesign name='facebook-square' size={RFValue(17)} />
-                    <Text selectable={true}
-                        onPress={() => { Linking.openURL(faceLink) }}
-                        style={styles.infoTxt}
-                    >{faceLink}</Text>
-                </View> : null}
-                {instaLink != '' ? <View style={styles.infoContainer}>
-                    <AntDesign name='instagram' size={RFValue(17)} />
-                    <Text selectable={true}
-                        onPress={() => { Linking.openURL(instaLink) }}
-                        style={styles.infoTxt}
-                    >{instaLink}</Text>
-                </View> : null}
-                {render_addresses()}
-            </View>
+            {isLoading ? <ActivityIndicator size={40} color={COLORS.primary} /> : (
+                <View style={{ marginRight: RFValue(20) }}>
+                    <Text style={styles.headerTxt}>حـول </Text>
+                    {render_phoneNum()}
+                    {whatsLink != '' ? <View style={styles.infoContainer}>
+                        <Fontisto name='whatsapp' size={RFValue(17)} />
+                        <Text
+                            style={[styles.infoTxt, { textDecorationLine: 'none' }]}
+                            onPress={() => { Linking.openURL(whatsLink) }}
+                        >إرسال رسالة</Text>
+                    </View> : null}
+                    {faceLink != '' ? <View style={styles.infoContainer}>
+                        <AntDesign name='facebook-square' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL(faceLink) }}
+                            style={styles.infoTxt}
+                        >فيس بوك</Text>
+                    </View> : null}
+                    {instaLink != '' ? <View style={styles.infoContainer}>
+                        <AntDesign name='instagram' size={RFValue(17)} />
+                        <Text selectable={true}
+                            onPress={() => { Linking.openURL(instaLink) }}
+                            style={styles.infoTxt}
+                        >انستجرام</Text>
+                    </View> : null}
+                    {render_addresses()}
+                </View>
+            )}
             <View style={{ height: RFValue(235) }}>
                 <Text style={styles.headerTxt}>الآراء </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <TouchableOpacity
-                        style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center' }]}
+                        style={[styles.review_container, { backgroundColor: '#eee', justifyContent: 'center', borderColor: '#eee' }]}
                         onPress={() => { setVisible(visible => true) }}>
                         <Text style={{ fontSize: RFValue(30), fontWeight: 'bold' }}>+</Text>
                     </TouchableOpacity>
-                    <Dialog.Container visible={visible}>
+                    <Dialog.Container visible={visible} >
                         <View style={{ flexDirection: 'row', justifyContent: 'center' }} >
                             {render_rating()}
                         </View>
-                        <Dialog.Input placeholder='ادخل رأيك عنا' style={{ marginTop: 10 }} value={opinion} onChangeText={(value) => { setOpenion(opinion => value) }} />
+                        <Dialog.Input
+                            placeholder='ادخل رأيك عنا'
+                            style={{ marginTop: 10, width: RFValue(250) }}
+                            // multiline={true}
+                            value={opinion}
+                            onChangeText={(value) => { setOpenion(opinion => value) }} />
                         <Dialog.Button label="تم" onPress={() => { addReview(), setVisible(visible => false), rating_fun(0), setOpenion(opinion => '') }} />
                     </Dialog.Container>
                     {reviewsMap()}
@@ -365,19 +380,23 @@ const styles = StyleSheet.create({
     review_container: {
         alignItems: 'center',
         marginHorizontal: RFValue(5),
-        padding: RFValue(10),
-        width: RFValue(165),
+        padding: RFValue(20),
+        width: RFValue(270),
         height: RFValue(170),
-        backgroundColor: COLORS.primary,
-        borderRadius: RADIUS.smRadius
+        // borderWidth: RFValue(1),
+        backgroundColor: '#fff',
+        borderColor: COLORS.primary,
+        borderRadius: RADIUS.smRadius,
+        elevation: 3
     },
     container: {
         flex: 1,
     },
-    photoAndName: {
+    photo_name_rate: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'flex-start',
+        justifyContent:'space-between'
+        // justifyContent: 'flex-start',
     },
     photoView: {
         width: RFValue(40),
@@ -402,6 +421,14 @@ const styles = StyleSheet.create({
         color: '#71a8fb',
         padding: RFValue(PADDING.xsPadding),
         fontSize: RFValue(FONTS.h5)
+    },
+    stars: {
+        flexDirection: 'row',
+        paddingVertical: RFValue(PADDING.xsPadding),
+        alignItems: 'center',
+        // backgroundColor:'#0f0',
+        // width: RFValue(125),
+        // justifyContent: 'center'
     }
 
 })

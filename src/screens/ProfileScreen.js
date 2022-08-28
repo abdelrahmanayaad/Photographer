@@ -234,7 +234,10 @@ export class ProfileScreen extends Component {
             <Text style={styles.textHeaderStyle}>الملف الشخصي</Text>
           </View>
           {this.state.owner ? (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('SettingsScreen');
+              }}>
               <AntDesign
                 name="setting"
                 color={COLORS.gray}
