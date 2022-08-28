@@ -38,7 +38,7 @@ export class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <AdminProfileStack />
+        <Navigation />
       </NavigationContainer>
     );
   }
