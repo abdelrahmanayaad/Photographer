@@ -69,10 +69,8 @@ export default function Signup({ navigation }) {
       .then((res) => {
         if (res.status == 200) {     
              console.log(res.data)
-
           if ((res.data) == "successful") {
             console.log("don")
-            navigation.navigate('HomeStack');
             alert("done")
           } else if (res.data == "Not Valid Values" || res.data == "error happen") {
             alert("من فضلك تأكد من صحة البيانات")
@@ -81,6 +79,7 @@ export default function Signup({ navigation }) {
           }
         } else {
           alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+          console.log("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
         }
         // setName("")
         // setPassword("")
@@ -353,6 +352,10 @@ export default function Signup({ navigation }) {
           <GeneralButton
             onPress={() => {
               signup();
+              nameerorr == '' && Emailerorr == '' && phoneerorr == "" && passwordconfirmerorr==""&& passworderorr==""
+                  ? navigation.navigate('HomeStack')
+                  : null;
+
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}

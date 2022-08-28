@@ -161,6 +161,7 @@ function ChangePassword() {
 
     if (old_pass_matches_endtyping() == true && new_password_check() == true && confirm_password() == true) {
       change_password(check_old_pass, new_password)
+      //navigation
       //console.log("ok")
     }
   }

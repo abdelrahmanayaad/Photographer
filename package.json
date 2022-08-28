@@ -27,6 +27,7 @@
     "react-native-dialog": "^9.2.2",
     "react-native-element-dropdown": "^2.2.0",
     "react-native-image-picker": "^4.8.4",
+    "react-native-insta-story": "^1.1.8",
     "react-native-maps": "^1.2.0",
     "react-native-otp-inputs": "^7.4.0",
     "react-native-paper": "^4.12.4",

@@ -134,6 +134,7 @@ function NewPassword() {
     if (new_password_check() == true && confirm_password() == true) {
       //console.log("ok")
       send_new_password(newpassword)
+      //navigation
     }
   }
   const multifunonpress = () => {
