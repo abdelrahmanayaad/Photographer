@@ -31,7 +31,11 @@ const change_password = (oldpassword, newpassword) => {
         //this.setState({ color: '#0f0' })
 
         // alert("user added");
+
        // alert("done")
+
+        
+
       } else if (res.data == 'user not found') {
         //alert('data_to_send is empty')
         //this.setState({ color: '#f00' })
@@ -39,7 +43,9 @@ const change_password = (oldpassword, newpassword) => {
 
 
       } else {
+
         //alert(res.data)
+
         // this.setState({ color: '#f00' })
 
       }

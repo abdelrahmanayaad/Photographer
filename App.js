@@ -37,8 +37,14 @@ const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
     return (
+
+      // <Signup />
+
+      // <NavigationContainer>
+      //   <Navigation />
+      // </NavigationContainer>
       <NavigationContainer>
-        <AdminProfileStack />
+        <Navigation />
       </NavigationContainer>
     );
   }

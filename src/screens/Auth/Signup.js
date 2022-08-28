@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SwipeUpDownModal from 'react-native-swipe-modal-up-down';
 import {
   Text,
@@ -13,9 +13,10 @@ import {
   Button,
   TextInput,
   StatusBar,
+  Modal
 } from 'react-native';
-import {Input, GeneralButton} from '../../components';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Input, GeneralButton } from '../../components';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -25,13 +26,13 @@ import {
   FONTS,
 } from '../../constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Entypo from 'react-native-vector-icons/Entypo';
 import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 
-const {width, height} = Dimensions.get('window');
-export default function Signup({navigation}) {
+const { width, height } = Dimensions.get('window');
+export default function Signup({ navigation }) {
   const [name, setName] = useState('');
   const [nameerorr, setNameerorr] = useState('');
   const [Email, setEmail] = useState('');
@@ -42,148 +43,66 @@ export default function Signup({navigation}) {
   const [passworderorr, setPassError] = useState('');
   const [passwordconfirm, setConPass] = useState('');
   const [passwordconfirmerorr, setConPassError] = useState('');
-  const [secured_pass, setSecured_pass] = useState(true);
-  const [secured_pass1, setSecured_pass1] = useState(true);
+  const [secured_pass, setSecured_pass] = useState(false);
+  const [secured_pass1, setSecured_pass1] = useState(false);
   const [ShowComment, setShowComment] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
   const [arr, setArr] = useState([
-    {name: 'مستخدم'},
-    {name: ' مصور'},
-    {name: 'ميكب ارتست'},
+    { name: 'مستخدم' },
+    { name: ' مصور' },
+    { name: 'ميكب ارتست' },
   ]);
+  const [model_alert, setmodel_alert] = useState(false);
   const [usertype, setusertype] = useState(arr[0]);
   const [token, setToken] = useState('');
 
   const SendUser = () => {
     let data_to_send = {
-      // name: name,
-      // email: Email,
-      // pass: password,
-      // type: arr,
-      // token: token,
-      name: 'Ayad',
-      email: 'ayad74@gmail.com',
-      pass: 'A10105655#',
-      type: 'مستخدم',
-      token: token,
-    };
-    axios
-      .post(
-        'https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php',
-        data_to_send,
-      )
-      .then(res => {
+      name: name,
+      email: Email,
+      pass: password,
+      type: usertype,
+      token: token
+    }
+
+    axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
+      .then((res) => {
         if (res.status == 200) {
-          alert(res.data);
-          if (res.data == 'successful') {
-            alert('done');
-          } else if (
-            res.data == 'Not Valid Values' ||
-            res.data == 'error happen'
-          ) {
-            alert('من فضلك تأكد من صحة البيانات');
-          } else if (res.data == 'email is already exist') {
-            alert('هذا البريد موجود بالفعل');
+          if ((res.data) == "successful") {
+            // console.log("don")
+            navigation.navigate('HomeStack')
+            // alert("done")
+          } else if (res.data == "Not Valid Values" || res.data == "error happen") {
+            alert("من فضلك تأكد من صحة البيانات")
+          } else if (res.data == "email is already exist") {
+            alert("هذا البريد موجود بالفعل")
           }
         } else {
-          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+          alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
         }
-        setName('');
-        setPassword('');
-        setPhoneError('');
-        setEmail('');
-        setConPass('');
-      });
-  };
+        setName("")
+        setPassword("")
+        setPhone("")
+        setEmail("")
+        setConPass("")
+      })
+  }
 
-  // componentDidMount(){
-  //   messaging()
-  //   .getToken()
-  //   .then(token => {
-  //       // alert(token)
-  //       setToken(token)
-
-  //   });
-
-  // return messaging().onTokenRefresh(token => {
-  //   setToken(token)
-
-  // });
-
-  // }
-  useEffect(() => {
-    messaging()
-      .getToken()
-      .then(token => {
-        alert(token);
-        // setToken(token)
-      });
-
-    return messaging().onTokenRefresh(token => {
-      // setToken(token)
-      alert(token);
-    });
-
-    // const getToken = async () => {
-    //   try {
-    //     const token = await messaging().getToken();
-    //     if (token) return console.log(token);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // getToken()
-  }, []);
-  // SendUser = () => {
-  //   // alert(token)
-  //   let data_to_send = {
-  //     name: name,
-  //     email: Email,
-  //     pass: password,
-  //     type: usertype,
-  //     token: token,
-  //   };
-  //   axios
-  //     .post(
-  //       'https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php',
-  //       data_to_send,
-  //     )
-  //     .then(res => {
-  //       if (res.status == 200) {
-  //         if (res.data == 'successful') {
-  //           alert('done');
-  //         } else if (
-  //           res.data == 'Not Valid Values' ||
-  //           res.data == 'error happen'
-  //         ) {
-  //           alert('من فضلك تأكد من صحة البيانات');
-  //         } else if (res.data == 'email is already exist') {
-  //           alert('هذا البريد موجود بالفعل');
-  //         }
-  //       } else {
-  //         alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
-  //       }
-  //       setName('');
-  //       setPassword('');
-  //       setPhone('');
-  //       setEmail('');
-  //       setConPass('');
-  //     });
-  // };
 
   useEffect(() => {
     messaging()
       .getToken()
       .then(token => {
-        // console.log(token.length)
-        setToken(token);
+        // alert(token);
+        setToken(token)
       });
 
     return messaging().onTokenRefresh(token => {
-      setToken(token);
-      // console.log(token.length)
+      setToken(token)
+      // alert(token);
     });
   }, []);
+
 
   const validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -246,7 +165,7 @@ export default function Signup({navigation}) {
     if (password.trim() == '') {
       error++;
       setPassError('لايجب ان يكون هذا الحقل فارغ');
-    } else if (password.length < 20) {
+    } else if (password.length > 20) {
       error++;
       setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
     } else if (!validatePassword(password)) {
@@ -273,13 +192,13 @@ export default function Signup({navigation}) {
     }
 
     if (error == 0) {
-      // SendUser();
-      console.log('dn');
-      SendUser();
-    } else {
-      console.log('no');
+      console.log(error)
+      SendUser()
     }
-  };
+    else {
+      console.log(error)
+    }
+  }
   const onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     return reg.test(value.trim());
@@ -433,8 +352,6 @@ export default function Signup({navigation}) {
           <GeneralButton
             onPress={() => {
               signup();
-              SendUser();
-              navigation.navigate('HomeStack');
             }}
             title="انشاء حساب"
             bgcolor={COLORS.primary}
@@ -444,29 +361,40 @@ export default function Signup({navigation}) {
           <GeneralButton
             onPress={() => {
               setAnimateModal(true), setShowComment(true);
+              setmodel_alert(true)
+
             }}
             title="تحديد النوع"
             bgcolor={COLORS.primary}
           />
         </View>
-        <SwipeUpDownModal
-          modalVisible={ShowComment}
-          PressToanimate={animateModal}
-          ContentModal={
-            <View style={styles.containerContent}>
-              <Text style={[styles.fontModal, {marginBottom: MARGIN.xsMargin}]}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+
+          visible={model_alert}
+          onRequestClose={() => {
+            setmodel_alert(false);
+          }}>
+          <View
+            style={styles.viewModal}>
+            <View
+              style={styles.viewModalText}>
+              <Text style={[styles.fontModal, { marginBottom: MARGIN.xsMargin }]}>
                 حدد نوع المستخدم
               </Text>
 
+
               <FlatList
                 data={arr}
-                renderItem={({item, index}) => (
+                renderItem={({ item, index }) => (
                   <>
                     <TouchableOpacity
                       style={styles.buttonmodal}
                       onPress={() => {
                         setShowComment(false);
-                        setusertype(item.name);
+                        setusertype(item.name)
+                        setmodel_alert(false)
                       }}>
                       <Text style={styles.fontModal}>{item.name}</Text>
 
@@ -480,13 +408,9 @@ export default function Signup({navigation}) {
                 )}
               />
             </View>
-          }
-          HeaderStyle={styles.headerContent}
-          ContentModalStyle={styles.Modal}
-          onClose={() => {
-            setAnimateModal(true), setShowComment(false);
-          }}
-        />
+          </View>
+        </Modal>
+
 
         <View style={styles.ViewTitle1}>
           <Text style={styles.messageTitleStyle}>هل لديك حساب؟ </Text>
@@ -572,8 +496,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: COLORS.black,
   },
+  viewModal: {
+    height: RFValue(height),
+    justifyContent: 'center',
+  },
+
   buttonmodal: {
-    height: RFValue(height / 19),
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -585,18 +513,15 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
     marginBottom: MARGIN.xsMargin,
   },
-  containerContent: {
-    height: RFValue(height),
-    marginTop: 30,
-  },
-  headerContent: {
-    height: 50,
-  },
-  Modal: {
-    backgroundColor: COLORS.background,
-    height: RFValue(height / 2.5),
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    padding: PADDING.mdPadding,
-  },
+  viewModalText: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: RFValue(width / 1.2),
+    height: RFValue(height / 3),
+    backgroundColor: COLORS.white,
+    borderRadius: 20,
+    elevation: 5,
+    paddingVertical: PADDING.smPadding,
+    marginBottom: MARGIN.xsMargin,
+  }
 });
