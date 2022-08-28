@@ -8,10 +8,10 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import {
   PADDING,
@@ -22,7 +22,7 @@ import {
   FONTS,
   RADIUS,
 } from '../constants';
-import {GeneralButton, Input} from '../components';
+import { GeneralButton, Input } from '../components';
 import * as ImagePicker from 'react-native-image-picker';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -84,7 +84,7 @@ export class EditprofileScreen extends Component {
         emailErr: '',
       },
     };
-    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
+    ImagePicker.launchImageLibrary({ options, includeBase64: true }, res => {
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
@@ -127,21 +127,21 @@ export class EditprofileScreen extends Component {
   };
   render() {
     return (
-      <View style={{padding: '4%'}}>
+      <View style={{flex: 1, padding: RFValue(PADDING.xsPadding)}}>
         <ScrollView>
           <View style={styles.headerView}>
+            <View style={{width:RFValue(15)}}></View>
+            <Text style={styles.headerTxt}>تعديل الملف الشخصى</Text>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('AdminProfile');
+                this.props.navigation.goBack();
               }}>
               <AntDesign
-                name="arrowright"
+                name="arrowleft"
                 color={COLORS.gray}
                 size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
-            <Text style={styles.headerTxt}>تعديل الملف الشخصى</Text>
-            <View></View>
           </View>
           <View style={styles.photoContainer}>
             <View style={styles.photo}>
@@ -149,7 +149,7 @@ export class EditprofileScreen extends Component {
                 <Entypo name="user" size={RFValue(50)} color="#4b4b4b" />
               ) : (
                 <Image
-                  source={{uri: this.state.photo_uri}}
+                  source={{ uri: this.state.photo_uri }}
                   style={styles.selectedPhoto}
                   resizeMode="contain"
                 />
@@ -177,18 +177,18 @@ export class EditprofileScreen extends Component {
                   } else if (index == 1) {
                     this.selectFromGallery();
                   } else if (index == 2) {
-                    this.setState({photo_uri: ''});
+                    this.setState({ photo_uri: '' });
                   }
                 }}
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginVertical: RFValue(20)}}>
+          <View style={{ marginVertical: RFValue(20) }}>
             <Input
               placeholder="الاسم"
               value={this.state.name}
               onChangeText={value => {
-                this.setState({name: value});
+                this.setState({ name: value });
               }}
             />
           </View>
@@ -206,14 +206,15 @@ export class EditprofileScreen extends Component {
 }
 const styles = StyleSheet.create({
   headerView: {
-    width: '96%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginVertical:RFValue(10)
   },
   headerTxt: {
     color: COLORS.black,
-    fontSize: RFValue(FONTS.h4),
+    fontSize: RFValue(FONTS.h3),
+    fontWeight: 'bold',
   },
   photoContainer: {
     width: RFValue(100),

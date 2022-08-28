@@ -17,6 +17,7 @@ import {
   MARGIN,
   ICONS,
   FONTS,
+  RADIUS,
 } from '../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -53,12 +54,19 @@ export default function SettingsScreen({navigation}) {
       icon_name: 'logout',
     },
   ]);
+  const choosenIndex =(index)=>{
+    if(index==0){
+      navigation.navigate('EditprofileScreen')
+    }else if(index==1){
+      navigation.navigate('ChangePassword')
+    }
+  }
 
   function renderserring() {
     return settings.map((item, index) => {
       return (
         <View style={styles.each_view_in_map_style}>
-          <TouchableOpacity style={styles.each_button_style}>
+          <TouchableOpacity style={styles.each_button_style} onPress={()=>choosenIndex(index)}>
             <Text style={styles.each_text_style}>{item.name}</Text>
             <View>
               {index == 6 ? (
@@ -86,6 +94,7 @@ export default function SettingsScreen({navigation}) {
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
 
       <View style={styles.headerView}>
+        <View style={{width:RFValue(15)}}></View>
         <View>
           <Text style={styles.headerTxt}>الاعدادات</Text>
         </View>
@@ -121,17 +130,22 @@ const styles = StyleSheet.create({
     marginTop: RFValue(10),
   },
   headerTxt: {
-    marginLeft: '45%',
+    // marginLeft: '45%',
     color: COLORS.black,
     fontSize: RFValue(FONTS.h3),
     fontWeight: 'bold',
   },
   each_view_in_map_style: {
-    borderBottomWidth: RFValue(1),
+    // borderBottomWidth: RFValue(1),
     borderColor: COLORS.gray,
-    height: RFValue(70),
+    height: RFValue(60),
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:'#fff',
+    elevation:3,
+    marginVertical:5,
+    paddingHorizontal:5,
+    borderRadius:3
   },
   each_button_style: {
     flexDirection: 'row',
