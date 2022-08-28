@@ -212,7 +212,8 @@ function HomeScreen({navigation}) {
   const [email, setemail] = useState('esraaelgiz@gmail.com');
   const [password, setpassword] = useState('123456');
   const [dialog_visible, setdialog_visible] = useState(false);
-  const [notification_model_visible, set_notification_model_visible] = useState(false)
+  const [notification_model_visible, set_notification_model_visible] =
+    useState(false);
 
   const favouritepress = (item, index) => {
     let posts_arr = [...posts];
@@ -248,7 +249,7 @@ function HomeScreen({navigation}) {
     if (email == '' || password == '') {
       setdialog_visible(dialog_visible => true);
     } else {
-      set_notification_model_visible(notification_model_visible => true)
+      set_notification_model_visible(notification_model_visible => true);
     }
   };
 
@@ -391,24 +392,33 @@ function HomeScreen({navigation}) {
       <Modal visible={notification_model_visible}>
         <View style={styles.modal_container_style}>
           <View style={styles.headerView_notification_modal}>
-            <TouchableOpacity onPress={() => set_notification_model_visible(notification_model_visible => false)}>
+            <View>
+              <Text style={styles.headerTxt}>الاشعارات</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() =>
+                set_notification_model_visible(
+                  notification_model_visible => false,
+                )
+              }>
               <AntDesign
-                name="arrowright"
+                name="arrowleft"
                 color={COLORS.gray}
                 size={RFValue(ICONS.xlIcon)}
               />
             </TouchableOpacity>
-            <View>
-              <Text style={styles.headerTxt}>الاشعارات</Text>
-            </View>
-            <View></View>
           </View>
-          <View style={{ alignItems: 'center', justifyContent: 'center', height: '95%' }}>
-            <Text style={{ color: COLORS.black, fontSize: RFValue(FONTS.h4) }}>لا توجد اشعارات</Text>
-
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '95%',
+            }}>
+            <Text style={{color: COLORS.black, fontSize: RFValue(FONTS.h4)}}>
+              لا توجد اشعارات
+            </Text>
           </View>
         </View>
-
       </Modal>
     </View>
   );
@@ -550,17 +560,21 @@ const styles = StyleSheet.create({
     fontWeight: '100',
   },
   headerView_notification_modal: {
-    width: '94%',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  }, modal_container_style: {
+  },
+  modal_container_style: {
     padding: RFValue(PADDING.xsPadding),
     height: '100%',
-    width: "100%",
-  }, headerTxt: {
+    width: '100%',
+  },
+  headerTxt: {
+    fontWeight: 'bold',
     color: COLORS.black,
-    fontSize: RFValue(FONTS.h4)
+    fontSize: RFValue(FONTS.h4),
+    marginLeft: '50%',
   },
 });
 export default HomeScreen;

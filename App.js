@@ -38,11 +38,14 @@ export class App extends Component {
   render() {
     return (
 
-      <Signup />
+      // <Signup />
 
       // <NavigationContainer>
       //   <Navigation />
       // </NavigationContainer>
+      <NavigationContainer>
+        <AdminProfileStack />
+      </NavigationContainer>
     );
   }
 }

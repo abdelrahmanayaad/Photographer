@@ -51,7 +51,7 @@ const change_password = (oldpassword, newpassword) => {
     console.log(err)
   })
 }
-function ChangePassword() {
+function ChangePassword({navigation}) {
   const [check_old_pass, setcheck_old_pass] = useState("")
   const [text_check_old_pass, settext_check_old_pass] = useState("")
   const [text_check_old_pass_text_color, settext_check_old_pass_text_color] = useState("")
@@ -177,15 +177,19 @@ function ChangePassword() {
     <View style={styles.main_view_style}>
       <ScrollView>
         <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
-        <TouchableOpacity style={styles.iconStyle}>
-          <AntDesign
-            name="arrowright"
-            color={COLORS.gray}
-            size={RFValue(ICONS.xlIcon)}
-          />
-        </TouchableOpacity>
-        <View style={styles.ViewTitle}>
-          <Text style={styles.titleStyle}>تغيير كلمة المرور</Text>
+        <View style={styles.headerView}>
+          <View style={{ width: RFValue(15) }}></View>
+          <Text style={styles.headerTxt}>تغيير كلمة المرور</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <AntDesign
+              name="arrowleft"
+              color={COLORS.gray}
+              size={RFValue(ICONS.xlIcon)}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.view_after_header_style}>
           <View style={styles.each_textinput_viewstyle}>
@@ -258,7 +262,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: RFValue(PADDING.xsPadding),
   },
-
+  headerView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical:RFValue(10)
+  },
+  headerTxt: {
+    color: COLORS.black,
+    fontSize: RFValue(FONTS.h3),
+    fontWeight: 'bold',
+  },
   each_textinput_viewstyle: {
     //marginBottom:height*.02
     //marginBottom: RFValue(MARGIN.mdMargin),
