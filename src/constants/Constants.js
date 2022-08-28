@@ -36,10 +36,10 @@ export const RADIUS = {
 };
 
 export const FONTS = {
-  h1: 35,
-  h2: 30,
-  h3: 23,
-  h4: 20,
+  h1: 30,
+  h2: 22,
+  h3: 20,
+  h4: 18,
   h5: 16,
   h6: 14,
   h7: 18,

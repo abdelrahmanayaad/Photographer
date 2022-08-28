@@ -59,7 +59,8 @@ function HomeScreen({navigation}) {
       id: 6,
       img: require('../assets/Images/photo.jpg'),
       story: '',
-    },{
+    },
+    {
       id: 6,
       img: require('../assets/Images/photo.jpg'),
       story: require('../assets/Images/post.jpg'),
@@ -206,6 +207,9 @@ function HomeScreen({navigation}) {
         <View style={styles.view_for_each_post_style}>
           <View style={styles.view_for_profilenameandimg_in_each_post}>
             <TouchableOpacity
+              onPress={() => {
+                // navigation.navigate('ProfileScreen');
+              }}
               style={styles.button_of_img_in_the_header_of_each_post_style}>
               <Image
                 source={
@@ -254,7 +258,10 @@ function HomeScreen({navigation}) {
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
               {/* <TouchableOpacity onPress={() => commentpress(item, index)}>  */}
-              <TouchableOpacity onPress={() => {}}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Comment');
+                }}>
                 <Fontisto
                   name="comment"
                   color={COLORS.gray}

@@ -53,77 +53,86 @@ export default function Signup({navigation}) {
   ]);
   const [token, setToken] = useState('');
 
-  // SendUser=()=> {
-  //   let data_to_send = {
-  //     name:  name,
-  //     email:  Email,
-  //     pass:  password,
-  //     type:  arr,
-  //     token:  token
-  //   }
-  //   axios.post("https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php", data_to_send)
-  //     .then((res) => {
-  //       if (res.status == 200) {
-  //         if ( (res.data) == "successful") {
-  //           alert("done")
-  //         } else if (res.data == "Not Valid Values" || res.data == "error happen") {
-  //           alert("من فضلك تأكد من صحة البيانات")
-  //         } else if (res.data == "email is already exist") {
-  //           alert("هذا البريد موجود بالفعل")
-  //         }
-  //       } else {
-  //         alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
-  //       }
-  //       setName( "" )
-  //       setPassword("")
-  //       setPhoneError( "" )
-  //       setEmail("")
-  //       setConPass("")
-  //     })
+  const SendUser = () => {
+    let data_to_send = {
+      // name: name,
+      // email: Email,
+      // pass: password,
+      // type: arr,
+      // token: token,
+      name: 'Ayad',
+      email: 'ayad74@gmail.com',
+      pass: 'A10105655#',
+      type: 'مستخدم',
+      token: token,
+    };
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php',
+        data_to_send,
+      )
+      .then(res => {
+        if (res.status == 200) {
+          alert(res.data);
+          if (res.data == 'successful') {
+            alert('done');
+          } else if (
+            res.data == 'Not Valid Values' ||
+            res.data == 'error happen'
+          ) {
+            alert('من فضلك تأكد من صحة البيانات');
+          } else if (res.data == 'email is already exist') {
+            alert('هذا البريد موجود بالفعل');
+          }
+        } else {
+          alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+        }
+        setName('');
+        setPassword('');
+        setPhoneError('');
+        setEmail('');
+        setConPass('');
+      });
+  };
+
+  // componentDidMount(){
+  //   messaging()
+  //   .getToken()
+  //   .then(token => {
+  //       // alert(token)
+  //       setToken(token)
+
+  //   });
+
+  // return messaging().onTokenRefresh(token => {
+  //   setToken(token)
+
+  // });
+
   // }
+  useEffect(() => {
+    messaging()
+      .getToken()
+      .then(token => {
+        alert(token);
+        // setToken(token)
+      });
 
-  // // componentDidMount(){
-  // //   messaging()
-  // //   .getToken()
-  // //   .then(token => {
-  // //       // alert(token)
-  // //       setToken(token)
+    return messaging().onTokenRefresh(token => {
+      // setToken(token)
+      alert(token);
+    });
 
-  // //   });
-
-  // // return messaging().onTokenRefresh(token => {
-  // //   setToken(token)
-
-  // // });
-
-  // // }
-  //   useEffect(() => {
-
-  //     messaging()
-  //         .getToken()
-  //         .then(token => {
-  //             console.log(token)
-  //             // setToken(token)
-
-  //         });
-
-  //     return messaging().onTokenRefresh(token => {
-  //         // setToken(token)
-  //         console.log(token)
-
-  //     });
-
-  //     // const getToken = async () => {
-  //     //   try {
-  //     //     const token = await messaging().getToken();
-  //     //     if (token) return console.log(token);
-  //     //   } catch (error) {
-  //     //     console.log(error);
-  //     //   }
-  //     // };
-  //     // getToken()
-
-  // }, [])
+    // const getToken = async () => {
+    //   try {
+    //     const token = await messaging().getToken();
+    //     if (token) return console.log(token);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // getToken()
+  }, []);
 
   validateEmail = email => {
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -186,7 +195,7 @@ export default function Signup({navigation}) {
     if (password.trim() == '') {
       error++;
       setPassError('لايجب ان يكون هذا الحقل فارغ');
-    } else if (password.length > 20) {
+    } else if (password.length < 20) {
       error++;
       setPassError('كلمه المرور يجب ألا تزيد عن 20 حرف و رقم');
     } else if (!validatePassword(password)) {
@@ -212,9 +221,9 @@ export default function Signup({navigation}) {
       setConPassError('');
     }
 
-    // if (error == 0) {
-    //   alert("WELCOME")
-    // }
+    if (error == 0) {
+      // SendUser();
+    }
   };
   onChangeEmail = value => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -369,6 +378,7 @@ export default function Signup({navigation}) {
           <GeneralButton
             onPress={() => {
               signup();
+              SendUser();
               navigation.navigate('HomeStack');
             }}
             title="انشاء حساب"

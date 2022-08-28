@@ -32,7 +32,6 @@ import HomeStack from './src/navigation/HomeStack';
 import SplashScreen from './src/screens/Auth/SplashScreen';
 // import LoginWithG from './src/screens/Auth/LoginWithG';
 
-
 const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
@@ -41,7 +40,6 @@ export class App extends Component {
       <NavigationContainer>
         <Navigation />
       </NavigationContainer>
-
     );
   }
 }

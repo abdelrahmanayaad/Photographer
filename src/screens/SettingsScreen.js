@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -7,9 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  StatusBar
+  StatusBar,
 } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {
   PADDING,
   IconsView,
@@ -19,116 +19,123 @@ import {
   FONTS,
 } from '../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-const { width, height } = Dimensions.get('window');
- export default function SettingsScreen() {
-  const [settings, setSettings] = useState([{
-        name: "تعديل الملف الشخصى",
-        icon_name: 'arrowleft'
-      }, {
-        name: "تغيير كلمه المرور",
-        icon_name: 'arrowleft'
-      }, {
-        name: "الاشعارات",
-        icon_name: 'arrowleft'
-      }, {
-        name: "احصل علي المساعده",
-        icon_name: 'arrowleft'
-      }, {
-        name: "الابلاغ عن مشكله",
-        icon_name: 'arrowleft'
-      }, {
-        name: "تعليمات الاستخدام",
-        icon_name: 'arrowleft'
-      }, {
-        name: "تسجيل الخروج",
-        icon_name: 'logout'
-      }
-      ])
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+const {width, height} = Dimensions.get('window');
+export default function SettingsScreen() {
+  const [settings, setSettings] = useState([
+    {
+      name: 'تعديل الملف الشخصى',
+      icon_name: 'arrowleft',
+    },
+    {
+      name: 'تغيير كلمه المرور',
+      icon_name: 'arrowleft',
+    },
+    {
+      name: 'الاشعارات',
+      icon_name: 'arrowleft',
+    },
+    {
+      name: 'احصل علي المساعده',
+      icon_name: 'arrowleft',
+    },
+    {
+      name: 'الابلاغ عن مشكله',
+      icon_name: 'arrowleft',
+    },
+    {
+      name: 'تعليمات الاستخدام',
+      icon_name: 'arrowleft',
+    },
+    {
+      name: 'تسجيل الخروج',
+      icon_name: 'logout',
+    },
+  ]);
 
-
-
-  renderserring=()=> {
+  renderserring = () => {
     return settings.map((item, index) => {
       return (
         <View style={styles.each_view_in_map_style}>
           <TouchableOpacity style={styles.each_button_style}>
             <Text style={styles.each_text_style}>{item.name}</Text>
             <View>
-              {index == 6 ? <SimpleLineIcons name={item.icon_name} size={RFValue(ICONS.lIcon)} color={COLORS.gray} /> : <AntDesign name={item.icon_name} size={RFValue(ICONS.lIcon)} color={COLORS.gray} />
-              }
+              {index == 6 ? (
+                <SimpleLineIcons
+                  name={item.icon_name}
+                  size={RFValue(ICONS.lIcon)}
+                  color={COLORS.gray}
+                />
+              ) : (
+                <AntDesign
+                  name={item.icon_name}
+                  size={RFValue(ICONS.lIcon)}
+                  color={COLORS.gray}
+                />
+              )}
             </View>
           </TouchableOpacity>
         </View>
-      )
+      );
+    });
+  };
 
-    })
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
 
-  }
-
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
-
-        <View style={styles.headerView}>
-          <TouchableOpacity  >
-            <AntDesign
-              name="arrowright"
-              color={COLORS.gray}
-              size={RFValue(ICONS.xlIcon)}
-            />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.headerTxt}>الاعدادات</Text>
-          </View>
-          <View></View>
+      <View style={styles.headerView}>
+        <TouchableOpacity>
+          <AntDesign
+            name="arrowright"
+            color={COLORS.gray}
+            size={RFValue(ICONS.xlIcon)}
+          />
+        </TouchableOpacity>
+        <View>
+          <Text style={styles.headerTxt}>الاعدادات</Text>
         </View>
-        <ScrollView>
-
-          <View>
-            {renderserring()}
-          </View>
-        </ScrollView>
-
-
-
+        <View></View>
       </View>
-    );
-  }
+      <ScrollView>
+        <View>{renderserring()}</View>
+      </ScrollView>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: RFValue(PADDING.xsPadding),
-
-
-  }, headerView: {
+  },
+  headerView: {
     width: '92%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: RFValue(10),
-    marginTop: RFValue(10)
-
-  }, headerTxt: {
+    marginTop: RFValue(10),
+  },
+  headerTxt: {
     color: COLORS.black,
     fontSize: RFValue(FONTS.h3),
-    fontWeight: 'bold'
-  }, each_view_in_map_style: {
+    fontWeight: 'bold',
+  },
+  each_view_in_map_style: {
     borderBottomWidth: RFValue(1),
     borderColor: COLORS.gray,
     height: RFValue(70),
     alignItems: 'center',
-    justifyContent: 'center'
-  }, each_button_style: {
+    justifyContent: 'center',
+  },
+  each_button_style: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between'
-  }, each_text_style: {
+    justifyContent: 'space-between',
+  },
+  each_text_style: {
     fontSize: RFValue(FONTS.h4),
-    color: COLORS.black
-  }
-
-
+    color: COLORS.black,
+  },
 });
-
