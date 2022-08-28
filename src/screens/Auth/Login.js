@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   StatusBar,
+  BackHandler,
 } from 'react-native';
 import {Input, GeneralButton} from '../../components';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -29,6 +30,16 @@ import {HomeScreen} from '../HomeScreen';
 import {StackActions} from '@react-navigation/native';
 
 function Login({navigation, route}) {
+  useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+  }, []);
   useEffect(() => {
     messaging()
       .getToken()
