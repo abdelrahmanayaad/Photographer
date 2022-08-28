@@ -235,7 +235,7 @@ function PhotographerSettingScreen({navigation}) {
 
 
                 } else {
-                    alert(res.data)
+                    //alert(res.data)
                     // this.setState({ color: '#f00' })
 
                 }
