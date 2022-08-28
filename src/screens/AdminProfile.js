@@ -10,6 +10,7 @@ import {
   Modal,
   ImageBackground,
   PermissionsAndroid,
+  StatusBar,
 } from 'react-native';
 import {Input, GeneralButton} from '../components';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -369,6 +370,7 @@ export class AdminProfile extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar backgroundColor={COLORS.primary} />
         <View style={styles.headerStyle}>
           <TouchableOpacity
             onPress={() => {

@@ -44,7 +44,7 @@ export class App extends Component {
       //   <Navigation />
       // </NavigationContainer>
       <NavigationContainer>
-        <AdminProfileStack />
+        <Navigation />
       </NavigationContainer>
     );
   }
