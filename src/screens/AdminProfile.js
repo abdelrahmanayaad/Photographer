@@ -22,6 +22,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import * as ImagePicker from 'react-native-image-picker';
 import ActionSheet from 'react-native-actionsheet';
 import axios from 'axios';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export class AdminProfile extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export class AdminProfile extends React.Component {
       HighLight_photo_uri: '',
       error_text: '',
       postsPin: 0,
+      photoBase64: '',
       // esraa
 
       profile_img_for_post: require('../assets/Images/photo.jpg'),
@@ -170,6 +172,51 @@ export class AdminProfile extends React.Component {
         // console.log(res.data);
       });
   };*/
+  setPosts(assets) {
+    // alert(JSON.stringify(assets));
+    RNFetchBlob.fetch(
+      'POST',
+      'https://generation3.000webhostapp.com/project/Training/insert_post.php',
+      {
+        Authorization: 'Bearer access-token',
+        otherHeader: 'foo',
+        'Content-Type': 'multipart/form-data',
+      },
+      assets,
+    )
+      .then(resp => {
+        // ...
+        console.log(JSON.stringify(resp.data));
+      })
+      .catch(err => {
+        // ...
+        console.log(err);
+      });
+  }
+
+  // setPost = () => {
+  //   let data_to_send = {
+  //     name: 'image1',
+  //     filename: this.state.photo_data,
+  //     type: 'image/png',
+  //     data: this.state.photo_data,
+  //   };
+  //   axios
+  //     .post(
+  //       'https://generation3.000webhostapp.com/project/Training/insert_post.php',
+  //       // data_to_send,
+  //     )
+  //     .then(res => {
+  //       if (res.status == 200) {
+  //         this.setState({posts: res.data});
+  //       } else {
+  //         alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
   likes_back() {
     let data_to_send = {
       post_id: '15',
@@ -192,6 +239,7 @@ export class AdminProfile extends React.Component {
   }
   componentDidMount() {
     //this.getData();
+    // this.setPost();
     this.likes_back();
   }
   incrementNumLikes(idx) {
@@ -212,7 +260,7 @@ export class AdminProfile extends React.Component {
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary({options, includeBase64: false}, res => {
+    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
       console.log('Response = ', res);
       if (res.didCancel) {
         console.log('User cancelled image picker');
@@ -223,6 +271,7 @@ export class AdminProfile extends React.Component {
         alert(res.customButton);
       } else {
         this.setState({
+          photoBase64: res.assets[0].base64,
           photo_data: res.assets[0],
           photo_uri: res.assets[0].uri,
         });
@@ -247,9 +296,11 @@ export class AdminProfile extends React.Component {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
+        alert(JSON.stringify(res.assets[0]));
         this.setState({
           HighLight_photo_data: res.assets[0],
           HighLight_photo_uri: res.assets[0].uri,
+          photoBase64: res.assets[0].base64,
         });
         this.addHighLight();
       }
@@ -273,7 +324,9 @@ export class AdminProfile extends React.Component {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
+        alert(res.assets[0].base64);
         this.setState({
+          photoBase64: res.assets[0].base64,
           photo_data: res.assets[0],
           photo_uri: res.assets[0].uri,
         });
@@ -301,6 +354,22 @@ export class AdminProfile extends React.Component {
       liked: false,
       details: '',
     };
+    // alert(JSON.stringify(this.state.photoBase64));
+    const arrPhoto = [
+      {
+        name: 'image',
+        filename: 'image.png',
+        type: 'image/png',
+        data: this.state.photoBase64,
+      },
+      {name: 'user_id', data: '15'},
+      {
+        name: 'post_description',
+        data: 'عنيكوا بتعمل كوارث وعياد شقيان مش وارث',
+      },
+      {name: 'post_type', data: 'public'},
+    ];
+    this.setPosts(arrPhoto);
     post.splice(this.state.postsPin, 0, newObj);
     this.setState({posts: post});
   }

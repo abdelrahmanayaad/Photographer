@@ -5,8 +5,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ProfileScreen} from '../screens';
 import {SettingsScreen} from '../screens';
 import {EditprofileScreen} from '../screens';
-import {ChangePassword} from '../screens'
+import {ChangePassword} from '../screens';
 import {Following} from '../screens/Following';
+import {PhotographerProfile} from '../screens/PhotographerProfile';
 const Stack = createNativeStackNavigator();
 
 function SettingStack() {
@@ -19,6 +20,10 @@ function SettingStack() {
       <Stack.Screen name="EditprofileScreen" component={EditprofileScreen} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="Following" component={Following} />
+      <Stack.Screen
+        name="PhotographerProfile"
+        component={PhotographerProfile}
+      />
     </Stack.Navigator>
   );
 }

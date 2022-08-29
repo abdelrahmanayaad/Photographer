@@ -136,6 +136,9 @@ export class Followers extends Component {
               .includes(this.state.search.toLowerCase()) ? (
               <View style={styles.container_profile}>
                 <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate('PhotographerProfile');
+                  }}
                   style={{
                     alignItems: 'center',
                     flexDirection: 'row',

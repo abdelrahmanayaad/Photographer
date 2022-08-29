@@ -43,7 +43,6 @@ function NewPassword({navigation}) {
           // console.log(res.data);
           if (res.data == 'successful') {
             //this.setState({ color: '#0f0' })
-
             // alert("user added");
             // alert('done');
           } else if (res.data == 'user not found') {
@@ -139,17 +138,20 @@ function NewPassword({navigation}) {
       setconfirm_new_password_msg(confirm_new_password_msg => '');
       setconfirm_new_password_msg_color(confirm_new_password_msg_color => '');
     }
+    if (new_pass != confirm_new_pass) {
+      confirm_new_password_msg = 'كلمة المرور غير متطابقة';
+    }
   };
   const confirm = () => {
     if (new_password_check() == true && confirm_password() == true) {
       //console.log("ok")
       send_new_password(newpassword);
+      navigation.navigate('HomeStack');
     }
   };
   const multifunonpress = () => {
     confirm();
     changeButtomPress();
-    navigation.navigate('HomeStack');
   };
   return (
     <View style={styles.main_view_style}>

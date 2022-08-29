@@ -37,15 +37,9 @@ const {width, height} = Dimensions.get('window');
 export class App extends Component {
   render() {
     return (
-
-       <SettingsScreen />
-
-      // <NavigationContainer>
-      //   <Navigation />
-      // </NavigationContainer>
-      // <NavigationContainer>
-      //   <Navigation />
-      // </NavigationContainer>
+      <NavigationContainer>
+        <Navigation />
+      </NavigationContainer>
     );
   }
 }
