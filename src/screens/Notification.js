@@ -22,6 +22,8 @@ function Notification({ navigation }) {
 
     return (
         <View style={styles.container_style}>
+            <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
+
             <View style={styles.headerView_notification}>
                 <View style={{ width: RFValue(35) }}></View>
 
@@ -56,10 +58,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    },headerTxt: {
+    }, headerTxt: {
         color: COLORS.black,
         fontSize: RFValue(FONTS.h4)
-      },
+    },
 
 });
 export default Notification;
