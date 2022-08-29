@@ -180,7 +180,9 @@ function PhotographerSettingScreen({navigation}) {
     }
     const get_photographer_data = () => {
         let data_to_send = {
-            user_id: "15"
+            user_id: "15",
+            search_user_type:"مصور"
+
         };
         axios.post("https://generation3.000webhostapp.com/project/Training/brand_details.php", data_to_send).then((res) => {
             if (res.status == 200) {
