@@ -16,6 +16,7 @@ import Followers from '../screens/Followers';
 import Followering from '../screens/Following';
 import AdminProfile from '../screens/AdminProfile';
 import NewPassword from '../screens/Auth/NewPassword';
+import Notification from '../screens/Notification';
 
 export {
   Signup,
@@ -36,4 +37,5 @@ export {
   Followering,
   AdminProfile,
   NewPassword,
+  Notification
 };

@@ -59,6 +59,8 @@ export default function SettingsScreen({navigation}) {
       navigation.navigate('EditprofileScreen')
     }else if(index==1){
       navigation.navigate('ChangePassword')
+    }else if(index==2){
+      navigation.navigate('Notification')
     }
   }
 

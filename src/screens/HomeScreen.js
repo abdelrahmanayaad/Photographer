@@ -11,13 +11,13 @@ import {
   BackHandler,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Dimensions} from 'react-native';
-const {width, height} = Dimensions.get('screen');
-import {COLORS, FONTS, ICONS, PADDING, RADIUS} from '../constants';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MARGIN} from '../constants';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('screen');
+import { COLORS, FONTS, ICONS, PADDING, RADIUS } from '../constants';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { MARGIN } from '../constants';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -25,8 +25,9 @@ import Dialog from 'react-native-dialog';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Comment from './Comment';
 import InstaStory from 'react-native-insta-story';
+import Notification from './Notification';
 
-function HomeScreen({navigation}) {
+function HomeScreen({ navigation }) {
   useEffect(() => {
     const backAction = () => {
       BackHandler.exitApp();
@@ -248,7 +249,7 @@ function HomeScreen({navigation}) {
     if (email == '' || password == '') {
       setdialog_visible(dialog_visible => true);
     } else {
-      set_notification_model_visible(notification_model_visible => true)
+      navigation.navigate('Notification');
     }
   };
 
@@ -334,9 +335,9 @@ function HomeScreen({navigation}) {
             </View>
           </View>
           <View style={styles.captionView}>
-            <Text style={[styles.nameunderpost, {fontSize: RFValue(12)}]}>
+            <Text style={[styles.nameunderpost, { fontSize: RFValue(12) }]}>
               {item.name}{' '}
-              <Text style={[styles.textCaptionStyle, {fontSize: RFValue(12)}]}>
+              <Text style={[styles.textCaptionStyle, { fontSize: RFValue(12) }]}>
                 {item.discribtion}
               </Text>
             </Text>
@@ -351,7 +352,7 @@ function HomeScreen({navigation}) {
       <StatusBar barStyle={'light-content'} backgroundColor={COLORS.primary} />
 
       <View style={styles.header}>
-        <View style={{paddingLeft: RFValue(25)}}></View>
+        <View style={{ paddingLeft: RFValue(25) }}></View>
         <View>
           <Text style={styles.titleStyle}>الصفحة الرئيسية</Text>
         </View>
@@ -384,34 +385,11 @@ function HomeScreen({navigation}) {
         <Dialog.Description>يجب ان تقوم بتسجيل الدخول اولا.</Dialog.Description>
         <Dialog.Button
           label="انهاء"
-          style={{color: COLORS.primary}}
+          style={{ color: COLORS.primary }}
           onPress={() => setdialog_visible(dialog_visible => false)}
         />
       </Dialog.Container>
-      <Modal visible={notification_model_visible}>
-        <View style={styles.modal_container_style}>
-          <View style={styles.headerView_notification_modal}>
-          <View style={{width:RFValue(35)}}></View>
-          
-            <View >
-              <Text style={styles.headerTxt}>الاشعارات</Text>
-            </View>
-            <TouchableOpacity
-            onPress={() => set_notification_model_visible(notification_model_visible => false)}>
-              <AntDesign
-                name="arrowleft"
-                color={COLORS.gray}
-                size={RFValue(ICONS.xlIcon)}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ alignItems: 'center', justifyContent: 'center', height: '95%' }}>
-            <Text style={{ color: COLORS.black, fontSize: RFValue(FONTS.h4) }}>لا توجد اشعارات</Text>
 
-          </View>
-        </View>
-
-      </Modal>
     </View>
   );
 }
@@ -551,16 +529,7 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontWeight: '100',
   },
-  headerView_notification_modal: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  }, modal_container_style: {
-    padding: RFValue(PADDING.xsPadding),
-    height: '100%',
-    width: "100%",
-  }, headerTxt: {
+  headerTxt: {
     color: COLORS.black,
     fontSize: RFValue(FONTS.h4)
   },

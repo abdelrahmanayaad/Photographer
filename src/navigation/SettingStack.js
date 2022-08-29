@@ -7,6 +7,7 @@ import {SettingsScreen} from '../screens';
 import {EditprofileScreen} from '../screens';
 import {ChangePassword} from '../screens'
 import {Following} from '../screens/Following';
+import {Notification} from '../screens';
 const Stack = createNativeStackNavigator();
 
 function SettingStack() {
@@ -19,6 +20,7 @@ function SettingStack() {
       <Stack.Screen name="EditprofileScreen" component={EditprofileScreen} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="Following" component={Following} />
+      <Stack.Screen  name="Notification" component={Notification}/>
     </Stack.Navigator>
   );
 }
