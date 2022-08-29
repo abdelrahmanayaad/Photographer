@@ -101,6 +101,8 @@ function ProfileInfo() {
   const about = () => {
     let data_to_send = {
       user_id: '15',
+      search_user_type:"مصور"
+
     };
     axios
       .post(

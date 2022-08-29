@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, StatusBar, ScrollView,TextInput } from 'react-native';
 import { Dimensions } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
@@ -7,9 +7,10 @@ import {
   FONTS,
   ICONS,
   PADDING,
+  
 } from '../../constants';
 import GeneralButton from '../../components/GeneralButton';
-import Input from '../../components/Input';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MARGIN } from '../../constants/Constants';
 import Dialog from "react-native-dialog";
@@ -58,6 +59,7 @@ const change_password = (oldpassword, newpassword) => {
   })
 }
 function ChangePassword({navigation}) {
+  const [secured_pass, set_secured_pass] = useState(false);
   const [check_old_pass, setcheck_old_pass] = useState("")
   const [text_check_old_pass, settext_check_old_pass] = useState("")
   const [text_check_old_pass_text_color, settext_check_old_pass_text_color] = useState("")
@@ -68,7 +70,12 @@ function ChangePassword({navigation}) {
   const [confirm_new_password_msg, setconfirm_new_password_msg] = useState("")
   const [confirm_new_password_msg_color, setconfirm_new_password_msg_color] = useState("")
   const [dialog_visible, setdialog_visible] = useState(false)
-
+  
+  const pass_secured = () => {
+    let securedPass = secured_pass;
+    securedPass = !securedPass;
+    set_secured_pass(secured_pass => securedPass);
+  };
   const validatePassword = (password) => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     return pass.test(password);
@@ -199,35 +206,62 @@ function ChangePassword({navigation}) {
         </View>
         <View style={styles.view_after_header_style}>
           <View style={styles.each_textinput_viewstyle}>
-            <Input
+            <TextInput
               placeholder="كلمة المرور القديمة "
-              check_old_pass={check_old_pass}
+              value={check_old_pass}
+              secureTextEntry={secured_pass}
               onChangeText={value => { setcheck_old_pass(check_old_pass => value) }}
+              style={styles.inputPass}
             />
-            <Text></Text>
+            <TouchableOpacity
+              onPress={() => {
+                pass_secured();
+              }}>
+              <Entypo
+                name={secured_pass ? 'eye-with-line' : 'eye'}
+                size={ICONS.mIcon}
+                color={'#aaa'}
+              />
+            </TouchableOpacity>
           </View>
+          <Text></Text>
+
           <View style={styles.each_textinput_viewstyle}>
-            <Input
+            <TextInput
               placeholder="كلمة المرور الجديدة"
-              new_password={new_password}
+              value={new_password}
+              secureTextEntry={secured_pass}
               onChangeText={value => {
                 setnew_password(new_password => value)
               }}
+              style={styles.inputPass}
               onBlur={
                 new_password_check}
             />
-            <Text style={{ color: new_password_msg_color }}>
+            <TouchableOpacity
+              onPress={() => {
+                pass_secured();
+              }}>
+              <Entypo
+                name={secured_pass ? 'eye-with-line' : 'eye'}
+                size={ICONS.mIcon}
+                color={'#aaa'}
+              />
+            </TouchableOpacity>
+            
+          </View>
+          <Text style={{ color: new_password_msg_color ,alignSelf:'flex-start'}}>
               {new_password_msg}
             </Text>
-          </View>
           <View
-            style={[
-              styles.each_textinput_viewstyle,
-              { marginBottom: RFValue(MARGIN.xlMargin) },
-            ]}>
-            <Input
+            style={
+              styles.each_textinput_viewstyle
+              }>
+            <TextInput
               placeholder="تاكيد كلمة المرور الجديدة"
-              confirm_new_password={confirm_new_password}
+              value={confirm_new_password}
+              secureTextEntry={secured_pass}
+              style={styles.inputPass}
               onChangeText={value => {
                 setconfirm_new_password(confirm_new_password => value)
               }}
@@ -235,11 +269,22 @@ function ChangePassword({navigation}) {
                 confirm_password
               }
             />
-            <Text style={{ color: confirm_new_password_msg_color }}>
+            <TouchableOpacity
+              onPress={() => {
+                pass_secured();
+              }}>
+              <Entypo
+                name={secured_pass ? 'eye-with-line' : 'eye'}
+                size={ICONS.mIcon}
+                color={'#aaa'}
+              />
+            </TouchableOpacity>
+           
+          </View>
+          <Text style={{ color: confirm_new_password_msg_color,alignSelf:'flex-start' }}>
               {confirm_new_password_msg}
             </Text>
-          </View>
-          <View style={styles.view_button_style}>
+          <View style={[styles.view_button_style,{marginTop: RFValue(MARGIN.xlMargin)}]}>
             <GeneralButton
               title={'تغيير كلمة المرور'}
               bgcolor={COLORS.primary}
@@ -282,7 +327,12 @@ const styles = StyleSheet.create({
   each_textinput_viewstyle: {
     //marginBottom:height*.02
     //marginBottom: RFValue(MARGIN.mdMargin),
-    width: '100%',
+    height: RFValue(60),
+    borderBottomWidth: RFValue(0.7),
+    borderBottomColor: COLORS.gray,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   text_style: {
     color: COLORS.gray,
@@ -315,6 +365,11 @@ const styles = StyleSheet.create({
   },
   ViewTitle: {
     marginBottom: RFValue(MARGIN.xsMargin),
-  },
+  },inputPass: {
+    width: '93%',
+    height: RFValue(60),
+    color: COLORS.black,
+    fontSize: RFValue(FONTS.h5),
+  }
 });
 export default ChangePassword;

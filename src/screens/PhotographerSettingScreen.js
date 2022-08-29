@@ -317,6 +317,56 @@ function PhotographerSettingScreen({navigation}) {
     <Text onPress={selectFromGallery}>اختيار صوره</Text>,
     <Text onPress={launchCamera}>التقاط صوره</Text>,
   ];
+}
+const get_photographer_data = () => {
+  let data_to_send = {
+    user_id: '15',
+    search_user_type: 'مصور',
+  };
+  axios
+    .post(
+      'https://generation3.000webhostapp.com/project/Training/brand_details.php',
+      data_to_send,
+    )
+    .then(res => {
+      if (res.status == 200) {
+        //console.log(res.data.Photogarpher_brand_phone_num)
+        //console.log(res.data)
+        setLoading(isLoading => true);
+        //setphoto_uri(photo_uri => res.data.Photogarpher_brand_img)
+        //setphoto_data(photo_data => res.data.Photogarpher_brand_img)
+        setbrandname(brandname => res.data.Photogarpher_brand_name);
+        setdetails(details => res.data.Photogarpher_details);
+        setfacelink(facelink => res.data.Photogarpher_face_link);
+        setinstalink(instalink => res.data.Photogarpher_insta_link);
+        setwhatsapplink(whatsapplink => res.data.Photogarpher_whats_link);
+        setphonenumbersarr(
+          phonenumbersarr => res.data.Photogarpher_brand_phone_num,
+        );
+        setadditionaladdressesarr(
+          additionaladdressesarr => res.data.brand_addresses,
+        );
+      } else {
+        alert('حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا');
+      }
+      setLoading(isLoading => false);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+const send_photographer_data = () => {
+  let data_to_send = {
+    user_id: '15',
+    brand_name: brandname,
+    user_details: details,
+    brand_phone_num: phonenumbersarr,
+    //brand_img: photo_data,
+    face_link: facelink,
+    insta_link: instalink,
+    whats_link: whatsapplink,
+    addresses: additionaladdressesarr,
+  };
 
   /*componentDidMount=()=> {
         this.requestCameraPermission();
@@ -855,7 +905,7 @@ function PhotographerSettingScreen({navigation}) {
       </Modal>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

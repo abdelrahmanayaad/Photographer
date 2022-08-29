@@ -8,6 +8,7 @@ import {EditprofileScreen} from '../screens';
 import {ChangePassword} from '../screens';
 import {Following} from '../screens/Following';
 import {PhotographerProfile} from '../screens/PhotographerProfile';
+import {Notification} from '../screens';
 const Stack = createNativeStackNavigator();
 
 function SettingStack() {
@@ -24,6 +25,7 @@ function SettingStack() {
         name="PhotographerProfile"
         component={PhotographerProfile}
       />
+      <Stack.Screen name="Notification" component={Notification} />
     </Stack.Navigator>
   );
 }

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {COLORS, FONTS, ICONS, PADDING} from '../../constants';
@@ -15,8 +16,10 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {MARGIN} from '../../constants/Constants';
 import axios from 'axios';
 import Navigation from '../../navigation/Navigation';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 function NewPassword({navigation}) {
+  const [secured_pass, set_secured_pass] = useState(false);
   const [newpassword, setnewpassword] = useState('');
   const [confirm_new_password, setconfirm_new_password] = useState('');
   const [new_password_msg, setnew_password_msg] = useState('');
@@ -60,6 +63,11 @@ function NewPassword({navigation}) {
       .catch(err => {
         console.log(err);
       });
+  };
+  const pass_secured = () => {
+    let securedPass = secured_pass;
+    securedPass = !securedPass;
+    set_secured_pass(secured_pass => securedPass);
   };
 
   const validatePassword = password => {
@@ -144,7 +152,7 @@ function NewPassword({navigation}) {
   };
   const confirm = () => {
     if (new_password_check() == true && confirm_password() == true) {
-      //console.log("ok")
+      // console.log("ok")
       send_new_password(newpassword);
       navigation.navigate('HomeStack');
     }
@@ -172,36 +180,65 @@ function NewPassword({navigation}) {
         </View>
         <View style={styles.view_after_header_style}>
           <View style={styles.each_textinput_viewstyle}>
-            <Input
+            <TextInput
               placeholder="كلمة المرور الجديدة"
-              newpassword={newpassword}
+              value={newpassword}
+              secureTextEntry={secured_pass}
               onChangeText={value => {
                 setnewpassword(newpassword => value);
               }}
+              style={styles.inputPass}
               onBlur={new_password_check}
             />
-            <Text style={{color: new_password_msg_color}}>
-              {new_password_msg}
-            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                pass_secured();
+              }}>
+              <Entypo
+                name={secured_pass ? 'eye-with-line' : 'eye'}
+                size={ICONS.mIcon}
+                color={'#aaa'}
+              />
+            </TouchableOpacity>
           </View>
-          <View
-            style={[
-              styles.each_textinput_viewstyle,
-              {marginBottom: RFValue(MARGIN.xlMargin)},
-            ]}>
-            <Input
+          <Text
+            style={{color: new_password_msg_color, alignSelf: 'flex-start'}}>
+            {new_password_msg}
+          </Text>
+          <View style={styles.each_textinput_viewstyle}>
+            <TextInput
               placeholder="تاكيد كلمة المرور الجديدة"
-              confirm_new_password={confirm_new_password}
+              value={confirm_new_password}
+              secureTextEntry={secured_pass}
               onChangeText={value => {
                 setconfirm_new_password(confirm_new_password => value);
               }}
               onBlur={confirm_password}
+              style={styles.inputPass}
             />
-            <Text style={{color: confirm_new_password_msg_color}}>
-              {confirm_new_password_msg}
-            </Text>
+            <TouchableOpacity
+              onPress={() => {
+                pass_secured();
+              }}>
+              <Entypo
+                name={secured_pass ? 'eye-with-line' : 'eye'}
+                size={ICONS.mIcon}
+                color={'#aaa'}
+              />
+            </TouchableOpacity>
           </View>
-          <View style={styles.view_button_style}>
+          <Text
+            style={{
+              color: confirm_new_password_msg_color,
+              alignSelf: 'flex-start',
+            }}>
+            {confirm_new_password_msg}
+          </Text>
+          <View
+            style={[
+              styles.view_button_style,
+              {marginTop: RFValue(MARGIN.xlMargin)},
+            ]}>
             <GeneralButton
               title={'تغيير كلمة المرور'}
               bgcolor={COLORS.primary}
@@ -223,7 +260,12 @@ const styles = StyleSheet.create({
   each_textinput_viewstyle: {
     //marginBottom:height*.02
     //marginBottom: RFValue(MARGIN.mdMargin),
-    width: '100%',
+    height: RFValue(60),
+    borderBottomWidth: RFValue(0.7),
+    borderBottomColor: COLORS.gray,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   text_style: {
     color: COLORS.gray,
@@ -256,6 +298,12 @@ const styles = StyleSheet.create({
   },
   ViewTitle: {
     marginBottom: RFValue(MARGIN.xsMargin),
+  },
+  inputPass: {
+    width: '93%',
+    height: RFValue(60),
+    color: COLORS.black,
+    fontSize: RFValue(FONTS.h5),
   },
 });
 export default NewPassword;

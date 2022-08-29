@@ -7,6 +7,7 @@ import {HomeScreen} from '../screens';
 import {Comment} from '../screens';
 import {PhotographerProfile} from '../screens/PhotographerProfile';
 import {Followers} from '../screens';
+import {Notification} from '../screens';
 const Stack = createNativeStackNavigator();
 
 function CommentStack() {
@@ -21,6 +22,8 @@ function CommentStack() {
         name="PhotographerProfile"
         component={PhotographerProfile}
       />
+      <Stack.Screen  name="Notification" component={Notification}/>
+
     </Stack.Navigator>
   );
 }
