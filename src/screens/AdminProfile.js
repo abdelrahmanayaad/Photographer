@@ -22,7 +22,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import * as ImagePicker from 'react-native-image-picker';
 import ActionSheet from 'react-native-actionsheet';
 import axios from 'axios';
-import RNFetchBlob from 'rn-fetch-blob';
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export class AdminProfile extends React.Component {
   constructor(props) {

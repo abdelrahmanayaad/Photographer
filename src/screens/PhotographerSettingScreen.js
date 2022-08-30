@@ -18,7 +18,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {RFValue} from 'react-native-responsive-fontsize';
-import RNFetchBlob from 'rn-fetch-blob';
+import RNFetchBlob from 'react-native-fetch-blob';
 import Feather from 'react-native-vector-icons/Feather';
 import {PADDING, COLORS, MARGIN, ICONS, FONTS, RADIUS} from '../constants';
 import {GeneralButton, Input} from '../components';
