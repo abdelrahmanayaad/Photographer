@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   StyleSheet,
@@ -6,19 +6,19 @@ import {
   TouchableOpacity,
   StatusBar,
   ScrollView,
-  TextInput
+  TextInput,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { COLORS, FONTS, ICONS, PADDING } from '../../constants';
+import {COLORS, FONTS, ICONS, PADDING} from '../../constants';
 import GeneralButton from '../../components/GeneralButton';
 import Input from '../../components/Input';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { MARGIN } from '../../constants/Constants';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {MARGIN} from '../../constants/Constants';
 import axios from 'axios';
 import Navigation from '../../navigation/Navigation';
 import Entypo from 'react-native-vector-icons/Entypo';
 
-function NewPassword({ navigation }) {
+function NewPassword({navigation}) {
   const [secured_pass, set_secured_pass] = useState(false);
   const [newpassword, setnewpassword] = useState('');
   const [confirm_new_password, setconfirm_new_password] = useState('');
@@ -46,7 +46,6 @@ function NewPassword({ navigation }) {
           // console.log(res.data);
           if (res.data == 'successful') {
             //this.setState({ color: '#0f0' })
-
             // alert("user added");
             // alert('done');
           } else if (res.data == 'user not found') {
@@ -70,7 +69,6 @@ function NewPassword({ navigation }) {
     securedPass = !securedPass;
     set_secured_pass(secured_pass => securedPass);
   };
-
 
   const validatePassword = password => {
     var pass = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
@@ -142,14 +140,21 @@ function NewPassword({ navigation }) {
         confirm_new_password_msg_color => COLORS.error,
       );
     }
-   
+    if (new_pass != '' && confirm_new_pass != '') {
+      setnew_password_msg(new_password_msg => '');
+      setnew_password_msg_color(new_password_msg_color => '');
+      setconfirm_new_password_msg(confirm_new_password_msg => '');
+      setconfirm_new_password_msg_color(confirm_new_password_msg_color => '');
+    }
+    if (new_pass != confirm_new_pass) {
+      confirm_new_password_msg = 'كلمة المرور غير متطابقة';
+    }
   };
   const confirm = () => {
     if (new_password_check() == true && confirm_password() == true) {
-     // console.log("ok")
+      // console.log("ok")
       send_new_password(newpassword);
       navigation.navigate('HomeStack');
-
     }
   };
   const multifunonpress = () => {
@@ -195,20 +200,16 @@ function NewPassword({ navigation }) {
                 color={'#aaa'}
               />
             </TouchableOpacity>
-
           </View>
-          <Text style={{ color: new_password_msg_color,alignSelf:'flex-start' }}>
+          <Text
+            style={{color: new_password_msg_color, alignSelf: 'flex-start'}}>
             {new_password_msg}
           </Text>
-          <View
-            style={
-              styles.each_textinput_viewstyle
-            }>
+          <View style={styles.each_textinput_viewstyle}>
             <TextInput
               placeholder="تاكيد كلمة المرور الجديدة"
               value={confirm_new_password}
               secureTextEntry={secured_pass}
-
               onChangeText={value => {
                 setconfirm_new_password(confirm_new_password => value);
               }}
@@ -225,12 +226,19 @@ function NewPassword({ navigation }) {
                 color={'#aaa'}
               />
             </TouchableOpacity>
-            
           </View>
-          <Text style={{ color: confirm_new_password_msg_color ,alignSelf:'flex-start'}}>
-              {confirm_new_password_msg}
-            </Text>
-          <View style={[styles.view_button_style,{marginTop: RFValue(MARGIN.xlMargin)}]}>
+          <Text
+            style={{
+              color: confirm_new_password_msg_color,
+              alignSelf: 'flex-start',
+            }}>
+            {confirm_new_password_msg}
+          </Text>
+          <View
+            style={[
+              styles.view_button_style,
+              {marginTop: RFValue(MARGIN.xlMargin)},
+            ]}>
             <GeneralButton
               title={'تغيير كلمة المرور'}
               bgcolor={COLORS.primary}
@@ -290,11 +298,12 @@ const styles = StyleSheet.create({
   },
   ViewTitle: {
     marginBottom: RFValue(MARGIN.xsMargin),
-  }, inputPass: {
+  },
+  inputPass: {
     width: '93%',
     height: RFValue(60),
     color: COLORS.black,
     fontSize: RFValue(FONTS.h5),
-  }
+  },
 });
 export default NewPassword;

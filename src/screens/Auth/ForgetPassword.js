@@ -22,14 +22,14 @@ import axios from 'axios';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 export function ForgetPassword({navigation}) {
   useEffect(() => {
-    getData();
+    generatCode();
   }, []);
 
   function getData() {
     let data_to_send = {
       to_email: email,
       user_type: userType,
-      OTP: 1234,
+      OTP: code,
     };
     axios
       .post(
@@ -56,6 +56,7 @@ export function ForgetPassword({navigation}) {
   const [email, setEmail] = useState('abdelrahmanayad74@gmail.com');
   const [userType, setUserType] = useState('مصور');
   const [emailError, setEmailError] = useState('');
+  const [code, setcode] = useState('0000');
 
   const handelPress = value => {
     let errors = 0;
@@ -65,7 +66,8 @@ export function ForgetPassword({navigation}) {
       errors++;
     } else {
       setEmailError('');
-      navigation.navigate('OTP');
+      getData();
+      navigation.navigate('OTP', {otpNumber: code});
     }
     // if (errors == 0) {
     //   alert('Change Pass');
@@ -83,8 +85,7 @@ export function ForgetPassword({navigation}) {
     for (let i = 0; i < 4; i++) {
       code += numbers[Math.floor(Math.random() * numbers.length)];
     }
-    // alert(code);
-    return code;
+    setcode(code);
   };
 
   const sendCode = () => {
