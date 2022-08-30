@@ -26,9 +26,11 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Comment from './Comment';
 import InstaStory from 'react-native-insta-story';
 import Notification from './Notification';
+import axios from 'axios';
 
 function HomeScreen({ navigation }) {
   useEffect(() => {
+    //get_postsandstories();
     const backAction = () => {
       BackHandler.exitApp();
       return true;
@@ -39,7 +41,26 @@ function HomeScreen({ navigation }) {
     );
   }, []);
 
-  const story_data = [
+  const get_postsandstories=()=>{
+    let data_to_send = {
+      user_id: "15",
+
+  };
+  axios.post("https://generation3.000webhostapp.com/project/Training/select_user_posts_stories.php", data_to_send).then((res) => {
+      if (res.status == 200) {
+          //console.log(res.data.Photogarpher_brand_phone_num)
+          console.log(res.data)
+        
+      } else {
+          alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
+      }
+  }).catch((err) => {
+      console.log(err)
+  })
+
+  }
+
+  const [story_data,setstory_data] =useState( [
     {
       user_id: 1,
       user_image:
@@ -167,7 +188,7 @@ function HomeScreen({ navigation }) {
         },
       ],
     },
-  ];
+  ]);
 
   const [posts, setposts] = useState([
     {
@@ -175,7 +196,6 @@ function HomeScreen({ navigation }) {
       profile_img: require('../assets/Images/two.jpg'),
       post_img: require('../assets/Images/ten.jpg'),
       name: 'اسراء الجز',
-      email: 'esraaelgiz',
       discribtion: 'صورة',
       favourite: false,
       saved: false,
@@ -188,7 +208,6 @@ function HomeScreen({ navigation }) {
       profile_img: require('../assets/Images/four.jpg'),
       post_img: require('../assets/Images/five.jpg'),
       name: 'مروه السوداني',
-      email: 'marwaelsodany',
       discribtion: '',
       favourite: false,
       saved: false,
@@ -201,7 +220,6 @@ function HomeScreen({ navigation }) {
       profile_img: require('../assets/Images/five.jpg'),
       post_img: require('../assets/Images/nine.png'),
       name: 'اسراء الجز',
-      email: 'esraaelgiz',
       discribtion: '',
       favourite: false,
       saved: false,
