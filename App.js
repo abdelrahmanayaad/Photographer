@@ -43,10 +43,11 @@ export class App extends Component {
 
 
     //<PhotographerSettingScreen/>
+    //<HomeScreen/>
       
 
       <NavigationContainer>
-        <AdminProfileStack />
+        <Navigation />
       </NavigationContainer>
     );
   }

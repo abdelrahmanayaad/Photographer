@@ -10,6 +10,7 @@ import {
   ImageBackground,
   BackHandler,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -27,10 +28,12 @@ import Comment from './Comment';
 import InstaStory from 'react-native-insta-story';
 import Notification from './Notification';
 import axios from 'axios';
+import ImageSlider from 'react-native-image-slider';
+import { SliderBox } from 'react-native-image-slider-box';
 
 function HomeScreen({ navigation }) {
   useEffect(() => {
-    //get_postsandstories();
+    get_postsandstories();
     const backAction = () => {
       BackHandler.exitApp();
       return true;
@@ -41,26 +44,51 @@ function HomeScreen({ navigation }) {
     );
   }, []);
 
-  const get_postsandstories=()=>{
+  const get_postsandstories = () => {
     let data_to_send = {
-      user_id: "15",
+      user_id: "5",
 
-  };
-  axios.post("https://generation3.000webhostapp.com/project/Training/select_user_posts_stories.php", data_to_send).then((res) => {
+    };
+    axios.post("https://generation3.000webhostapp.com/project/Training/select_user_posts_stories.php", data_to_send).then((res) => {
       if (res.status == 200) {
-          //console.log(res.data.Photogarpher_brand_phone_num)
-          console.log(res.data)
-        
+        //console.log(res.data.Photogarpher_brand_phone_num)
+        //console.log(JSON.stringify(res.data.posts))
+        setposts(posts => res.data.posts)
+        set_staticPosts(staticPosts=>res.data.posts)
+        setLoading(isLoading => true)
+
+
       } else {
-          alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
+        alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
       }
-  }).catch((err) => {
+      setLoading(isLoading => false)
+
+    }).catch((err) => {
       console.log(err)
-  })
+    })
+
+  }
+  const insert_likes = (postid) => {
+    let data_to_send = {
+      post_id: postid,
+      like_maker_id: 6
+
+    };
+    axios.post("https://generation3.000webhostapp.com/project/Training/insert_likes.php", data_to_send).then((res) => {
+      if (res.status == 200) {
+        //console.log(res.data.Photogarpher_brand_phone_num)
+        console.log(res.data)
+
+      } else {
+        alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
 
   }
 
-  const [story_data,setstory_data] =useState( [
+  const [story_data, setstory_data] = useState([
     {
       user_id: 1,
       user_image:
@@ -191,7 +219,7 @@ function HomeScreen({ navigation }) {
   ]);
 
   const [posts, setposts] = useState([
-    {
+    /*{
       id: 1,
       profile_img: require('../assets/Images/two.jpg'),
       post_img: require('../assets/Images/ten.jpg'),
@@ -226,12 +254,13 @@ function HomeScreen({ navigation }) {
       likes_number: 250,
       comment_number: 60,
       upload_time: 'منذ دقيقه واحده',
-    },
+    },*/
   ]);
+  const [isLoading, setLoading] = useState(true)
+  const [staticPosts, set_staticPosts] = useState([])
   const [email, setemail] = useState('esraaelgiz@gmail.com');
   const [password, setpassword] = useState('123456');
   const [dialog_visible, setdialog_visible] = useState(false);
-  const [notification_model_visible, set_notification_model_visible] = useState(false)
 
   const favouritepress = (item, index) => {
     let posts_arr = [...posts];
@@ -239,11 +268,6 @@ function HomeScreen({ navigation }) {
       setdialog_visible(dialog_visible => true);
     } else if (email != '' && password != '') {
       posts_arr[index].favourite = !posts_arr[index].favourite;
-      if (posts_arr[index].favourite == true) {
-        posts_arr[index].likes_number = posts_arr[index].likes_number + 1;
-      } else if (posts_arr[index].favourite == false) {
-        posts_arr[index].likes_number = posts_arr[index].likes_number - 1;
-      }
       setposts(posts => posts_arr);
     }
   };
@@ -270,21 +294,34 @@ function HomeScreen({ navigation }) {
       navigation.navigate('Notification');
     }
   };
-
+  const add_like = (index) =>{
+    var staticArr = [...staticPosts]
+    var arr =[...posts]
+    if(arr[index].number_of_likes==staticArr[index].number_of_likes){
+      arr[index].number_of_likes +=1
+    }else{
+      arr[index].number_of_likes -=1
+    }
+    
+    setposts(posts=>arr)    
+  }
   const renderposts = () => {
     return posts.map((item, index) => {
       return (
         <View style={styles.view_for_each_post_style}>
           <View style={styles.view_for_profilenameandimg_in_each_post}>
             <TouchableOpacity
+
               onPress={() => {
+                // console.log(JSON.stringify(posts[20]))
                 navigation.navigate('PhotographerProfile');
               }}
-              style={styles.button_of_img_in_the_header_of_each_post_style}>
+              style=
+              {styles.button_of_img_in_the_header_of_each_post_style}>
               <Image
                 source={
-                  item.profile_img != ''
-                    ? item.profile_img
+                  posts[index]["user_info"]
+                    ? { uri: item["user_info"]["user_image_profile_url"] }
                     : require('../assets/Images/user.png')
                 }
                 style={styles.img_in_the_header_of_each_post_style}
@@ -293,37 +330,35 @@ function HomeScreen({ navigation }) {
             <View style={styles.view_for_text_at_header_style}>
               <View>
                 <Text style={styles.text_for_header_at_post_style}>
-                  {item.name}
+                  {posts[index]["user_info"] ? item["user_info"]["user_name"] : " "}
                 </Text>
               </View>
               <View>
-                <Text style={styles.timedatepost}>{item.upload_time}</Text>
+                <Text style={styles.timedatepost}>{item.post_push_time}</Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.view_for_img_in_post_style}>
-            <Image source={item.post_img} style={styles.img_in_post_style} />
-          </View>
+
+          {item.post_images.map((imgs, index2) => (
+            <View style={styles.view_for_img_in_post_style}>
+              <Image source={{ uri: imgs.image_url }} style={styles.img_in_post_style} />
+            </View>
+
+          )
+          )}
+
           <View style={styles.view_for_icons_in_post_style}>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
-              <TouchableOpacity onPress={() => favouritepress(item, index)}>
-                {item.favourite == false ? (
-                  <AntDesign
-                    name="hearto"
-                    color={COLORS.gray}
-                    size={RFValue(ICONS.mIcon)}
-                  />
-                ) : (
-                  <AntDesign
-                    name="heart"
-                    color={COLORS.primary}
-                    size={RFValue(ICONS.mIcon)}
-                  />
-                )}
+              <TouchableOpacity onPress={() => { favouritepress(item, index); add_like(index) }}>
+                <FontAwesome
+                  name={item.favourite == true ? 'heart' : 'heart-o'}
+                  color={item.favourite == true ? COLORS.primary : COLORS.gray}
+                  size={RFValue(ICONS.mIcon)}
+                />
               </TouchableOpacity>
               <Text style={styles.text_near_each_icon_style}>
-                {item.likes_number > 0 ? item.likes_number : ''}
+                {item.number_of_likes}
               </Text>
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
@@ -339,7 +374,7 @@ function HomeScreen({ navigation }) {
                 />
               </TouchableOpacity>
               <Text style={styles.text_near_each_icon_style}>
-                {item.comment_number > 0 ? item.comment_number : ''}
+                {item.number_of_comments}
               </Text>
             </View>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
@@ -353,12 +388,20 @@ function HomeScreen({ navigation }) {
             </View>
           </View>
           <View style={styles.captionView}>
-            <Text style={[styles.nameunderpost, { fontSize: RFValue(12) }]}>
-              {item.name}{' '}
-              <Text style={[styles.textCaptionStyle, { fontSize: RFValue(12) }]}>
-                {item.discribtion}
+
+            <View>
+              <Text style={[styles.nameunderpost, { fontSize: RFValue(12) }]}>
+                {posts[index]["user_info"] ? item["user_info"]["user_name"] : " "}{' '}
+
               </Text>
-            </Text>
+
+            </View>
+            <View>
+              <Text style={[styles.textCaptionStyle, { fontSize: RFValue(12) }]}>
+                {item.post_description}
+              </Text>
+
+            </View>
           </View>
         </View>
       );
@@ -385,6 +428,7 @@ function HomeScreen({ navigation }) {
         </View>
       </View>
       <ScrollView>
+        {isLoading?<ActivityIndicator size={RFValue(40)} color={COLORS.primary} />:(
         <View>
           <View style={styles.highlight_view_style}>
             {
@@ -398,6 +442,7 @@ function HomeScreen({ navigation }) {
           </View>
           <View>{renderposts()}</View>
         </View>
+        )}
       </ScrollView>
       <Dialog.Container visible={dialog_visible}>
         <Dialog.Description>يجب ان تقوم بتسجيل الدخول اولا.</Dialog.Description>
@@ -488,6 +533,7 @@ const styles = StyleSheet.create({
     width: RFValue(50),
     height: RFValue(50),
     borderRadius: RFValue(25),
+    //backgroundColor: "red"
     // marginRight:'5%'
     //marginRight: RFValue(MARGIN.smMargin)
   },
@@ -497,6 +543,7 @@ const styles = StyleSheet.create({
     borderRadius: RFValue(25),
   },
   view_for_img_in_post_style: {
+    flexDirection: 'row',
     width: '100%',
     maxHeight: RFValue(450),
     //height:'63%',
@@ -504,9 +551,11 @@ const styles = StyleSheet.create({
     //marginBottom:'4%'
   },
   img_in_post_style: {
-    maxHeight: RFValue(450),
+    height: RFValue(450),
     width: '100%',
     borderRadius: RFValue(RADIUS.xsRadius),
+    //resizeMode: "contain"
+
   },
   view_for_icons_in_post_style: {
     width: '50%',
@@ -526,6 +575,8 @@ const styles = StyleSheet.create({
   },
   captionView: {
     marginBottom: RFValue(MARGIN.mdMargin),
+    //justifyContent:'flex-end',
+    flexDirection: 'row',
   },
   exit_buttom_in_story_style: {
     width: RFValue(50),

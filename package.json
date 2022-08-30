@@ -28,6 +28,8 @@
     "react-native-element-dropdown": "^2.2.0",
     "react-native-fetch-blob": "^0.10.8",
     "react-native-image-picker": "^4.8.4",
+    "react-native-image-slider": "^2.0.3",
+    "react-native-image-slider-box": "^2.0.5",
     "react-native-insta-story": "^1.1.8",
     "react-native-maps": "^1.2.0",
     "react-native-otp-inputs": "^7.4.0",
