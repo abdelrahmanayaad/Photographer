@@ -13,14 +13,12 @@ import {
   ActivityIndicator
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('screen');
 import { COLORS, FONTS, ICONS, PADDING, RADIUS } from '../constants';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { MARGIN } from '../constants';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Dialog from 'react-native-dialog';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -56,6 +54,7 @@ function HomeScreen({ navigation }) {
         setposts(posts => res.data.posts)
         set_staticPosts(staticPosts=>res.data.posts)
         setLoading(isLoading => true)
+        
 
 
       } else {
@@ -68,13 +67,35 @@ function HomeScreen({ navigation }) {
     })
 
   }
-  const insert_likes = (postid) => {
+  const insert_likes = (postid,index) => {
     let data_to_send = {
       post_id: postid,
       like_maker_id: 6
 
     };
     axios.post("https://generation3.000webhostapp.com/project/Training/insert_likes.php", data_to_send).then((res) => {
+      if (res.status == 200) {
+        //console.log(res.data.Photogarpher_brand_phone_num)
+        console.log(res.data)
+        let arr=[...posts]
+        arr[index].like_id_of_user=res.data.like_id
+        setposts(posts=>arr)
+
+
+      } else {
+        alert("حدث خطا اثناء الاتصال بالخادم من فضلك حاول مجددا")
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+
+  }
+  const delete_like=(postid)=>{
+    let data_to_send = {
+      like_id: postid,
+
+    };
+    axios.post("https://generation3.000webhostapp.com/project/Training/delete_like.php", data_to_send).then((res) => {
       if (res.status == 200) {
         //console.log(res.data.Photogarpher_brand_phone_num)
         console.log(res.data)
@@ -85,6 +106,18 @@ function HomeScreen({ navigation }) {
     }).catch((err) => {
       console.log(err)
     })
+
+  }
+  const plus_and_minusfun=(item,index)=>{
+    let arr=[...posts]
+    if(arr[index].favourite==true){
+      arr[index].number_of_likes=arr[index].number_of_likes+1
+      insert_likes(item.post_id,index)
+    }else if (arr[index].favourite==false){
+      arr[index].number_of_likes=arr[index].number_of_likes-1
+      delete_like(item.like_id_of_user)
+    }
+    setposts(posts=>arr)
 
   }
 
@@ -218,44 +251,7 @@ function HomeScreen({ navigation }) {
     },
   ]);
 
-  const [posts, setposts] = useState([
-    /*{
-      id: 1,
-      profile_img: require('../assets/Images/two.jpg'),
-      post_img: require('../assets/Images/ten.jpg'),
-      name: 'اسراء الجز',
-      discribtion: 'صورة',
-      favourite: false,
-      saved: false,
-      likes_number: 130,
-      comment_number: 20,
-      upload_time: 'منذ دقيقه واحده',
-    },
-    {
-      id: 2,
-      profile_img: require('../assets/Images/four.jpg'),
-      post_img: require('../assets/Images/five.jpg'),
-      name: 'مروه السوداني',
-      discribtion: '',
-      favourite: false,
-      saved: false,
-      likes_number: 300,
-      comment_number: 120,
-      upload_time: 'منذ دقيقه واحده',
-    },
-    {
-      id: 3,
-      profile_img: require('../assets/Images/five.jpg'),
-      post_img: require('../assets/Images/nine.png'),
-      name: 'اسراء الجز',
-      discribtion: '',
-      favourite: false,
-      saved: false,
-      likes_number: 250,
-      comment_number: 60,
-      upload_time: 'منذ دقيقه واحده',
-    },*/
-  ]);
+  const [posts, setposts] = useState([]);
   const [isLoading, setLoading] = useState(true)
   const [staticPosts, set_staticPosts] = useState([])
   const [email, setemail] = useState('esraaelgiz@gmail.com');
@@ -294,17 +290,7 @@ function HomeScreen({ navigation }) {
       navigation.navigate('Notification');
     }
   };
-  const add_like = (index) =>{
-    var staticArr = [...staticPosts]
-    var arr =[...posts]
-    if(arr[index].number_of_likes==staticArr[index].number_of_likes){
-      arr[index].number_of_likes +=1
-    }else{
-      arr[index].number_of_likes -=1
-    }
-    
-    setposts(posts=>arr)    
-  }
+
   const renderposts = () => {
     return posts.map((item, index) => {
       return (
@@ -350,7 +336,7 @@ function HomeScreen({ navigation }) {
 
           <View style={styles.view_for_icons_in_post_style}>
             <View style={styles.view_for_each_iconandtext_for_each_post_style}>
-              <TouchableOpacity onPress={() => { favouritepress(item, index); add_like(index) }}>
+              <TouchableOpacity onPress={() => { favouritepress(item, index); plus_and_minusfun(item,index) }}>
                 <FontAwesome
                   name={item.favourite == true ? 'heart' : 'heart-o'}
                   color={item.favourite == true ? COLORS.primary : COLORS.gray}
